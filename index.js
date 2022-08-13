@@ -120,6 +120,27 @@ class Character {
             leg2.visualSpeed = 200;
             leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
+            if (i % 4 === 0) {
+                leg1.minDistanceFromParent *= 3;
+                leg2.maxDistanceFromParent *= 3;
+
+                const ext1 = new Node(leg1);
+                ext1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
+                ext1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
+                ext1.minDistanceFromParent = 40;
+                ext1.maxDistanceFromParent = 60;
+                ext1.visualSpeed = 200;
+                ext1.angleResolutionResolutionSelector = Node.pickAverage;
+
+                const ext2 = new Node(leg2);
+                ext2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
+                ext2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
+                ext2.minDistanceFromParent = 40;
+                ext2.maxDistanceFromParent = 60;
+                ext2.visualSpeed = 200;
+                ext2.angleResolutionResolutionSelector = Node.pickAverage;
+            }
+
             parent = child;
         }
 
