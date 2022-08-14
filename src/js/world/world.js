@@ -3,29 +3,7 @@ class World {
         this.elements = [];
         this.obstacles = new Set();
 
-        const masks = [
-            [
-                [1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                [0, 3, 3, 0, 0, 0, 0, 3, 3, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                [0, 3, 3, 0, 0, 0, 0, 3, 3, 0],
-                [1, 1, 1, 3, 0, 0, 3, 1, 1, 1],
-                [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
-                [1, 1, 1, 0, 0, 0, 0, 1, 1, 1]
-            ],
-        ];
-
-        const mapCanvas = createCanvas(100, 100, (ctx, can) => {
-            ctx.fillStyle = '#000';
-            ctx.fillRect(0, 0, 100, 100);
-        });
-
-        const grid = generateRandomWorld();
-
-        grid.forEach((rowValues, row) => {
+        generateRandomWorld().forEach((rowValues, row) => {
             rowValues.forEach((cell, col) => {
                 if (cell) {
                     this.addObstacle(row, col);
