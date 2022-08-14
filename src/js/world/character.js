@@ -6,8 +6,8 @@ class Character {
         this.head.position.x = -50;
         this.head.position.y = 0;
 
-        // creepyBug(this.head);
-        human(this.head);
+        creepyBug(this.head);
+        // human(this.head);
 
         // for (let i = 0 ; i < 3 ; i++) {
         //     const absorbed = new Node();

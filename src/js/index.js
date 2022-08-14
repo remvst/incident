@@ -14,8 +14,6 @@ window.addEventListener('load', () => {
     onresize();
 
     world = new World();
-    world.add(player = new Character());
-
     camera = new Camera();
 
     frame();

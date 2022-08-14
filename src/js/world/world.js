@@ -3,6 +3,44 @@ class World {
         this.elements = [];
         this.obstacles = new Set();
 
+        const masks = [
+            [
+                [1, 1, 1, 1, 0, 0, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                [0, 3, 3, 0, 0, 0, 0, 3, 3, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                [0, 3, 3, 0, 0, 0, 0, 3, 3, 0],
+                [1, 1, 1, 3, 0, 0, 3, 1, 1, 1],
+                [1, 1, 1, 0, 0, 0, 0, 1, 1, 1],
+                [1, 1, 1, 0, 0, 0, 0, 1, 1, 1]
+            ],
+        ];
+
+        const mapCanvas = createCanvas(100, 100, (ctx, can) => {
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, 100, 100);
+        });
+
+        const grid = generateRandomWorld();
+
+        grid.forEach((rowValues, row) => {
+            rowValues.forEach((cell, col) => {
+                if (cell) {
+                    this.addObstacle(row, col);
+                }
+            });
+        });
+
+        world = this;
+
+        player = new Character();
+        player.head.position.x = player.head.position.y = 25 * CELL_SIZE;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+
         for (let i = 0 ; i < 10 ; i++) {
             this.addObstacle(0, i);
             this.addObstacle(i, 0);
@@ -20,21 +58,6 @@ class World {
 
     hasObstacleXY(x, y, radius) {
         return this.hasObstacle(Math.floor(y / CELL_SIZE), Math.floor(x / CELL_SIZE), 0);
-        if (radius === 0) {
-            return this.hasObstacle(Math.floor(y / CELL_SIZE), Math.floor(x / CELL_SIZE), 0);
-        } else {
-            const left = x - radius;
-            const right = x + radius;
-            const top = y - radius;
-            const bottom = y + radius;
-            return this.hasObstacleXY(x, y, 0)
-                || this.hasObstacleXY(left, y, 0)
-                || this.hasObstacleXY(right, y, 0)
-                || this.hasObstacleXY(x, top, 0)
-                || this.hasObstacleXY(x, bottom, 0)
-                ;
-        }
-
     }
 
     readjust(x, y, radius) {
