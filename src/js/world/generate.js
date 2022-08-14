@@ -50,8 +50,8 @@ generateRandomWorld = () => createCanvas(50, 50, (ctx, can) => {
 
             ctx.fillRect(x, y, w, h);
 
-            ctx.fillRect(x, ~~rnd(y, y + h - 2), 10, 2);
-            ctx.fillRect( ~~rnd(x, x + w - 2), y, 2, 10);
+            ctx.fillRect(x, ~~rnd(y, y + h - 2), 12, 2);
+            ctx.fillRect( ~~rnd(x, x + w - 2), y, 2, 12);
         }
     }
 

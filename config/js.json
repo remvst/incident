@@ -16,6 +16,8 @@
     "src/js/world/characters/character.js",
     "src/js/world/characters/player.js",
     "src/js/world/characters/human.js",
+    
+    "src/js/world/effects/blood.js",
 
     "src/js/camera.js",
 

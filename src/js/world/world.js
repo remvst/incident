@@ -14,15 +14,20 @@ class World {
         world = this;
 
         player = new Player();
-        player.head.position.x = player.head.position.y = 25 * CELL_SIZE;
+        player.head.position.x = player.head.position.y = 4 * CELL_SIZE;
         player.head.resolve();
         player.head.realign();
         this.add(player);
 
-        for (let i = 0 ; i < 10 ; i++) {
-            this.addObstacle(0, i);
-            this.addObstacle(i, 0);
-            this.addObstacle(i, 10);
+        for (let i = 0 ; i < 5 ; i++) {
+            const testHuman = new Human();
+            testHuman.head.position.x = testHuman.head.position.y = 6 * CELL_SIZE;
+            testHuman.head.position.y += CELL_SIZE * i;
+            testHuman.head.resolve();
+            testHuman.head.realign();
+            testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
+            testHuman.target.y += CELL_SIZE * i;
+            this.add(testHuman);
         }
     }
 
@@ -82,6 +87,10 @@ class World {
         this.elements.push(element);
     }
 
+    addToBottom(element) {
+        this.elements.unshift(element);
+    }
+
     remove(element) {
         const index = this.elements.indexOf(element);
         if (index >= 0) this.elements.splice(index, 1);
@@ -114,7 +123,7 @@ class World {
 
             // Obstacle side outlines
             ctx.fillStyle = 'rgba(0, 0, 0, 0)';
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 1;
             ctx.strokeStyle = '#666';
             for (const [row, col] of this.renderableObstacles()) {
                 this.renderObstacleSides(row, col);

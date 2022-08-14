@@ -34,55 +34,53 @@ class Character {
 
 function creepyBug(head) {
     let parent = head;
-    let child;
-    for (let i = 0 ; i < 10 ; i++)  {
-        child = new Node(parent);
-        child.minDistanceFromParent = 30;
-        child.maxDistanceFromParent = 50;
-        child.visualSpeed = 100;
-        child.angleResolutionResolutionSelector = Node.pickClosest;
 
-        const leg1 = new Node(child);
-        leg1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
-        leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
-        leg1.minDistanceFromParent = 40;
-        leg1.maxDistanceFromParent = 60;
-        leg1.visualSpeed = 200;
-        leg1.angleResolutionResolutionSelector = Node.pickAverage;
-    
-        const leg2 = new Node(child);
-        leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
-        leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
-        leg2.minDistanceFromParent = 40;
-        leg2.maxDistanceFromParent = 60;
-        leg2.visualSpeed = 200;
-        leg2.angleResolutionResolutionSelector = Node.pickAverage;
+    spine = new Node(parent);
+    spine.minDistanceFromParent = 30;
+    spine.maxDistanceFromParent = 50;
+    spine.visualSpeed = 100;
+    spine.angleResolutionResolutionSelector = Node.pickClosest;
 
-        // leg2.extraRender = 
+    const leg1 = new Node(spine);
+    leg1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
+    leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
+    leg1.minDistanceFromParent = 40;
+    leg1.maxDistanceFromParent = 60;
+    leg1.visualSpeed = 200;
+    leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
-        if (i % 4 === 0) {
-            leg1.minDistanceFromParent *= 3;
-            leg2.maxDistanceFromParent *= 3;
+    const leg2 = new Node(spine);
+    leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
+    leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
+    leg2.minDistanceFromParent = 40;
+    leg2.maxDistanceFromParent = 60;
+    leg2.visualSpeed = 200;
+    leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
-            const ext1 = new Node(leg1);
-            ext1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
-            ext1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
-            ext1.minDistanceFromParent = 40;
-            ext1.maxDistanceFromParent = 60;
-            ext1.visualSpeed = 200;
-            ext1.angleResolutionResolutionSelector = Node.pickAverage;
+    // leg2.extraRender = 
 
-            const ext2 = new Node(leg2);
-            ext2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
-            ext2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
-            ext2.minDistanceFromParent = 40;
-            ext2.maxDistanceFromParent = 60;
-            ext2.visualSpeed = 200;
-            ext2.angleResolutionResolutionSelector = Node.pickAverage;
-        }
+    if (spine.depth % 4 === 0) {
+        leg1.minDistanceFromParent *= 3;
+        leg2.maxDistanceFromParent *= 3;
 
-        parent = child;
+        const ext1 = new Node(leg1);
+        ext1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
+        ext1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
+        ext1.minDistanceFromParent = 40;
+        ext1.maxDistanceFromParent = 60;
+        ext1.visualSpeed = 200;
+        ext1.angleResolutionResolutionSelector = Node.pickAverage;
+
+        const ext2 = new Node(leg2);
+        ext2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
+        ext2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
+        ext2.minDistanceFromParent = 40;
+        ext2.maxDistanceFromParent = 60;
+        ext2.visualSpeed = 200;
+        ext2.angleResolutionResolutionSelector = Node.pickAverage;
     }
+
+    return spine;
 }
 
 function human(head) {

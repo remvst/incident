@@ -291,6 +291,11 @@ class Node {
             }
         }
     }
+
+    get depth() {
+        if (!this.parent) return 0;
+        return this.parent.depth + 1;
+    }
 }
 
 
