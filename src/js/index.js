@@ -1,7 +1,7 @@
 onmousemove = (e) => {
     const canvasRect = can.getBoundingClientRect();
-    character.target.x = (e.pageX - canvasRect.left) / canvasRect.width * can.width;
-    character.target.y = (e.pageY - canvasRect.top) / canvasRect.height * can.height
+    player.target.x = (e.pageX - canvasRect.left) / canvasRect.width * can.width;
+    player.target.y = (e.pageY - canvasRect.top) / canvasRect.height * can.height
 };
 
 window.addEventListener('load', () => {
@@ -11,7 +11,9 @@ window.addEventListener('load', () => {
 
     ctx = can.getContext('2d');
 
-    character = new Character();
+    world = new World();
+    world.add(player = new Character());
+
     frame();
 });
 
@@ -22,16 +24,15 @@ function frame() {
     const elapsed = (now - lastFrame) / 1000;
     lastFrame = now;
 
-    character.cycle(elapsed);
+    world.cycle(elapsed);
 
-    clear();
-    character.render();
-
-    requestAnimationFrame(frame);
-}
-
-function clear() {
+    // Clear
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, can.width, can.height);
+
+    // Render
+    world.render();
+
+    requestAnimationFrame(frame);
 }
 

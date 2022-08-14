@@ -8,6 +8,7 @@
 
     "src/js/world/character.js",
     "src/js/world/node.js",
-    
+    "src/js/world/world.js",
+
     "src/js/index.js"
 ]

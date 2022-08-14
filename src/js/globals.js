@@ -3,4 +3,5 @@ const w = window;
 let can;
 let ctx;
 
-let character;
+let world;
+let player;
