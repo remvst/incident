@@ -6,8 +6,22 @@ class Character {
         this.head.position.x = -50;
         this.head.position.y = 0;
 
-        creepyBug(this);
-        // human(this);
+        // creepyBug(this.head);
+        human(this.head);
+
+        // for (let i = 0 ; i < 3 ; i++) {
+        //     const absorbed = new Node();
+        //     human(absorbed);
+        //     const addedNodes = Array.from(absorbed.allNodes());
+        //     const allNodes = Array.from(this.head.allNodes());
+
+        //     for (const added of addedNodes) {
+        //         const randomNode = pick(allNodes);
+        //         randomNode.children.push(added);
+        //         added.parent = randomNode;
+                
+        //     }
+        // }
 
         this.head.realign();
     }
@@ -35,8 +49,8 @@ class Character {
     }
 }
 
-function creepyBug(character) {
-    let parent = character.head;
+function creepyBug(head) {
+    let parent = head;
     let child;
     for (let i = 0 ; i < 10 ; i++)  {
         child = new Node(parent);
@@ -60,6 +74,8 @@ function creepyBug(character) {
         leg2.maxDistanceFromParent = 60;
         leg2.visualSpeed = 200;
         leg2.angleResolutionResolutionSelector = Node.pickAverage;
+
+        // leg2.extraRender = 
 
         if (i % 4 === 0) {
             leg1.minDistanceFromParent *= 3;
@@ -86,48 +102,38 @@ function creepyBug(character) {
     }
 }
 
-function human(character) {
-    const neck = new Node(character.head);
+function human(head) {
+    const neck = new Node(head);
     neck.maxAngleOffset = Math.PI / 8;
     neck.minAngleOffset = -Math.PI / 8;
     neck.minDistanceFromParent = 0;
     neck.maxDistanceFromParent = 5;
 
     const leftShoulder = new Node(neck);
-    leftShoulder.minDistanceFromParent = 50;
-    leftShoulder.maxDistanceFromParent = 70;
+    leftShoulder.minDistanceFromParent = 30;
+    leftShoulder.maxDistanceFromParent = 50;
     leftShoulder.minAngleOffset = Math.PI / 2 - Math.PI / 8 + Math.PI / 8;
     leftShoulder.maxAngleOffset = Math.PI / 2 + Math.PI / 8 + Math.PI / 8;
 
     const rightShoulder = new Node(neck);
-    rightShoulder.minDistanceFromParent = 50;
-    rightShoulder.maxDistanceFromParent = 70;
+    rightShoulder.minDistanceFromParent = 30;
+    rightShoulder.maxDistanceFromParent = 50;
     rightShoulder.minAngleOffset = -Math.PI / 2 - Math.PI / 8 - Math.PI / 8;
     rightShoulder.maxAngleOffset = -Math.PI / 2 + Math.PI / 8 - Math.PI / 8;
 
     const leftHand = new Node(leftShoulder);
-    leftHand.minDistanceFromParent = 30;
-    leftHand.maxDistanceFromParent = 50;
+    leftHand.minDistanceFromParent = 10;
+    leftHand.maxDistanceFromParent = 30;
     leftHand.minAngleOffset = Math.PI / 2 - Math.PI / 8;
     leftHand.maxAngleOffset = Math.PI / 2 + Math.PI / 8;
 
     const rightHand = new Node(rightShoulder);
-    rightHand.minDistanceFromParent = 30;
-    rightHand.maxDistanceFromParent = 50;
+    rightHand.minDistanceFromParent = 10;
+    rightHand.maxDistanceFromParent = 30;
     rightHand.minAngleOffset = -Math.PI / 2 - Math.PI / 8;
     rightHand.maxAngleOffset = -Math.PI / 2 + Math.PI / 8;
 
-    character.head.extraRender = () => {
-        ctx.fillStyle = '#fff';
-        ctx.beginPath();
-        ctx.arc(0, 0, 20, 0, Math.PI * 2);
-        ctx.fill();
-    };
-
-    rightHand.extraRender = () => {
-        ctx.rotate(rightHand.angle + Math.PI);
-        ctx.fillStyle = '#f00';
-        ctx.fillRect(0, -5, 40, 10);
-    };
+    rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine('#f00', 20);
+    neck.extraRender = renderCircle('#daab79', 20);
 }
 

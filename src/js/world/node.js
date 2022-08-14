@@ -21,7 +21,7 @@ class Node {
             this.parent.children.push(this);
         }
 
-        this.extraRender = () => {};
+        this.extraRender = parent ? renderLine('#fff') : () => {};
     }
 
     static pickAverage(resolutions) {
@@ -215,20 +215,22 @@ class Node {
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
                 ctx.lineTo(this.parent.visualPosition.x - this.visualPosition.x, this.parent.visualPosition.y - this.visualPosition.y);
-                ctx.stroke();
+                // ctx.stroke();
             }
+        });
 
-            this.extraRender();
+        for (const child of this.children) {
+            ctx.wrap(() => child.render());
+        } 
+
+        ctx.wrap(() => {
+            this.extraRender(this);
         });
 
         ctx.wrap(() => {
             ctx.globalAlpha *= 0.5;
             this.renderDebug();
         });
-
-        for (const child of this.children) {
-            ctx.wrap(() => child.render());
-        } 
     }
 
     renderDebug() {
@@ -280,5 +282,36 @@ class Node {
             ctx.fillText(this.id, 0, -10);
         });
     }
+
+    * allNodes() {
+        yield this;
+        for (const child of this.children) {
+            for (const sub of child.allNodes()) {
+                yield sub;
+            }
+        }
+    }
 }
 
+
+function renderLine(color, thickness = 10, lineCap = 'round') {
+    return (node) => {
+        ctx.strokeStyle = color;
+        ctx.lineWidth = thickness;
+        ctx.lineCap = lineCap;
+
+        ctx.beginPath();
+        ctx.moveTo(node.parent.visualPosition.x, node.parent.visualPosition.y);
+        ctx.lineTo(node.visualPosition.x, node.visualPosition.y)
+        ctx.stroke();
+    };
+};
+
+function renderCircle(color, radius) {
+    return (node) => {
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(node.visualPosition.x, node.visualPosition.y, radius, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
