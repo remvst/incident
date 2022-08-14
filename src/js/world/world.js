@@ -13,7 +13,7 @@ class World {
 
         world = this;
 
-        player = new Character();
+        player = new Player();
         player.head.position.x = player.head.position.y = 25 * CELL_SIZE;
         player.head.resolve();
         player.head.realign();
@@ -93,23 +93,6 @@ class World {
         }
         camera.cycle(elapsed);
     }
-
-    // readjust(x, y, radius) {
-    //     const left = x - radius;
-    //     const right = x + radius;
-    //     const top = y - radius;
-    //     const bottom = y + radius;
-
-    //     const currentObstacle = this.hasObstacleXY(x, y);
-    //     const leftObstacle = this.hasObstacleXY(left, y);
-    //     const rightObstacle = this.hasObstacleXY(right, y);
-    //     const topObstacle = this.hasObstacleXY(top, y);
-    //     const bottomObstacle = this.hasObstacleXY(bottom, y);
-
-    //     if (leftObstacle && !rightObstacle) {
-    //         return {'x': }
-    //     }
-    // }
 
     render() {
         // Clear

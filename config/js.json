@@ -9,10 +9,13 @@
     "src/js/graphics/create-pattern.js",
     "src/js/graphics/floor.js",
 
-    "src/js/world/character.js",
     "src/js/world/node.js",
     "src/js/world/world.js",
     "src/js/world/generate.js",
+
+    "src/js/world/characters/character.js",
+    "src/js/world/characters/player.js",
+    "src/js/world/characters/human.js",
 
     "src/js/camera.js",
 
