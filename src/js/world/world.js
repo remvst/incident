@@ -41,6 +41,10 @@ class World {
 
             ctx.fillStyle = FLOOR_PATTERN;
             ctx.fillRect(camera.x, camera.y, can.width, can.height);
+    
+            for (const element of this.elements) {
+                element.render();
+            }
 
             // Obstacles sides
             ctx.fillStyle = '#111';
@@ -61,10 +65,6 @@ class World {
             ctx.strokeStyle = 'rgba(255,255,255, 0)';
             for (const [row, col] of this.renderableObstacles()) {
                 this.renderObstacleTop(row, col);
-            }
-    
-            for (const element of this.elements) {
-                element.render();
             }
         });
     }

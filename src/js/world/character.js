@@ -6,8 +6,8 @@ class Character {
         this.head.position.x = 100;
         this.head.position.y = 100;
 
-        // creepyBug(this);
-        human(this);
+        creepyBug(this);
+        // human(this);
 
         this.head.realign();
     }
