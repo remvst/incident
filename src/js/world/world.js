@@ -18,6 +18,65 @@ class World {
         return this.obstacles.has(`${row},${col}`);
     }
 
+    hasObstacleXY(x, y, radius) {
+        return this.hasObstacle(Math.floor(y / CELL_SIZE), Math.floor(x / CELL_SIZE), 0);
+        if (radius === 0) {
+            return this.hasObstacle(Math.floor(y / CELL_SIZE), Math.floor(x / CELL_SIZE), 0);
+        } else {
+            const left = x - radius;
+            const right = x + radius;
+            const top = y - radius;
+            const bottom = y + radius;
+            return this.hasObstacleXY(x, y, 0)
+                || this.hasObstacleXY(left, y, 0)
+                || this.hasObstacleXY(right, y, 0)
+                || this.hasObstacleXY(x, top, 0)
+                || this.hasObstacleXY(x, bottom, 0)
+                ;
+        }
+
+    }
+
+    readjust(x, y, radius) {
+        const left = x - radius;
+        const right = x + radius;
+        const top = y - radius;
+        const bottom = y + radius;
+
+        const currentObstacle = this.hasObstacleXY(x, y);
+        const leftObstacle = this.hasObstacleXY(left, y);
+        const rightObstacle = this.hasObstacleXY(right, y);
+        const topObstacle = this.hasObstacleXY(x, top);
+        const bottomObstacle = this.hasObstacleXY(x, bottom);
+
+        if (!currentObstacle && !leftObstacle && !rightObstacle && !topObstacle && !bottomObstacle) {
+            return null;
+        }
+
+        const row = Math.floor(y / CELL_SIZE);
+        const col = Math.floor(x / CELL_SIZE);
+
+        const res = {'x': x, 'y': y};
+
+        if (leftObstacle) {
+            res.x = col * CELL_SIZE + radius;
+        }
+
+        if (rightObstacle) {
+            res.x = (col + 1) * CELL_SIZE - radius;
+        }
+
+        if (topObstacle) {
+            res.y = row * CELL_SIZE + radius;
+        }
+
+        if (bottomObstacle) {
+            res.y = (row + 1) * CELL_SIZE - radius;
+        }
+
+        return res;
+    }
+
     add(element) {
         this.elements.push(element);
     }
@@ -33,6 +92,23 @@ class World {
         }
         camera.cycle(elapsed);
     }
+
+    // readjust(x, y, radius) {
+    //     const left = x - radius;
+    //     const right = x + radius;
+    //     const top = y - radius;
+    //     const bottom = y + radius;
+
+    //     const currentObstacle = this.hasObstacleXY(x, y);
+    //     const leftObstacle = this.hasObstacleXY(left, y);
+    //     const rightObstacle = this.hasObstacleXY(right, y);
+    //     const topObstacle = this.hasObstacleXY(top, y);
+    //     const bottomObstacle = this.hasObstacleXY(bottom, y);
+
+    //     if (leftObstacle && !rightObstacle) {
+    //         return {'x': }
+    //     }
+    // }
 
     render() {
         // Clear

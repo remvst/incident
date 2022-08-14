@@ -3,8 +3,8 @@ class Character {
         this.target = {'x': 0, 'y': 0};
 
         this.head = new Node();
-        this.head.position.x = 100;
-        this.head.position.y = 100;
+        this.head.position.x = -50;
+        this.head.position.y = 0;
 
         creepyBug(this);
         // human(this);
@@ -13,9 +13,10 @@ class Character {
     }
     
     cycle(elapsed) {
+        const speed = 200;
         const distToTarget = dist(this.head.position, this.target);
         const angleToTarget = angleBetween(this.head.position, this.target);
-        const appliedDistance = Math.min(elapsed * 100, distToTarget);
+        const appliedDistance = Math.min(elapsed * speed, distToTarget);
 
         this.head.position.x += Math.cos(angleToTarget) * appliedDistance;
         this.head.position.y += Math.sin(angleToTarget) * appliedDistance;

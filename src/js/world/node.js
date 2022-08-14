@@ -129,6 +129,39 @@ class Node {
         // if (this.id === 'n[3]') throw new Error();
     }
 
+    needsCollisionResolution() {
+        // return world.hasObstacleXY(this.position.x, this.position.y, 50);
+    }
+
+    resolveCollision() {
+        const {x, y} = this.position;
+
+        const radius = 50;
+        // const left = x - radius;
+        // const right = x + radius;
+        // const top = y - radius;
+        // const bottom = y + radius;
+
+        // const leftObstacle = world.hasObstacleXY(left, y);
+        // const rightObstacle = world.hasObstacleXY(right, y);
+
+        // if (world.hasObstacleXY(x, y, 0)) {
+        //     return; // Not much we can do
+        // }
+
+        // if (world.hasObstacleXY(left, y)) {
+        //     this.position.x = x + radius;
+        // }
+
+        const readjusted = world.readjust(x, y, radius);
+        if (!readjusted) {
+            return;
+        }
+
+        this.position.x = readjusted.x;
+        this.position.y = readjusted.y;
+    }
+
     resolve() {
         // Resolve length elasticity
         if (this.needsLengthResolution()) {
@@ -139,6 +172,11 @@ class Node {
         if (this.needsAngleResolution()) {
             this.resolveAngle();
         }
+
+        // Resolve collisions
+        // if (this.needsCollisionResolution()) {
+            this.resolveCollision();
+        // }
     }
 
     realign() {
@@ -233,10 +271,6 @@ class Node {
                     ctx.lineTo(Math.cos(this.minAngleOffset + this.parent.angle) * length, Math.sin(this.minAngleOffset + this.parent.angle) * length);
                     ctx.stroke();
                 });
-
-                // if (this.id === 'n[4]') {
-                //     // console.log(angle);
-                // }
             }
 
             ctx.fillStyle = '#fff';
