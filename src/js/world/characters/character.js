@@ -7,6 +7,12 @@ class Character {
         this.head.position.y = 0;
 
         this.head.realign();
+
+        this.health = 1;
+    }
+
+    damage(amount) {
+        this.health -= amount;
     }
     
     cycle(elapsed) {

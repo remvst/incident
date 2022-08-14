@@ -174,9 +174,7 @@ class Node {
         }
 
         // Resolve collisions
-        // if (this.needsCollisionResolution()) {
-            this.resolveCollision();
-        // }
+        this.resolveCollision();
     }
 
     realign() {
@@ -229,7 +227,7 @@ class Node {
 
         ctx.wrap(() => {
             ctx.globalAlpha *= 0.5;
-            this.renderDebug();
+            // this.renderDebug();
         });
     }
 

@@ -4,16 +4,19 @@ class Player extends Character {
         this.tail = this.head;
         this.extend();
         this.extend();
-        this.extend();
     }
 
     cycle(elapsed) {
         super.cycle(elapsed);
-
+        
         for (const element of world.elements) {
             if (element instanceof Human) {
                 if (dist(this.head.position, element.head.position) < 50) {
-                    this.absorb(element);
+                    element.damage(elapsed * 1);
+                    console.log(element.health);
+                    if (element.health <= 0) {
+                        this.absorb(element);
+                    }
                 }
             }
         }
@@ -31,7 +34,7 @@ class Player extends Character {
     absorb(human) {
         world.remove(human);
 
-        for (let i = 0 ; i < 50 ; i++) {
+        for (let i = 0 ; i < 20 ; i++) {
             world.addToBottom(new Blood(
                 human.head.position.x + rnd(-50, 50),
                 human.head.position.y + rnd(-50, 50),
