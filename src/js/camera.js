@@ -2,6 +2,8 @@ class Camera {
     constructor() {
         this.x = 0;
         this.y = 0;
+
+        this.center = {'x': 0, 'y': 0};
     }
 
     get minRow() {
@@ -25,5 +27,8 @@ class Camera {
 
         this.x += cos(angle) * appliedDist;
         this.y += sin(angle) * appliedDist;
+
+        this.center.x = camera.x + CANVAS_WIDTH / 2;
+        this.center.y = camera.y + CANVAS_HEIGHT / 2;
     }
 }
