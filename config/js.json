@@ -1,0 +1,8 @@
+[
+    "src/js/globals.js",
+    "src/js/math.js",
+    "src/js/canvas.js",
+    "src/js/node.js",
+    "src/js/character.js",
+    "src/js/index.js"
+]
