@@ -112,7 +112,7 @@ class World {
             ctx.fillRect(camera.x, camera.y, can.width, can.height);
     
             for (const element of this.elements) {
-                element.render();
+                ctx.wrap(() => element.render());
             }
 
             // Obstacles sides

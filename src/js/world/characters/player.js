@@ -13,7 +13,6 @@ class Player extends Character {
             if (element instanceof Human) {
                 if (dist(this.head.position, element.head.position) < 50) {
                     element.damage(elapsed * 1);
-                    console.log(element.health);
                     if (element.health <= 0) {
                         this.absorb(element);
                     }
@@ -34,12 +33,12 @@ class Player extends Character {
     absorb(human) {
         world.remove(human);
 
-        for (let i = 0 ; i < 20 ; i++) {
-            world.addToBottom(new Blood(
-                human.head.position.x + rnd(-50, 50),
-                human.head.position.y + rnd(-50, 50),
-            ));
-        }
+        // for (let i = 0 ; i < 20 ; i++) {
+        //     world.addToBottom(new Blood(
+        //         human.head.position.x + rnd(-50, 50),
+        //         human.head.position.y + rnd(-50, 50),
+        //     ));
+        // }
 
         setTimeout(() => this.extend(), 500);
 

@@ -3,11 +3,13 @@
     "src/js/math.js",
 
     "src/js/util/resizer.js",
+    "src/js/util/interp.js",
 
     "src/js/graphics/wrap.js",
     "src/js/graphics/create-canvas.js",
     "src/js/graphics/create-pattern.js",
     "src/js/graphics/floor.js",
+    "src/js/graphics/particle.js",
 
     "src/js/world/node.js",
     "src/js/world/world.js",
@@ -16,7 +18,7 @@
     "src/js/world/characters/character.js",
     "src/js/world/characters/player.js",
     "src/js/world/characters/human.js",
-    
+
     "src/js/world/effects/blood.js",
 
     "src/js/camera.js",
