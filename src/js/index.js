@@ -6,10 +6,12 @@ onmousemove = (e) => {
 
 window.addEventListener('load', () => {
     can = document.querySelector('canvas');
-    can.width = 800;
-    can.height = 800;
+    can.width = CANVAS_WIDTH;
+    can.height = CANVAS_HEIGHT;
 
     ctx = can.getContext('2d');
+
+    onresize();
 
     world = new World();
     world.add(player = new Character());
@@ -25,12 +27,6 @@ function frame() {
     lastFrame = now;
 
     world.cycle(elapsed);
-
-    // Clear
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, can.width, can.height);
-
-    // Render
     world.render();
 
     requestAnimationFrame(frame);

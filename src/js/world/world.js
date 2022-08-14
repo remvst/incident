@@ -19,6 +19,10 @@ class World {
     }
 
     render() {
+        // Clear
+        ctx.fillStyle = FLOOR_PATTERN;
+        ctx.fillRect(0, 0, can.width, can.height);
+
         for (const element of this.elements) {
             element.render();
         }
