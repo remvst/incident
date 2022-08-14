@@ -13,5 +13,7 @@
     "src/js/world/node.js",
     "src/js/world/world.js",
 
+    "src/js/camera.js",
+
     "src/js/index.js"
 ]

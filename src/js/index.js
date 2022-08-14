@@ -1,7 +1,7 @@
 onmousemove = (e) => {
     const canvasRect = can.getBoundingClientRect();
-    player.target.x = (e.pageX - canvasRect.left) / canvasRect.width * can.width;
-    player.target.y = (e.pageY - canvasRect.top) / canvasRect.height * can.height
+    player.target.x = (e.pageX - canvasRect.left) / canvasRect.width * can.width + camera.x;
+    player.target.y = (e.pageY - canvasRect.top) / canvasRect.height * can.height + camera.y;
 };
 
 window.addEventListener('load', () => {
@@ -15,6 +15,8 @@ window.addEventListener('load', () => {
 
     world = new World();
     world.add(player = new Character());
+
+    camera = new Camera();
 
     frame();
 });
