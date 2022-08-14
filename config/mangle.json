@@ -11,7 +11,8 @@
         "imageSmoothingEnabled",
         "cursor",
         "flatMap",
-        "monetization"
+        "monetization",
+        "yield"
     ],
     "force": [
         "a",
