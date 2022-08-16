@@ -1,9 +1,3 @@
-onmousemove = (e) => {
-    const canvasRect = can.getBoundingClientRect();
-    player.target.x = (e.pageX - canvasRect.left) / canvasRect.width * can.width + camera.x;
-    player.target.y = (e.pageY - canvasRect.top) / canvasRect.height * can.height + camera.y;
-};
-
 window.addEventListener('load', () => {
     can = document.querySelector('canvas');
     can.width = CANVAS_WIDTH;
