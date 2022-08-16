@@ -14,6 +14,8 @@ class Node {
         this.minAngleOffset = -Math.PI / 4;
         this.maxAngleOffset = Math.PI / 4;
 
+        this.onReadjustment = () => 0;
+
         this.children = [];
 
         if (parent) {
@@ -160,6 +162,8 @@ class Node {
 
         this.position.x = readjusted.x;
         this.position.y = readjusted.y;
+
+        this.onReadjustment();
     }
 
     resolve() {
@@ -202,9 +206,6 @@ class Node {
     render() {
         ctx.wrap(() => {
             ctx.translate(this.visualPosition.x, this.visualPosition.y);
-
-            ctx.fillStyle = '#f00';
-            ctx.fillRect(-5, -5, 10, 10);
 
             if (this.parent) {
                 ctx.lineWidth = 10;

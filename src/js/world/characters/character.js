@@ -45,24 +45,24 @@ function creepyBug(head) {
     let parent = head;
 
     spine = new Node(parent);
-    spine.minDistanceFromParent = 30;
-    spine.maxDistanceFromParent = 50;
+    spine.minDistanceFromParent = 10;
+    spine.maxDistanceFromParent = 30;
     spine.visualSpeed = 100;
     spine.angleResolutionResolutionSelector = Node.pickClosest;
 
     const leg1 = new Node(spine);
     leg1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
     leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
-    leg1.minDistanceFromParent = 40;
-    leg1.maxDistanceFromParent = 60;
+    leg1.minDistanceFromParent = 20;
+    leg1.maxDistanceFromParent = 40;
     leg1.visualSpeed = 200;
     leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
     const leg2 = new Node(spine);
     leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
     leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
-    leg2.minDistanceFromParent = 40;
-    leg2.maxDistanceFromParent = 60;
+    leg2.minDistanceFromParent = 20;
+    leg2.maxDistanceFromParent = 40;
     leg2.visualSpeed = 200;
     leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
@@ -121,7 +121,11 @@ function human(head) {
     rightHand.minAngleOffset = -Math.PI / 2 - Math.PI / 8;
     rightHand.maxAngleOffset = -Math.PI / 2 + Math.PI / 8;
 
-    rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine('#f00', 20);
+    const color = pick(['#00f', '#080', '#00f', '#8f0', '#808']);
+
+    rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine(color, 20);
     neck.extraRender = renderCircle('#daab79', 20);
+
+    return neck;
 }
 

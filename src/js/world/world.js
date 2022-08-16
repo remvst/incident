@@ -19,16 +19,27 @@ class World {
         player.head.realign();
         this.add(player);
 
-        for (let i = 0 ; i < 5 ; i++) {
+        for (let i = 0 ; i < 10 ; i++) {
             const testHuman = new Human();
-            testHuman.head.position.x = testHuman.head.position.y = 6 * CELL_SIZE;
-            testHuman.head.position.y += CELL_SIZE * i;
+
+            const pos = this.freePositionAround(6 * CELL_SIZE, (6 + i) * CELL_SIZE)
+            testHuman.head.position.x = pos.x;
+            testHuman.head.position.y = pos.y;
             testHuman.head.resolve();
             testHuman.head.realign();
-            testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
-            testHuman.target.y += CELL_SIZE * i;
+            // testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
+            // testHuman.target.y += CELL_SIZE * i;
             this.add(testHuman);
         }
+    }
+
+    freePositionAround(x, y) {
+        while (this.hasObstacleXY(x, y)) {
+            x += CELL_SIZE;
+            y += CELL_SIZE;
+        }
+
+        return {x, y};
     }
 
     addObstacle(row, col) {
