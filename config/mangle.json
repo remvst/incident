@@ -12,7 +12,9 @@
         "cursor",
         "flatMap",
         "monetization",
-        "yield"
+        "yield",
+        "await",
+        "async"
     ],
     "force": [
         "a",

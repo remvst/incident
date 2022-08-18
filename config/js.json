@@ -2,6 +2,8 @@
     "src/js/globals.js",
     "src/js/math.js",
     "src/js/mouse.js",
+    "src/js/waitable.js",
+    "src/js/story.js",
 
     "src/js/util/resizer.js",
     "src/js/util/interp.js",
@@ -13,6 +15,8 @@
     "src/js/graphics/floor.js",
     "src/js/graphics/overlay.js",
     "src/js/graphics/particle.js",
+
+    "src/js/prompts/prompt-screen.js",
 
     "src/js/world/node.js",
     "src/js/world/world.js",

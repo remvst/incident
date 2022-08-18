@@ -138,7 +138,7 @@ class Node {
     resolveCollision() {
         const {x, y} = this.position;
 
-        const radius = 50;
+        const radius = 20;
         // const left = x - radius;
         // const right = x + radius;
         // const top = y - radius;

@@ -7,5 +7,7 @@
     "CELL_SIZE": 100,
 
     "CANVAS_WIDTH": 1600,
-    "CANVAS_HEIGHT": 900
+    "CANVAS_HEIGHT": 900,
+
+    "WORLD_PADDING": 5
 }

@@ -1,4 +1,6 @@
-generateFromCanvas = (can, ctx) => {
+gridFromCanvas = (can) => {
+    const ctx = can.getContext('2d');
+
     const grid = [];
     const imageData = ctx.getImageData(0, 0, can.width, can.height);
 
@@ -11,6 +13,14 @@ generateFromCanvas = (can, ctx) => {
 
     return grid;
 };
+
+generateRoom = (w, h) => createCanvas(w + WORLD_PADDING * 2, h + WORLD_PADDING * 2, (ctx, can) => {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, w + WORLD_PADDING * 2, h + WORLD_PADDING * 2);
+
+    ctx.fillStyle = '#000';
+    ctx.fillRect(WORLD_PADDING, WORLD_PADDING, w, h);
+})
 
 generateRandomWorld = () => createCanvas(50, 50, (ctx, can) => {
     ctx.fillStyle = '#fff';
@@ -62,6 +72,4 @@ generateRandomWorld = () => createCanvas(50, 50, (ctx, can) => {
     ctx.fillRect(0, 0, thickness, can.height);
     ctx.fillRect(0, can.height - thickness, can.width, thickness);
     ctx.fillRect(can.width - thickness, 0, thickness, can.height);
-
-    return generateFromCanvas(can, ctx);
 });

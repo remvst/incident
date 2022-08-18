@@ -15,9 +15,12 @@ class Camera {
     }
 
     cycle(elapsed) {
-        const target = {
-            'x':player.head.position.x - CANVAS_WIDTH / 2,
-            'y':player.head.position.y - CANVAS_HEIGHT / 2,
+        const target = player ? {
+            'x': player.head.position.x - CANVAS_WIDTH / 2,
+            'y': player.head.position.y - CANVAS_HEIGHT / 2,
+        } : {
+            'x': 0,
+            'y': 0,
         };
 
         const distanceToTarget = dist(target, this),

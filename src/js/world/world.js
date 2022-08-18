@@ -1,36 +1,12 @@
-class World {
+class World extends Waitable {
     constructor() {
+        super();
         this.elements = [];
         this.obstacles = new Set();
 
-        generateRandomWorld().forEach((rowValues, row) => {
-            rowValues.forEach((cell, col) => {
-                if (cell) {
-                    this.addObstacle(row, col);
-                }
-            });
-        });
+        camera = new Camera();
 
         world = this;
-
-        player = new Player();
-        player.head.position.x = player.head.position.y = 4 * CELL_SIZE;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
-
-        for (let i = 0 ; i < 10 ; i++) {
-            const testHuman = new Human();
-
-            const pos = this.freePositionAround(6 * CELL_SIZE, (6 + i) * CELL_SIZE)
-            testHuman.head.position.x = pos.x;
-            testHuman.head.position.y = pos.y;
-            testHuman.head.resolve();
-            testHuman.head.realign();
-            // testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
-            // testHuman.target.y += CELL_SIZE * i;
-            this.add(testHuman);
-        }
     }
 
     freePositionAround(x, y) {
@@ -290,6 +266,117 @@ class World {
             'x': x + Math.cos(angleFromCenter) * distanceFromCenter * z * 0.002,
             'y': y + Math.sin(angleFromCenter) * distanceFromCenter * z * 0.002,
         };
+    }
 
+    addObstaclesFromCanvas(can) {
+        gridFromCanvas(can).forEach((rowValues, row) => {
+            rowValues.forEach((cell, col) => {
+                if (cell) this.addObstacle(row, col);
+            });
+        });
+    }
+}
+
+class MovementTutorialWorld extends World {
+    constructor() {
+        super();
+
+        this.addObstaclesFromCanvas(generateRoom(8, 8));
+    
+        player = new Player();
+        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+    }
+
+    cycle(elapsed) {
+        super.cycle(elapsed);
+
+        if (player.travelledDistance > CELL_SIZE * 10) {
+            this.resolve();
+        }
+    }
+}
+
+class DashTutorialWorld extends World {
+    constructor() {
+        super();
+
+        this.addObstaclesFromCanvas(generateRoom(8, 8));
+    
+        player = new Player();
+        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+
+        this.dashTime = 0;
+    }
+
+    cycle(elapsed) {
+        super.cycle(elapsed);
+
+        if (dist(player.head.position, player.target) > 10 && mouseDown) {
+            this.dashTime += elapsed;
+        }
+
+        if (this.dashTime > 2) {
+            this.resolve();
+        }
+    }
+}
+
+class AttackTutorialWorld extends World {
+    constructor() {
+        super();
+
+        this.addObstaclesFromCanvas(generateRoom(8, 8));
+    
+        player = new Player();
+        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+    }
+
+    cycle(elapsed) {
+        super.cycle(elapsed);
+        // TODO
+
+        if (false) {
+            screen = new PromptScreen(
+                timeLabel() + nomangle(`Death of intern #${~~(Math.random() * 300)}`),
+                () => screen = new AttackTutorialWorld(),
+            );
+        }
+    }
+}
+
+
+class TestWorld extends World {
+    constructor() {
+        super();
+
+        this.addObstaclesFromCanvas(generateRandomWorld());
+    
+        player = new Player();
+        player.head.position.x = player.head.position.y = 4 * CELL_SIZE;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+    
+        for (let i = 0 ; i < 10 ; i++) {
+            const testHuman = new Human();
+    
+            const pos = this.freePositionAround(6 * CELL_SIZE, (6 + i) * CELL_SIZE)
+            testHuman.head.position.x = pos.x;
+            testHuman.head.position.y = pos.y;
+            testHuman.head.resolve();
+            testHuman.head.realign();
+            // testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
+            // testHuman.target.y += CELL_SIZE * i;
+            this.add(testHuman);
+        }
     }
 }

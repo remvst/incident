@@ -7,22 +7,29 @@ window.addEventListener('load', () => {
 
     onresize();
 
-    world = new World();
-    camera = new Camera();
+    // screen = new PromptScreen(
+    //     nomangle('On August 13th 2022, research facility BIOTHIRTEEN experienced a biohazard incident'),
+    // );
+
+    story();
 
     frame();
 });
 
 let lastFrame = performance.now();
 
-function frame() {
+frame = () => {
     const now = performance.now();
     const elapsed = (now - lastFrame) / 1000;
     lastFrame = now;
 
-    world.cycle(elapsed);
-    world.render();
+    screen.cycle(elapsed);
+    ctx.wrap(() => screen.render());
 
     requestAnimationFrame(frame);
 }
 
+timeLabel = () => {
+    const t = new Date();
+    return `${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)} - `;
+};

@@ -11,6 +11,8 @@ class Character {
         this.health = 1;
 
         this.speed = 200;
+
+        this.travelledDistance = 0;
     }
 
     damage(amount) {
@@ -25,6 +27,8 @@ class Character {
 
             this.head.position.x += Math.cos(angleToTarget) * appliedDistance;
             this.head.position.y += Math.sin(angleToTarget) * appliedDistance;
+
+            this.travelledDistance += appliedDistance;
         }
 
         this.head.cycle(elapsed);
