@@ -120,7 +120,7 @@ class World {
             ctx.translate(-camera.x, -camera.y);
 
             ctx.fillStyle = FLOOR_PATTERN;
-            ctx.fillRect(camera.x, camera.y, can.width, can.height);
+            ctx.fillRect(camera.x, camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
     
             for (const element of this.elements) {
                 ctx.wrap(() => element.render());
