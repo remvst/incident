@@ -7,6 +7,8 @@ class World extends Waitable {
         camera = new Camera();
 
         world = this;
+
+        this.instruction = null;
     }
 
     freePositionAround(x, y) {
@@ -26,7 +28,7 @@ class World extends Waitable {
         return this.obstacles.has(`${row},${col}`);
     }
 
-    hasObstacleXY(x, y, radius) {
+    hasObstacleXY(x, y) {
         return this.hasObstacle(Math.floor(y / CELL_SIZE), Math.floor(x / CELL_SIZE), 0);
     }
 
@@ -167,6 +169,13 @@ class World extends Waitable {
 
             ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -100, -4);
             ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -4, -100);
+
+            if (this.instruction) {
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'top';
+                ctx.font = '24pt Courier';
+                ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200);
+            }
         });
     }
 
@@ -275,6 +284,14 @@ class World extends Waitable {
             });
         });
     }
+
+    spawnPlayer(x, y) {
+        player.head.position.x = x;
+        player.head.position.y = y;
+        player.head.resolve();
+        player.head.realign();
+        this.add(player);
+    }
 }
 
 class MovementTutorialWorld extends World {
@@ -282,12 +299,9 @@ class MovementTutorialWorld extends World {
         super();
 
         this.addObstaclesFromCanvas(generateRoom(8, 8));
-    
-        player = new Player();
-        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
+        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
+
+        this.instruction = nomangle('Use mouse to move');
     }
 
     cycle(elapsed) {
@@ -304,14 +318,10 @@ class DashTutorialWorld extends World {
         super();
 
         this.addObstaclesFromCanvas(generateRoom(8, 8));
-    
-        player = new Player();
-        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
+        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
 
         this.dashTime = 0;
+        this.instruction = nomangle('Click to dash');
     }
 
     cycle(elapsed) {
@@ -327,29 +337,44 @@ class DashTutorialWorld extends World {
     }
 }
 
-class AttackTutorialWorld extends World {
-    constructor() {
-        super();
+class AttackWorld extends World {
 
-        this.addObstaclesFromCanvas(generateRoom(8, 8));
-    
-        player = new Player();
-        player.head.position.x = player.head.position.y = (WORLD_PADDING + 4) * CELL_SIZE;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
+    get hasHuman() {
+        for (const element of this.elements) {
+            if (element instanceof Human) {
+                return true;
+            }
+        }
     }
 
     cycle(elapsed) {
         super.cycle(elapsed);
-        // TODO
+        if (!this.hasHuman) this.resolve();
+    }
+}
 
-        if (false) {
-            screen = new PromptScreen(
-                timeLabel() + nomangle(`Death of intern #${~~(Math.random() * 300)}`),
-                () => screen = new AttackTutorialWorld(),
+class AttackTutorialWorld extends AttackWorld {
+    constructor() {
+        super();
+
+        this.addObstaclesFromCanvas(generateRoom(8, 8));
+        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
+
+        for (let i = 0 ; i < 2 ; i++) {
+            const human = new Human();
+    
+            const pos = this.freePositionAround(
+                (WORLD_PADDING + 6) * CELL_SIZE, 
+                (WORLD_PADDING + 6 + i) * CELL_SIZE,
             );
+            human.head.position.x = pos.x;
+            human.head.position.y = pos.y;
+            human.head.resolve();
+            human.head.realign();
+            this.add(human);
         }
+
+        this.instruction = nomangle('Move towards humans');
     }
 }
 

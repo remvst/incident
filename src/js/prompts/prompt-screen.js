@@ -8,8 +8,13 @@ class PromptScreen extends Waitable {
     cycle(elapsed) {
         this.age += elapsed;
 
-        if (mouseDown && this.promptReady) {
-            this.resolve();
+        if (mouseDown) {
+            if (this.promptReady) {
+                this.resolve();
+            } else {
+                this.age = 10;
+            }
+            mouseDown = false;
         }
     }
 
