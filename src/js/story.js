@@ -19,8 +19,9 @@ worldScreen = async (
     player.resetMetrics();
     await screen.wait();
     screen.instruction = null;
-    await new Promise(r => setTimeout(r, 2000));
 };
+
+wait = (x) => new Promise(r => setTimeout(r, x))
 
 spawnHumanGroup = (humanType, centerX, centerY, count) => {
     return world.addAll(mappable(count).map((_, i) => {
@@ -44,6 +45,8 @@ story = async () => {
     while (true) {
         try {
             world = new World();
+            world.expand(1);
+            world.expand(999);
 
             player = new Player();
             player.head.position.x = 0;
@@ -60,19 +63,22 @@ story = async () => {
             {
                 await fullScreenTimedMessage(nomangle('Specimen BRT-379 escapes containment'));
                 await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
+                await wait(2000);
             }
 
             // Dash tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen BRT-379 demonstrates fast movement'));
                 await worldScreen(nomangle('Click to dash'), () => player.dashDistance > CELL_SIZE * 10);
+                await wait(2000);
             }
 
             // Janitors: learn to absorb
             {
-                await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 const janitors = spawnHumanGroup(Human, 3 * CELL_SIZE, 0, 2);
+                await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
+                await wait(2000);
                 await fullScreenTimedMessage(nomangle(`BRT-379 starts showing absorption behavior`));
             }
 
@@ -81,11 +87,18 @@ story = async () => {
                 const interns = spawnHumanGroup(Human, 3 * CELL_SIZE, 0, 2);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
                 await worldScreen(null, () => !world.hasAny(interns));
+                await wait(2000);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} removed from payroll`));
             }
 
             // await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`BRT-379 escapes initial containment lab`));
+            {
+                const target = world.add(world.lastRoomAsTarget);
+                await fullScreenTimedMessage(nomangle(`BRT-379 escapes initial containment lab`));
+                await worldScreen(null, () => !world.hasAny([target]));
+                world.expand(2);
+                await wait(999999999);
+            }
 
             continue;
 

@@ -22,6 +22,7 @@
     "src/js/world/world.js",
     "src/js/world/generate.js",
     "src/js/world/raycaster.js",
+    "src/js/world/target.js",
 
     "src/js/world/characters/character.js",
     "src/js/world/characters/player.js",

@@ -9,7 +9,6 @@ class World extends Waitable {
         world = this;
 
         this.resolveCondition = () => false;
-        this.expand();
     }
 
     freePositionAround(x, y) {
@@ -74,8 +73,8 @@ class World extends Waitable {
     }
 
     add(element) {
-        console.log('adding');
         this.elements.push(element);
+        return element;
     }
 
     addAll(elements) {
@@ -300,17 +299,19 @@ class World extends Waitable {
                 this.addFreeCell(row + rowOffset, col + colOffset)
             }
         }
+
+        this.lastRoomAsTarget = new Target(row, col, rows, cols);
     }
 
-    expand() {
+    expand(roomCount) {
         const rooms = [() => {
             world.makeRoom(-5, -5, 10, 10);
-            world.makeRoom(0, 5, 1, 1);
+            world.makeRoom(0, 5, 2, 1);
         }, () => {
-    
+            world.makeRoom(-5, 6, 10, 10);
         }];
     
-        for (let i = 0 ; i < rooms.length ; i++) {
+        for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
             rooms[i](world);
         }
     }
