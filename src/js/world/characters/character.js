@@ -1,6 +1,6 @@
 class Character {
     constructor() {
-        this.target = {'x': 0, 'y': 0};
+        this.target = {'x': 0, 'y': 0, 'radius': CELL_SIZE / 2};
 
         this.head = new Node();
         this.head.position.x = -50;
@@ -25,7 +25,7 @@ class Character {
     
     cycle(elapsed) {
         const distToTarget = dist(this.head.position, this.target);
-        if (distToTarget > CELL_SIZE / 2) {
+        if (distToTarget >= this.target.radius) {
             const angleToTarget = angleBetween(this.head.position, this.target);
             const appliedDistance = Math.min(elapsed * this.speed, distToTarget);
 
@@ -46,6 +46,15 @@ class Character {
         //     ctx.fillStyle = '#f00';
         //     ctx.fillRect(this.target.x, this.target.y, 10, 10);
         // });
+    }
+
+    faceTarget(target) {
+        const angleFromTarget = angleBetween(target, this.head.position);
+        this.head.children.forEach((child) => {
+            const childDistance = dist(child.position, this.head.position);
+            child.position.x = this.head.position.x + Math.cos(angleFromTarget) * childDistance;
+            child.position.y = this.head.position.y + Math.sin(angleFromTarget) * childDistance;
+        });
     }
 }
 

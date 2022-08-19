@@ -59,6 +59,13 @@ story = async () => {
 
             await fullScreenMessage(nomangle('August 13th 2022 - BIO13K research lab'));
 
+            // Test stuff
+            {
+                const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
+                await worldScreen(nomangle('Use mouse to move'), () => !world.hasAny(securityTeam));
+                await wait(9999);
+            }
+
             // Movement tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen BRT-379 escapes containment'));
@@ -75,7 +82,7 @@ story = async () => {
 
             // Janitors: learn to absorb
             {
-                const janitors = spawnHumanGroup(Human, world.initialRoom.centerX, world.initialRoom.centerY, 2);
+                const janitors = spawnHumanGroup(Janitor, world.initialRoom.centerX, world.initialRoom.centerY, 2);
                 await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
                 await wait(2000);
@@ -84,7 +91,7 @@ story = async () => {
 
             // Interns: absorb more
             {
-                const interns = spawnHumanGroup(Human, world.initialRoom.centerX, world.initialRoom.centerY, 2);
+                const interns = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 2);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
                 await worldScreen(null, () => !world.hasAny(interns));
                 await wait(2000);

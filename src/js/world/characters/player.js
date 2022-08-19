@@ -48,17 +48,22 @@ class Player extends Character {
     render() {
         super.render();
 
-        const angle = angleBetween(this.head.position, this.target);
-
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         ctx.beginPath();
         ctx.arc(this.target.x, this.target.y, 20, 0, TWO_PI)
         ctx.fill();
 
+        // const angle = angleBetween(this.head.position, this.target);
         // const res = castRay(this.head.position.x, this.head.position.y, angle, CELL_SIZE * 10);
         // if (res) {
+        //     console.log(!!res);
         //     ctx.fillStyle = '#f00';
-        //     ctx.fillRect(res.x - 10, res.y - 10, 20, 20);
+        //     ctx.fillRect(res.x - 20, res.y - 20, 40, 40);
+
+        //     ctx.beginPath();
+        //     ctx.moveTo(this.head.position.x, this.head.position.y);
+        //     ctx.lineTo(res.x, res.y);
+        //     ctx.stroke();
         // }
     }
 

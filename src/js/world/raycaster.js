@@ -24,7 +24,7 @@ castRay = (x, y, angle, maxDistance) => {
 castAgainstHorizontal = (startX, startY, angle, maxDistance) => {
     const pointingDown = sin(angle) > 0;
 
-    const y = ~~(startY / CELL_SIZE) * CELL_SIZE + (pointingDown ? CELL_SIZE : -0.0001);
+    const y = ~~(startY / CELL_SIZE) * CELL_SIZE + (pointingDown ? CELL_SIZE : -0.01);
     const x = startX + (y - startY) / tan(angle);
 
     const yStep = pointingDown ? CELL_SIZE : -CELL_SIZE;
@@ -36,7 +36,7 @@ castAgainstHorizontal = (startX, startY, angle, maxDistance) => {
 castAgainstVertical = (startX, startY, angle, maxDistance) => {
     const pointingRight = cos(angle) > 0;
 
-    const x = ~~(startX / CELL_SIZE) * CELL_SIZE + (pointingRight ? CELL_SIZE : -0.0001);
+    const x = ~~(startX / CELL_SIZE) * CELL_SIZE + (pointingRight ? CELL_SIZE : -0.01);
     const y = startY + (x - startX) * tan(angle);
 
     const xStep = pointingRight ? CELL_SIZE : -CELL_SIZE;
@@ -50,7 +50,7 @@ doCast = (startX, startY, xStep, yStep, maxDistance) => {
         y = startY;
 
     while (distP(x, y, startX, startY) < maxDistance) {
-        if (internalHasBlock(x, y)) {
+        if (world.hasObstacleXY(x, y)) {
             // Got a block!
             return {
                 'x': x,
@@ -67,17 +67,3 @@ doCast = (startX, startY, xStep, yStep, maxDistance) => {
         'y': y
     };
 }
-
-hasBlock = (x, y, radius = 0) => {
-    return internalHasBlock(x, y) ||
-        internalHasBlock(x - radius, y - radius) ||
-        internalHasBlock(x - radius, y + radius) ||
-        internalHasBlock(x + radius, y - radius) ||
-        internalHasBlock(x + radius, y + radius);
-}
-
-internalHasBlock = (x, y) => world.hasObstacle(toCellUnit(y), toCellUnit(x));
-
-toCellUnit = x => ~~(x / CELL_SIZE);
-toCellCoord = rowOrCol => rowOrCol * CELL_SIZE;
-toMiddleCellCoord = rowOrCol => toCellCoord(rowOrCol + 0.5)
