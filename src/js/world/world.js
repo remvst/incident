@@ -303,7 +303,16 @@ class World extends Waitable {
     }
 
     expand() {
-        overallWorld(world);
+        const rooms = [() => {
+            world.makeRoom(-5, -5, 10, 10);
+            world.makeRoom(0, 5, 1, 1);
+        }, () => {
+    
+        }];
+    
+        for (let i = 0 ; i < rooms.length ; i++) {
+            rooms[i](world);
+        }
     }
 
     get hasHuman() {
@@ -320,88 +329,5 @@ class World extends Waitable {
                 return true;
             }
         }
-    }
-}
-
-class AttackWorld extends World {
-
-    get hasHuman() {
-        for (const element of this.elements) {
-            if (element instanceof Human) {
-                return true;
-            }
-        }
-    }
-
-    cycle(elapsed) {
-        super.cycle(elapsed);
-        if (!this.hasHuman) this.resolve();
-    }
-}
-
-class AttackTutorialWorld extends AttackWorld {
-    constructor() {
-        super();
-
-        overallWorld(world);
-        this.spawnPlayer(0, 0);
-
-        for (let i = 0 ; i < 2 ; i++) {
-            const human = new Human();
-    
-            const pos = this.freePositionAround(
-                (WORLD_PADDING + 6) * CELL_SIZE, 
-                (WORLD_PADDING + 6 + i) * CELL_SIZE,
-            );
-            human.head.position.x = pos.x;
-            human.head.position.y = pos.y;
-            human.head.resolve();
-            human.head.realign();
-            this.add(human);
-        }
-
-        this.instruction = nomangle('Move towards humans');
-    }
-}
-
-
-class TestWorld extends World {
-    constructor() {
-        super();
-
-        this.addObstaclesFromCanvas(generateRandomWorld());
-    
-        player = new Player();
-        player.head.position.x = player.head.position.y = 4 * CELL_SIZE;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
-    
-        for (let i = 0 ; i < 10 ; i++) {
-            const testHuman = new Human();
-    
-            const pos = this.freePositionAround(6 * CELL_SIZE, (6 + i) * CELL_SIZE)
-            testHuman.head.position.x = pos.x;
-            testHuman.head.position.y = pos.y;
-            testHuman.head.resolve();
-            testHuman.head.realign();
-            // testHuman.target.x = testHuman.target.y = 6 * CELL_SIZE;
-            // testHuman.target.y += CELL_SIZE * i;
-            this.add(testHuman);
-        }
-    }
-}
-
-
-function overallWorld(world) {
-    const rooms = [() => {
-        world.makeRoom(-5, -5, 10, 10);
-        world.makeRoom(0, 5, 1, 1);
-    }, () => {
-
-    }];
-
-    for (let i = 0 ; i < rooms.length ; i++) {
-        rooms[i](world);
     }
 }
