@@ -37,48 +37,50 @@ class Player extends Character {
         }
     }
 
-    extend() {
+    extend(addLegs) {
         const spine = new Node(this.tail);
         spine.minDistanceFromParent = 10;
         spine.maxDistanceFromParent = 30;
         spine.visualSpeed = 100;
         spine.angleResolutionResolutionSelector = Node.pickClosest;
 
-        const leg1 = new Node(spine);
-        leg1.minAngleOffset = PI / 2 + PI / 3;
-        leg1.maxAngleOffset = PI / 2 - PI / 3;
-        leg1.minDistanceFromParent = 20;
-        leg1.maxDistanceFromParent = 40;
-        leg1.visualSpeed = 200;
-        leg1.angleResolutionResolutionSelector = Node.pickAverage;
+        if (addLegs) {
+            const leg1 = new Node(spine);
+            leg1.minAngleOffset = PI / 2 + PI / 3;
+            leg1.maxAngleOffset = PI / 2 - PI / 3;
+            leg1.minDistanceFromParent = 20;
+            leg1.maxDistanceFromParent = 40;
+            leg1.visualSpeed = 200;
+            leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
-        const leg2 = new Node(spine);
-        leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
-        leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
-        leg2.minDistanceFromParent = 20;
-        leg2.maxDistanceFromParent = 40;
-        leg2.visualSpeed = 200;
-        leg2.angleResolutionResolutionSelector = Node.pickAverage;
+            const leg2 = new Node(spine);
+            leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
+            leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
+            leg2.minDistanceFromParent = 20;
+            leg2.maxDistanceFromParent = 40;
+            leg2.visualSpeed = 200;
+            leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
-        if (spine.depth % 4 === 0) {
-            leg1.minDistanceFromParent *= 3;
-            leg2.maxDistanceFromParent *= 3;
+            if (spine.depth % 4 === 0) {
+                leg1.minDistanceFromParent *= 3;
+                leg2.maxDistanceFromParent *= 3;
 
-            const ext1 = new Node(leg1);
-            ext1.minAngleOffset = PI / 2 + PI / 4;
-            ext1.maxAngleOffset = PI / 2 - PI / 4;
-            ext1.minDistanceFromParent = 40;
-            ext1.maxDistanceFromParent = 60;
-            ext1.visualSpeed = 200;
-            ext1.angleResolutionResolutionSelector = Node.pickAverage;
+                const ext1 = new Node(leg1);
+                ext1.minAngleOffset = PI / 2 + PI / 4;
+                ext1.maxAngleOffset = PI / 2 - PI / 4;
+                ext1.minDistanceFromParent = 40;
+                ext1.maxDistanceFromParent = 60;
+                ext1.visualSpeed = 200;
+                ext1.angleResolutionResolutionSelector = Node.pickAverage;
 
-            const ext2 = new Node(leg2);
-            ext2.minAngleOffset = PI * 3 / 2 + PI / 4;
-            ext2.maxAngleOffset = PI * 3 / 2 - PI / 4;
-            ext2.minDistanceFromParent = 40;
-            ext2.maxDistanceFromParent = 60;
-            ext2.visualSpeed = 200;
-            ext2.angleResolutionResolutionSelector = Node.pickAverage;
+                const ext2 = new Node(leg2);
+                ext2.minAngleOffset = PI * 3 / 2 + PI / 4;
+                ext2.maxAngleOffset = PI * 3 / 2 - PI / 4;
+                ext2.minDistanceFromParent = 40;
+                ext2.maxDistanceFromParent = 60;
+                ext2.visualSpeed = 200;
+                ext2.angleResolutionResolutionSelector = Node.pickAverage;
+            }
         }
 
         this.tail = spine;
@@ -122,20 +124,39 @@ class Player extends Character {
         //         human.head.position.y + rnd(-50, 50),
         //     ));
         // }
-
-        setTimeout(() => this.extend(), 500);
-
         let delay = 0.5;
         const absorbedNodes = Array.from(human.head.allNodes());
         for (const absorbedNode of absorbedNodes) {
             absorbedNode.children = [];
 
+            const hostingNode = pick(Array.from(this.head.children[0].allNodes()));
+
             setTimeout(() => {
-                const randomNode = pick(Array.from(this.head.allNodes()));
-                randomNode.children.push(absorbedNode);
-                absorbedNode.parent = randomNode;
+                hostingNode.children.push(absorbedNode);
+                absorbedNode.parent = hostingNode;
             }, delay * 1000);
             delay += 0.5;
         }
+
+        setTimeout(() => this.extend(true), 500);
+    }
+
+    damage(amount, source) {
+        super.damage(amount, source);
+
+        if (this.health <= 0) {
+            world.remove(this);
+
+            for (let i = 0 ; i < 20 ; i++) {
+                this.addBloodParticle(source);
+            }
+
+            return;
+        }
+
+        const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length && node !== this.tail));
+        if (!leaf) return; // For safety
+        const index = leaf.parent.children.indexOf(leaf);
+        leaf.parent.children.splice(index, 1);
     }
 }

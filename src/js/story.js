@@ -61,7 +61,8 @@ story = async () => {
 
             // Test stuff
             {
-                const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
+                // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
+                const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
                 await worldScreen(nomangle('Use mouse to move'), () => !world.hasAny(securityTeam));
                 await wait(9999);
             }
