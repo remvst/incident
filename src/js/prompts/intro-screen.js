@@ -1,6 +1,8 @@
 class IntroScreen extends Waitable {
     cycle() {
-
+        if (mouseDown) {
+            this.resolve();
+        }
     }
 
     render() {
@@ -15,28 +17,38 @@ class IntroScreen extends Waitable {
 
         if (Date.now() % 2000 > 500) {
             ctx.wrap(() => {
-                ctx.font = '18pt Arial';
+                ctx.font = '36pt Arial';
                 ctx.textAlign = 'left';
                 ctx.textBaseline = 'top';
                 ctx.fillStyle = '#fff';
                 ctx.shadowColor = '#000';
                 ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 4;
-                ctx.fillText(nomangle('NO INPUT'), 20, 20);
+                ctx.shadowOffsetY = 8;
+                ctx.fillText(nomangle('NO INPUT'), 40, 40);
             });
         }
 
-
         ctx.wrap(() => {
-            ctx.font = 'bold 48pt Courier';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
+            ctx.font = nomangle('bold 96pt Courier');
+            ctx.textAlign = nomangle('center');
+            ctx.textBaseline = nomangle('middle');
             ctx.fillStyle = '#fff';
             ctx.shadowColor = '#000';
             ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 8;
-            ctx.fillText(nomangle('INCIDENT'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 25);
-            ctx.fillText(nomangle('AT BIO13K'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 25);
+            ctx.shadowOffsetY = 16;
+            ctx.fillText(nomangle('INCIDENT'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 - 50);
+            ctx.fillText(nomangle('AT BIO13K'), CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 50);
+        });
+
+        ctx.wrap(() => {
+            ctx.font = nomangle('24pt Courier');
+            ctx.textAlign = nomangle('center');
+            ctx.textBaseline = nomangle('bottom');
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = '#000';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 4;
+            ctx.fillText(nomangle('[CLICK TO REVIEW THE INCIDENT]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40);
         });
 
         // Camera feed effects
