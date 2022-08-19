@@ -293,54 +293,18 @@ class World extends Waitable {
         });
     }
 
-    makeRoom(row, col, rows, cols) {
-        if (rows < 0) {
-            row += rows;
-            rows *= -1;
-        }
-        if (cols < 0) {
-            col += cols;
-            cols *= -1;
-        }
-
-        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
-            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
-                this.addFreeCell(row + rowOffset, col + colOffset)
-            }
-        }
-
-        this.lastRoomAsTarget = new Target(row, col, rows, cols);
-        this.lastMakeRoom = [row, col, rows, cols];
-    }
-
-    connectRoomRelative(connectRow, connectCol) { 
-        const [previousRow, previousCol, previousRows, previousCols] = this.lastMakeRoom;
-
-        this.makeRoom(
-            previousRow + previousRows / 2 + (rowDirection * previousRows / 2),
-        )
-    }
-
-    connectRight(rowOffset, rows, cols) {
-        const [previousRow, previousCol, previousRows, previousCols] = this.lastMakeRoom;
-        this.makeRoom(previousRow + rowOffset, previousCol + previousCols, rows, cols);
-    }
-
     expand(roomCount) {
-        const rooms = [() => {
-            return new Room(-5, -5, 10, 10)
-                .connectRight(5, 2, 1);
-
-            // this.makeRoom(-5, -5, 10, 10);
-
-            // this.connectRight(5, 2, 1);
-            // this.makeRoom(0, 5, 2, 1);
-        }, (initialRoom) => {
-            const secondRoom = initialRoom.connectRight(-1, 15, 10);
-            secondRoom.connectDown(2, 1, 2);
-            secondRoom.connectLeft(7, 2, 1);
-            secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
-        }];
+        const rooms = [
+            () => this.initialRoom = new Room(-5, -5, 10, 10), 
+            (initialRoom) => initialRoom.connectRight(5, 2, 1), 
+            (initialRoom) => {
+                const secondRoom = initialRoom.connectRight(-1, 15, 10);
+                secondRoom.connectDown(2, 1, 2);
+                secondRoom.connectLeft(7, 2, 1);
+                secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
+                return secondRoom;
+            },
+        ];
     
         let res;
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
@@ -381,11 +345,18 @@ class Room {
         this.rows = rows;
         this.cols = cols;
 
+        this.centerX = (this.col + this.cols / 2) * CELL_SIZE;
+        this.centerY = (this.row + this.rows / 2) * CELL_SIZE;
+
         for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
             for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
                 world.addFreeCell(row + rowOffset, col + colOffset)
             }
         }
+
+        this.asTarget = new Target(row, col, rows, cols);
+
+        world.lastRoom = this;
     }
 
     connectLeft(rowOffset, rows, cols) {
