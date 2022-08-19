@@ -35,7 +35,6 @@ class Human extends Character {
         rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine(shoulderColor, 20);
         neck.extraRender = renderCircle(headColor, 20);
 
-
         this.head.onReadjustment = () => this.newTarget();
 
         this.nextTarget = 0;
@@ -130,7 +129,7 @@ class Janitor extends Human {
 
     cycle(elapsed) {
         this.speed = 200 * this.health;
-        this.cycle(elapsed);
+        super.cycle(elapsed);
     }
 }
 
@@ -141,7 +140,7 @@ class Intern extends Human {
 
     cycle(elapsed) {
         this.speed = 200 * this.health;
-        this.cycle(elapsed);
+        super.cycle(elapsed);
     }
 }
 
