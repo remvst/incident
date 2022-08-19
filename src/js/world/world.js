@@ -294,6 +294,15 @@ class World extends Waitable {
     }
 
     makeRoom(row, col, rows, cols) {
+        if (rows < 0) {
+            row += rows;
+            rows *= -1;
+        }
+        if (cols < 0) {
+            col += cols;
+            cols *= -1;
+        }
+
         for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
             for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
                 this.addFreeCell(row + rowOffset, col + colOffset)
@@ -301,18 +310,41 @@ class World extends Waitable {
         }
 
         this.lastRoomAsTarget = new Target(row, col, rows, cols);
+        this.lastMakeRoom = [row, col, rows, cols];
+    }
+
+    connectRoomRelative(connectRow, connectCol) { 
+        const [previousRow, previousCol, previousRows, previousCols] = this.lastMakeRoom;
+
+        this.makeRoom(
+            previousRow + previousRows / 2 + (rowDirection * previousRows / 2),
+        )
+    }
+
+    connectRight(rowOffset, rows, cols) {
+        const [previousRow, previousCol, previousRows, previousCols] = this.lastMakeRoom;
+        this.makeRoom(previousRow + rowOffset, previousCol + previousCols, rows, cols);
     }
 
     expand(roomCount) {
         const rooms = [() => {
-            world.makeRoom(-5, -5, 10, 10);
-            world.makeRoom(0, 5, 2, 1);
-        }, () => {
-            world.makeRoom(-5, 6, 10, 10);
+            return new Room(-5, -5, 10, 10)
+                .connectRight(5, 2, 1);
+
+            // this.makeRoom(-5, -5, 10, 10);
+
+            // this.connectRight(5, 2, 1);
+            // this.makeRoom(0, 5, 2, 1);
+        }, (initialRoom) => {
+            const secondRoom = initialRoom.connectRight(-1, 15, 10);
+            secondRoom.connectDown(2, 1, 2);
+            secondRoom.connectLeft(7, 2, 1);
+            secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
         }];
     
+        let res;
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
-            rooms[i](world);
+            res = rooms[i](res);
         }
     }
 
@@ -330,5 +362,45 @@ class World extends Waitable {
                 return true;
             }
         }
+    }
+}
+
+class Room {
+    constructor(row, col, rows, cols) {
+        if (rows < 0) {
+            row += rows;
+            rows *= -1;
+        }
+        if (cols < 0) {
+            col += cols;
+            cols *= -1;
+        }
+
+        this.row = row;
+        this.col = col;
+        this.rows = rows;
+        this.cols = cols;
+
+        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
+            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
+                world.addFreeCell(row + rowOffset, col + colOffset)
+            }
+        }
+    }
+
+    connectLeft(rowOffset, rows, cols) {
+        return new Room(this.row + rowOffset, this.col - cols, rows, cols);
+    }
+
+    connectRight(rowOffset, rows, cols) {
+        return new Room(this.row + rowOffset, this.col + this.cols, rows, cols);
+    }
+
+    connectUp(colOffset, rows, cols) {
+        return new Room(this.row - rows, this.col + colOffset, rows, cols);
+    }
+
+    connectDown(colOffset, rows, cols) {
+        return new Room(this.row + this.rows, this.col + colOffset, rows, cols);
     }
 }

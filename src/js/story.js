@@ -64,6 +64,7 @@ story = async () => {
                 await fullScreenTimedMessage(nomangle('Specimen BRT-379 escapes containment'));
                 await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
                 await wait(2000);
+                await wait(9999999);
             }
 
             // Dash tutorial
@@ -97,7 +98,6 @@ story = async () => {
                 await fullScreenTimedMessage(nomangle(`BRT-379 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(2);
-                await wait(999999999);
             }
 
             continue;
