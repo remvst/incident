@@ -1,7 +1,40 @@
 class Human extends Character {
-    constructor() {
+    constructor(shoulderColor, headColor = '#daab79') {
         super();
-        human(this.head);
+        
+        const neck = new Node(this.head);
+        neck.maxAngleOffset = Math.PI / 8;
+        neck.minAngleOffset = -Math.PI / 8;
+        neck.minDistanceFromParent = 0;
+        neck.maxDistanceFromParent = 5;
+    
+        const leftShoulder = new Node(neck);
+        leftShoulder.minDistanceFromParent = 30;
+        leftShoulder.maxDistanceFromParent = 50;
+        leftShoulder.minAngleOffset = Math.PI / 2 - Math.PI / 8 + Math.PI / 8;
+        leftShoulder.maxAngleOffset = Math.PI / 2 + Math.PI / 8 + Math.PI / 8;
+    
+        const rightShoulder = new Node(neck);
+        rightShoulder.minDistanceFromParent = 30;
+        rightShoulder.maxDistanceFromParent = 50;
+        rightShoulder.minAngleOffset = -Math.PI / 2 - Math.PI / 8 - Math.PI / 8;
+        rightShoulder.maxAngleOffset = -Math.PI / 2 + Math.PI / 8 - Math.PI / 8;
+    
+        const leftHand = new Node(leftShoulder);
+        leftHand.minDistanceFromParent = 10;
+        leftHand.maxDistanceFromParent = 30;
+        leftHand.minAngleOffset = Math.PI / 2 - Math.PI / 8;
+        leftHand.maxAngleOffset = Math.PI / 2 + Math.PI / 8;
+    
+        const rightHand = new Node(rightShoulder);
+        rightHand.minDistanceFromParent = 10;
+        rightHand.maxDistanceFromParent = 30;
+        rightHand.minAngleOffset = -Math.PI / 2 - Math.PI / 8;
+        rightHand.maxAngleOffset = -Math.PI / 2 + Math.PI / 8;
+    
+        rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine(shoulderColor, 20);
+        neck.extraRender = renderCircle(headColor, 20);
+
 
         this.head.onReadjustment = () => this.newTarget();
 
@@ -91,7 +124,10 @@ class Human extends Character {
 }
 
 class Janitor extends Human {
-    // TODO color
+    constructor() {
+        super('#00f');
+    }
+
     cycle(elapsed) {
         this.speed = 200 * this.health;
         this.cycle(elapsed);
@@ -99,7 +135,10 @@ class Janitor extends Human {
 }
 
 class Intern extends Human {
-    // TODO color
+    constructor() {
+        super(pick(['#080', '#00f', '#8f0', '#808']));
+    }
+
     cycle(elapsed) {
         this.speed = 200 * this.health;
         this.cycle(elapsed);
@@ -108,7 +147,7 @@ class Intern extends Human {
 
 class SecurityDude extends Human {
     constructor() {
-        super();
+        super('#000');
         this.nextShot = 0;
     }
 
