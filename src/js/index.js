@@ -20,7 +20,7 @@ let lastFrame = performance.now();
 
 frame = () => {
     const now = performance.now();
-    const elapsed = (now - lastFrame) / 1000;
+    const elapsed = Math.min((now - lastFrame) / 1000, 1 / 30);
     lastFrame = now;
 
     screen.cycle(elapsed);

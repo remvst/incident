@@ -2,13 +2,14 @@ class World extends Waitable {
     constructor() {
         super();
         this.elements = [];
-        this.obstacles = new Set();
+        this.freeSpots = new Set();
 
         camera = new Camera();
 
         world = this;
 
-        this.instruction = null;
+        this.resolveCondition = () => false;
+        this.expand();
     }
 
     freePositionAround(x, y) {
@@ -20,12 +21,12 @@ class World extends Waitable {
         return {x, y};
     }
 
-    addObstacle(row, col) {
-        this.obstacles.add(`${row},${col}`);
+    addFreeCell(row, col) {
+        this.freeSpots.add(`${row},${col}`);
     }
 
     hasObstacle(row, col) {
-        return this.obstacles.has(`${row},${col}`);
+        return !this.freeSpots.has(`${row},${col}`);
     }
 
     hasObstacleXY(x, y) {
@@ -73,7 +74,13 @@ class World extends Waitable {
     }
 
     add(element) {
+        console.log('adding');
         this.elements.push(element);
+    }
+
+    addAll(elements) {
+        elements.forEach(x => this.add(x));
+        return elements;
     }
 
     addToBottom(element) {
@@ -90,6 +97,8 @@ class World extends Waitable {
             element.cycle(elapsed);
         }
         camera.cycle(elapsed);
+
+        if (this.resolveCondition()) this.resolve();
     }
 
     render() {
@@ -180,8 +189,8 @@ class World extends Waitable {
     }
 
     * renderableObstacles() {
-        for (let rowOffset = 0 ; rowOffset < CANVAS_HEIGHT / CELL_SIZE + 1 ; rowOffset++) {
-            for (let colOffset = 0 ; colOffset < CANVAS_WIDTH / CELL_SIZE + 1 ; colOffset++) {
+        for (let rowOffset = -1 ; rowOffset < CANVAS_HEIGHT / CELL_SIZE + 1 ; rowOffset++) {
+            for (let colOffset = -1 ; colOffset < CANVAS_WIDTH / CELL_SIZE + 1 ; colOffset++) {
                 const row = camera.minRow + rowOffset;
                 const col = camera.minCol + colOffset;
 
@@ -280,59 +289,36 @@ class World extends Waitable {
     addObstaclesFromCanvas(can) {
         gridFromCanvas(can).forEach((rowValues, row) => {
             rowValues.forEach((cell, col) => {
-                if (cell) this.addObstacle(row, col);
+                if (!cell) this.addFreeCell(row, col);
             });
         });
     }
 
-    spawnPlayer(x, y) {
-        player.head.position.x = x;
-        player.head.position.y = y;
-        player.head.resolve();
-        player.head.realign();
-        this.add(player);
-    }
-}
-
-class MovementTutorialWorld extends World {
-    constructor() {
-        super();
-
-        this.addObstaclesFromCanvas(generateRoom(8, 8));
-        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
-
-        this.instruction = nomangle('Use mouse to move');
-    }
-
-    cycle(elapsed) {
-        super.cycle(elapsed);
-
-        if (player.travelledDistance > CELL_SIZE * 10) {
-            this.resolve();
+    makeRoom(row, col, rows, cols) {
+        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
+            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
+                this.addFreeCell(row + rowOffset, col + colOffset)
+            }
         }
     }
-}
 
-class DashTutorialWorld extends World {
-    constructor() {
-        super();
-
-        this.addObstaclesFromCanvas(generateRoom(8, 8));
-        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
-
-        this.dashTime = 0;
-        this.instruction = nomangle('Click to dash');
+    expand() {
+        overallWorld(world);
     }
 
-    cycle(elapsed) {
-        super.cycle(elapsed);
-
-        if (dist(player.head.position, player.target) > 10 && mouseDown) {
-            this.dashTime += elapsed;
+    get hasHuman() {
+        for (const element of this.elements) {
+            if (element instanceof Human) {
+                return true;
+            }
         }
+    }
 
-        if (this.dashTime > 2) {
-            this.resolve();
+    hasAny(elements) {
+        for (const element of elements) {
+            if (this.elements.indexOf(element) >= 0) {
+                return true;
+            }
         }
     }
 }
@@ -357,8 +343,8 @@ class AttackTutorialWorld extends AttackWorld {
     constructor() {
         super();
 
-        this.addObstaclesFromCanvas(generateRoom(8, 8));
-        this.spawnPlayer((WORLD_PADDING + 4) * CELL_SIZE, (WORLD_PADDING + 4) * CELL_SIZE);
+        overallWorld(world);
+        this.spawnPlayer(0, 0);
 
         for (let i = 0 ; i < 2 ; i++) {
             const human = new Human();
@@ -403,5 +389,19 @@ class TestWorld extends World {
             // testHuman.target.y += CELL_SIZE * i;
             this.add(testHuman);
         }
+    }
+}
+
+
+function overallWorld(world) {
+    const rooms = [() => {
+        world.makeRoom(-5, -5, 10, 10);
+        world.makeRoom(0, 5, 1, 1);
+    }, () => {
+
+    }];
+
+    for (let i = 0 ; i < rooms.length ; i++) {
+        rooms[i](world);
     }
 }

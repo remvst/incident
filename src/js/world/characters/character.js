@@ -12,7 +12,11 @@ class Character {
 
         this.speed = 200;
 
-        this.travelledDistance = 0;
+        this.resetMetrics();
+    }
+
+    resetMetrics() {
+        this.travelledDistance = 0;   
     }
 
     damage(amount) {
@@ -55,16 +59,16 @@ function creepyBug(head) {
     spine.angleResolutionResolutionSelector = Node.pickClosest;
 
     const leg1 = new Node(spine);
-    leg1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
-    leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
+    leg1.minAngleOffset = Math.PI / 2 + Math.PI / 3;
+    leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 3;
     leg1.minDistanceFromParent = 20;
     leg1.maxDistanceFromParent = 40;
     leg1.visualSpeed = 200;
     leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
     const leg2 = new Node(spine);
-    leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
-    leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
+    leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 3;
+    leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 3;
     leg2.minDistanceFromParent = 20;
     leg2.maxDistanceFromParent = 40;
     leg2.visualSpeed = 200;

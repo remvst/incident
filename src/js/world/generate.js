@@ -22,6 +22,12 @@ generateRoom = (w, h) => createCanvas(w + WORLD_PADDING * 2, h + WORLD_PADDING *
     ctx.fillRect(WORLD_PADDING, WORLD_PADDING, w, h);
 })
 
+generateRoomSeries = (roomCount) => {
+    const MAX_ROOM_SIZE = 15;
+
+    createCanvas()
+};
+
 generateRandomWorld = () => createCanvas(50, 50, (ctx, can) => {
     ctx.fillStyle = '#fff';
 

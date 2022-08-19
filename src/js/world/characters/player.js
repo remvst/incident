@@ -6,12 +6,23 @@ class Player extends Character {
         this.extend();
     }
 
+    resetMetrics() {
+        super.resetMetrics();
+        this.dashDistance = 0;
+    }
+
     cycle(elapsed) {
+        const { x, y } = this.head.position;
+
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
-        this.speed = mouseDown ? 400 : 200;
+        this.speed = mouseDown ? 600 : 200;
 
         super.cycle(elapsed);
+
+        if (mouseDown) {
+            this.dashDistance += distP(this.head.position.x, this.head.position.y, x, y);
+        }
         
         for (const element of world.elements) {
             if (element instanceof Human) {
