@@ -6,8 +6,8 @@
 
     "CELL_SIZE": 100,
 
-    "CANVAS_WIDTH": 1600,
-    "CANVAS_HEIGHT": 900,
+    "CANVAS_WIDTH": 800,
+    "CANVAS_HEIGHT": 600,
 
     "WORLD_PADDING": 10
 }

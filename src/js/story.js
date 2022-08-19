@@ -55,7 +55,7 @@ story = async () => {
             player.head.realign();
             world.add(player);
 
-            // TODO add initial screen with title and such
+            await (screen = new IntroScreen).wait();
 
             await fullScreenMessage(nomangle('August 13th 2022 - BIO13K research lab'));
 
@@ -69,7 +69,7 @@ story = async () => {
 
             // Movement tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen BRT-379 escapes containment'));
+                await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment'));
                 await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
                 await wait(2000);
                 await wait(9999);
@@ -77,7 +77,7 @@ story = async () => {
 
             // Dash tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen BRT-379 demonstrates fast movement'));
+                await fullScreenTimedMessage(nomangle('Specimen K-31 demonstrates fast movement'));
                 await worldScreen(nomangle('Click to dash'), () => player.dashDistance > CELL_SIZE * 10);
                 await wait(2000);
             }
@@ -88,7 +88,7 @@ story = async () => {
                 await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
                 await wait(2000);
-                await fullScreenTimedMessage(nomangle(`BRT-379 starts showing absorption behavior`));
+                await fullScreenTimedMessage(nomangle(`K-31 starts showing absorption behavior`));
             }
 
             // Interns: absorb more
@@ -104,7 +104,7 @@ story = async () => {
             {
                 world.expand(2);
                 const target = world.add(world.lastRoom.asTarget);
-                await fullScreenTimedMessage(nomangle(`BRT-379 escapes initial containment lab`));
+                await fullScreenTimedMessage(nomangle(`K-31 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(3);
                 await wait(999999);
@@ -116,14 +116,14 @@ story = async () => {
             await fullScreenTimedMessage(nomangle(`Security team is dispatched`));
             // await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
             await fullScreenTimedMessage(nomangle(`Security team terminated by specimen`));
-            await fullScreenTimedMessage(nomangle(`BRT-379 starts navigating to upper lab floors`));
+            await fullScreenTimedMessage(nomangle(`K-31 starts navigating to upper lab floors`));
             await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
             await fullScreenTimedMessage(nomangle(`Emergency response team dispatched`));
             await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
             await fullScreenTimedMessage(nomangle(`Emergency team terminated by specimen`));
             await fullScreenTimedMessage(nomangle(`Specimen starts navigating to lab exit`));
             await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`BRT-379 location lost`));
+            await fullScreenTimedMessage(nomangle(`K-31 location lost`));
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
             await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`));
         } catch (e) {
