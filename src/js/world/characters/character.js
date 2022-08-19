@@ -11,6 +11,7 @@ class Character {
         this.health = 1;
 
         this.speed = 200;
+        this.bloodColor = '#900';
 
         this.resetMetrics();
     }
@@ -19,8 +20,30 @@ class Character {
         this.travelledDistance = 0;   
     }
 
-    damage(amount) {
+    damage(amount, source) {
         this.health -= amount;
+
+        for (let i = 0 ; i < 5 ; i++) {
+            const blood = new Blood(
+                source.x + rnd(-50, 50),
+                source.y + rnd(-50, 50),
+                this.bloodColor,
+            )
+            setTimeout(() => world.addToBottom(blood), 0);
+            setTimeout(() => world.remove(blood), 30000);
+        }
+        this.addBloodParticle(source);
+    }
+
+    addBloodParticle(source) {
+        world.add(new Particle({
+            'x': [source.x + rnd(-10, 10), rnd(-80, 80)],
+            'y': [source.y + rnd(-10, 10), rnd(-80, 80)],
+            'duration': rnd(0.2, 0.4),
+            'color': this.bloodColor,
+            'size': [rnd(20, 30), 5],
+            'alpha': [1, -1],
+        }));
     }
     
     cycle(elapsed) {
@@ -57,53 +80,3 @@ class Character {
         });
     }
 }
-
-function creepyBug(head) {
-    let parent = head;
-
-    spine = new Node(parent);
-    spine.minDistanceFromParent = 10;
-    spine.maxDistanceFromParent = 30;
-    spine.visualSpeed = 100;
-    spine.angleResolutionResolutionSelector = Node.pickClosest;
-
-    const leg1 = new Node(spine);
-    leg1.minAngleOffset = Math.PI / 2 + Math.PI / 3;
-    leg1.maxAngleOffset = Math.PI / 2 - Math.PI / 3;
-    leg1.minDistanceFromParent = 20;
-    leg1.maxDistanceFromParent = 40;
-    leg1.visualSpeed = 200;
-    leg1.angleResolutionResolutionSelector = Node.pickAverage;
-
-    const leg2 = new Node(spine);
-    leg2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 3;
-    leg2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 3;
-    leg2.minDistanceFromParent = 20;
-    leg2.maxDistanceFromParent = 40;
-    leg2.visualSpeed = 200;
-    leg2.angleResolutionResolutionSelector = Node.pickAverage;
-
-    if (spine.depth % 4 === 0) {
-        leg1.minDistanceFromParent *= 3;
-        leg2.maxDistanceFromParent *= 3;
-
-        const ext1 = new Node(leg1);
-        ext1.minAngleOffset = Math.PI / 2 + Math.PI / 4;
-        ext1.maxAngleOffset = Math.PI / 2 - Math.PI / 4;
-        ext1.minDistanceFromParent = 40;
-        ext1.maxDistanceFromParent = 60;
-        ext1.visualSpeed = 200;
-        ext1.angleResolutionResolutionSelector = Node.pickAverage;
-
-        const ext2 = new Node(leg2);
-        ext2.minAngleOffset = Math.PI * 3 / 2 + Math.PI / 4;
-        ext2.maxAngleOffset = Math.PI * 3 / 2 - Math.PI / 4;
-        ext2.minDistanceFromParent = 40;
-        ext2.maxDistanceFromParent = 60;
-        ext2.visualSpeed = 200;
-        ext2.angleResolutionResolutionSelector = Node.pickAverage;
-    }
-
-    return spine;
-}
-

@@ -1,6 +1,7 @@
 class Player extends Character {
     constructor() {
         super();
+        this.bloodColor = '#fffb23'
         this.tail = this.head;
         this.extend();
         this.extend();
@@ -27,7 +28,7 @@ class Player extends Character {
         for (const element of world.elements) {
             if (element instanceof Human) {
                 if (dist(this.head.position, element.head.position) < 50) {
-                    element.damage(elapsed * 1);
+                    element.damage(elapsed * 1, this.head.position);
                     if (element.health <= 0) {
                         this.absorb(element);
                     }
@@ -37,12 +38,57 @@ class Player extends Character {
     }
 
     extend() {
-        this.tail = creepyBug(this.tail);
+        const spine = new Node(this.tail);
+        spine.minDistanceFromParent = 10;
+        spine.maxDistanceFromParent = 30;
+        spine.visualSpeed = 100;
+        spine.angleResolutionResolutionSelector = Node.pickClosest;
+
+        const leg1 = new Node(spine);
+        leg1.minAngleOffset = PI / 2 + PI / 3;
+        leg1.maxAngleOffset = PI / 2 - PI / 3;
+        leg1.minDistanceFromParent = 20;
+        leg1.maxDistanceFromParent = 40;
+        leg1.visualSpeed = 200;
+        leg1.angleResolutionResolutionSelector = Node.pickAverage;
+
+        const leg2 = new Node(spine);
+        leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
+        leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
+        leg2.minDistanceFromParent = 20;
+        leg2.maxDistanceFromParent = 40;
+        leg2.visualSpeed = 200;
+        leg2.angleResolutionResolutionSelector = Node.pickAverage;
+
+        if (spine.depth % 4 === 0) {
+            leg1.minDistanceFromParent *= 3;
+            leg2.maxDistanceFromParent *= 3;
+
+            const ext1 = new Node(leg1);
+            ext1.minAngleOffset = PI / 2 + PI / 4;
+            ext1.maxAngleOffset = PI / 2 - PI / 4;
+            ext1.minDistanceFromParent = 40;
+            ext1.maxDistanceFromParent = 60;
+            ext1.visualSpeed = 200;
+            ext1.angleResolutionResolutionSelector = Node.pickAverage;
+
+            const ext2 = new Node(leg2);
+            ext2.minAngleOffset = PI * 3 / 2 + PI / 4;
+            ext2.maxAngleOffset = PI * 3 / 2 - PI / 4;
+            ext2.minDistanceFromParent = 40;
+            ext2.maxDistanceFromParent = 60;
+            ext2.visualSpeed = 200;
+            ext2.angleResolutionResolutionSelector = Node.pickAverage;
+        }
+
+        this.tail = spine;
 
         for (const node of this.tail.allNodes()) {
             node.resolve();
         }
         this.head.realign();
+
+        this.health++;
     }
 
     render() {

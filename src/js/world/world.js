@@ -296,13 +296,12 @@ class World extends Waitable {
     expand(roomCount) {
         const rooms = [
             () => this.initialRoom = new Room(-5, -5, 10, 10), 
-            (initialRoom) => initialRoom.connectRight(5, 2, 1), 
-            (initialRoom) => {
-                const secondRoom = initialRoom.connectRight(-1, 15, 10);
-                secondRoom.connectDown(2, 1, 2);
-                secondRoom.connectLeft(7, 2, 1);
-                secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
-                return secondRoom;
+            () => this.initialRoom.connectRight(5, 2, 1), 
+            () => {
+                this.secondRoom = this.initialRoom.connectRight(-1, 15, 10);
+                this.secondRoom.connectDown(2, 1, 2);
+                this.secondRoom.connectLeft(7, 2, 1);
+                this.secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
             },
         ];
     
