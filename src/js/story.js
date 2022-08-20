@@ -46,7 +46,6 @@ story = async () => {
         try {
             world = new World();
             world.expand(1);
-            world.expand(999);
 
             player = new Player();
             player.head.position.x = 0;
@@ -60,19 +59,18 @@ story = async () => {
             await fullScreenMessage(nomangle('August 13th 2022 - BIO13K research lab'));
 
             // Test stuff
-            {
-                // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
-                const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
-                await worldScreen(nomangle('Use mouse to move'), () => !world.hasAny(securityTeam));
-                await wait(9999);
-            }
+            // {
+            //     // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
+            //     const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
+            //     await worldScreen(nomangle('Use mouse to move'), () => !world.hasAny(securityTeam));
+            //     await wait(9999);
+            // }
 
             // Movement tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment'));
                 await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
                 await wait(2000);
-                await wait(9999);
             }
 
             // Dash tutorial

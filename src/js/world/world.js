@@ -101,6 +101,12 @@ class World extends Waitable {
     }
 
     render() {
+        if (Date.now() % 1000 < 500) {
+            ctx.translate(0, rnd(-2, 2));
+        }
+
+        const t = ~~(Date.now() / (1000 / 50));
+
         // Clear
         ctx.wrap(() => {
             ctx.translate(-camera.x, -camera.y);
@@ -184,6 +190,15 @@ class World extends Waitable {
                 ctx.font = '24pt Courier';
                 ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200);
             }
+        });
+
+        const x = ~~(sin(t) * 400);
+        const y = ~~(cos(t) * 400);
+
+        ctx.wrap(() => {
+            ctx.translate(x, y);
+            ctx.fillStyle = NOISE_PATTERN;
+            ctx.fillRect(-x, -y, CANVAS_WIDTH, CANVAS_HEIGHT);
         });
     }
 
@@ -296,9 +311,9 @@ class World extends Waitable {
     expand(roomCount) {
         const rooms = [
             () => this.initialRoom = new Room(-5, -5, 10, 10), 
-            () => this.initialRoom.connectRight(5, 2, 1), 
+            () => this.initialConnection = this.initialRoom.connectRight(5, 2, 1), 
             () => {
-                this.secondRoom = this.initialRoom.connectRight(-1, 15, 10);
+                this.secondRoom = this.initialConnection.connectRight(-1, 15, 10);
                 this.secondRoom.connectDown(2, 1, 2);
                 this.secondRoom.connectLeft(7, 2, 1);
                 this.secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
