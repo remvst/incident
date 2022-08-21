@@ -18,6 +18,7 @@ worldScreen = async (
     world.resolveCondition = resolveCondition;
     player.resetMetrics();
     await screen.wait();
+    screen.resolveCondition = () => false;
     screen.instruction = null;
 };
 
@@ -57,15 +58,27 @@ story = async () => {
             await (screen = new IntroScreen).wait();
 
             // Test stuff
-            {
-                world.expand(999);
-                player.head.position.x = world.flamethrowerRoom.centerX;
-                player.head.position.y = world.flamethrowerRoom.centerY;
+            // {
+            //     world.expand(999);
+            //     // player.head.position.x = world.flamethrowerRoom.centerX;
+            //     // player.head.position.y = world.flamethrowerRoom.centerY;
 
-                // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
-                const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
+            //     // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
+            //     const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
+            //     await worldScreen(null, () => !world.hasAny(securityTeam));
+            //     await wait(999999);
+            // }
+            {
+                world.expand(4);
+                player.head.position.x = world.longHallwayExit.centerX;
+                player.head.position.y = world.longHallwayExit.centerY;
+
+                const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
+                await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(securityTeam));
-                await wait(999999);
+                await wait(2000);
+                await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
+                world.expand(5);
             }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
@@ -109,7 +122,39 @@ story = async () => {
                 await fullScreenTimedMessage(nomangle(`K-31 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(3);
-                await wait(999999);
+
+                // TODO spawn a bunch of randos
+            }
+
+            // Reach the security room
+            {
+                const target = world.add(world.longHallwayExit.asTarget);
+                await worldScreen(null, () => !world.hasAny([target]));
+            }
+
+            // Security is dispatched
+            {
+                world.expand(4);
+                const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
+                await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
+                await worldScreen(null, () => !world.hasAny(securityTeam));
+
+
+                for (const sec of securityTeam) {
+                    if (world.hasAny([sec])) {
+                        console.log('still there');
+                    }
+                }
+                
+                console.log('KILLED EM')
+                await wait(2000);
+                await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
+            }
+
+            // Progress through map
+            {
+                world.expand(5);
+                await wait(99999999);
             }
 
             continue;

@@ -297,16 +297,12 @@ class World extends Waitable {
             },
             () => {
                 this.securityRoom = this.longHallwayExit.connectRight(-2, 14, 14)
-                    .makeWall(3, 3, 2, 2)
-                    .makeWall(9, 3, 2, 2)
-                    .makeWall(3, 9, 2, 2)
-                    .makeWall(9, 9, 2, 2);
+                    .makeWallWithSymetry(3, 3, 2, 2);
+            },
+            () => {
                 this.centerWallRoom = this.securityRoom.connectDown(6, 1, 2)
                     .connectDown(-3, 12, 12)
-                    .makeWall(4, 2, 4, 1)
-                    .makeWall(2, 4, 1, 4)
-                    .makeWall(4, 9, 4, 1)
-                    .makeWall(9, 4, 1, 4);
+                    .makeWallWithSymetry(4, 2, 4, 1);
 
                 this.centerWallRoom.connectRight(5, 2, 1).connectRight(-2, 6, 4);
                 this.centerWallRoom.connectLeft(5, 2, 1).connectLeft(-2, 6, 4);
