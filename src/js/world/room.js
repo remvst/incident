@@ -31,8 +31,8 @@ class Room {
 
     freeCells() {
         const cells = [];
-        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
-            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
+        for (let rowOffset = 0 ; rowOffset < this.rows ; rowOffset++) {
+            for (let colOffset = 0 ; colOffset < this.cols ; colOffset++) {
                 if (!world.hasObstacle(this.row + rowOffset, this.col + colOffset)) {
                     cells.push([this.row + rowOffset, this.col + colOffset]);
                 }
@@ -62,6 +62,8 @@ class Room {
     makeWallWithSymetry(row, col, rows, cols) {
         return this.makeWall(row, col, rows, cols)
             .makeWall(col, row, cols, rows)
+            .makeWall(this.rows - row, this.cols - col, -rows, -cols)
+            .makeWall(this.cols - col, this.rows - row, -cols, -rows)
             .makeWall(this.rows - row, col, -rows, cols)
             .makeWall(col, this.rows - row, cols, -rows);
     }

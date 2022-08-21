@@ -73,16 +73,11 @@ story = async () => {
             //     await timeout(999999);
             // }
             // {
-            //     world.expand(4);
-            //     player.head.position.x = world.longHallwayExit.centerX;
-            //     player.head.position.y = world.longHallwayExit.centerY;
-
-            //     const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
-            //     await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
-            //     await worldScreen(null, () => !world.hasAny(securityTeam));
-            //     await timeout(2000);
-            //     await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
-            //     world.expand(5);
+            //     world.expand(99);
+            //     player.head.position.x = world.centerWallRoom.centerX;
+            //     player.head.position.y = world.centerWallRoom.centerY;
+            //     await worldScreen(null, () => false);
+            //     await timeout(9999999);
             // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
@@ -96,14 +91,14 @@ story = async () => {
 
             // Dash tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen K-31 demonstrates fast movement'));
+                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing dashing capabilities'));
                 await worldScreen(nomangle('[Click to dash]'), () => player.dashDistance > CELL_SIZE * 10);
                 await timeout(2);
             }
 
             // Janitors: learn to absorb
             {
-                const janitors = spawnHumanGroup(Janitor, world.initialRoom.centerX, world.initialRoom.centerY, 2);
+                const janitors = world.initialRoom.spawnHumanGroup(Janitor, 2);
                 await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
                 await timeout(2);
@@ -112,7 +107,7 @@ story = async () => {
 
             // Interns: absorb more
             {
-                const interns = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 2);
+                const interns = world.initialRoom.spawnHumanGroup(Intern, 2);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
                 await worldScreen(null, () => !world.hasAny(interns));
                 await timeout(2);
@@ -127,7 +122,11 @@ story = async () => {
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(3);
 
-                // TODO spawn a bunch of randos
+                world.secondRoom.spawnHumanGroup(Intern, 2);
+                world.secondRoomLeft.spawnHumanGroup(Intern, 2);
+                world.secondRoomRight.spawnHumanGroup(Intern, 2);
+                world.secondRoomUp.spawnHumanGroup(Intern, 2);
+
             }
 
             // Reach the security room
@@ -142,14 +141,6 @@ story = async () => {
                 const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
                 await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(securityTeam));
-
-
-                for (const sec of securityTeam) {
-                    if (world.hasAny([sec])) {
-                        console.log('still there');
-                    }
-                }
-                
                 await timeout(2);
                 await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
             }

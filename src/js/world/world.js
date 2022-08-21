@@ -321,9 +321,9 @@ class World extends Waitable {
             () => this.initialConnection = this.initialRoom.connectRight(5, 2, 1), 
             () => {
                 this.secondRoom = this.initialConnection.connectRight(-1, 15, 10);
-                this.secondRoom.connectLeft(8, 2, 1).connectLeft(-1, 5, 5);
-                this.secondRoom.connectUp(1, 1, 2).connectUp(0, 8, 8);
-                this.secondRoom.connectRight(6, 2, 1).connectRight(-3, 6, 6).connectUp(2, 1, 1 ).connectUp(-2, 3, 6);
+                this.secondRoomLeft = this.secondRoom.connectLeft(8, 2, 1).connectLeft(-1, 5, 5);
+                this.secondRoomUp = this.secondRoom.connectUp(1, 1, 2).connectUp(0, 8, 8);
+                this.secondRoomRight = this.secondRoom.connectRight(6, 2, 1).connectRight(-3, 6, 6).connectUp(2, 1, 1 ).connectUp(-2, 3, 6);
                 this.longHallwayExit = this.secondRoom.connectDown(2, 1, 2).connectDown(-3, 3, 20).connectRight(1, 1, 1);
             },
             () => {
