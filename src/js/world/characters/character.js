@@ -30,7 +30,7 @@ class Character {
                 this.bloodColor,
             )
             setTimeout(() => world.addToBottom(blood), 0);
-            setTimeout(() => world.remove(blood), 30000);
+            setTimeout(() => world.remove(blood), 60000);
         }
         this.addBloodParticle(source);
     }
