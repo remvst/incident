@@ -68,32 +68,32 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await wait(999999);
             // }
-            {
-                world.expand(4);
-                player.head.position.x = world.longHallwayExit.centerX;
-                player.head.position.y = world.longHallwayExit.centerY;
+            // {
+            //     world.expand(4);
+            //     player.head.position.x = world.longHallwayExit.centerX;
+            //     player.head.position.y = world.longHallwayExit.centerY;
 
-                const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
-                await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
-                await worldScreen(null, () => !world.hasAny(securityTeam));
-                await wait(2000);
-                await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
-                world.expand(5);
-            }
+            //     const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
+            //     await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
+            //     await worldScreen(null, () => !world.hasAny(securityTeam));
+            //     await wait(2000);
+            //     await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
+            //     world.expand(5);
+            // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
             // Movement tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment'));
-                await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
+                await worldScreen(nomangle('[Use mouse to move]'), () => player.travelledDistance > CELL_SIZE * 10);
                 await wait(2000);
             }
 
             // Dash tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen K-31 demonstrates fast movement'));
-                await worldScreen(nomangle('Click to dash'), () => player.dashDistance > CELL_SIZE * 10);
+                await worldScreen(nomangle('[Click to dash]'), () => player.dashDistance > CELL_SIZE * 10);
                 await wait(2000);
             }
 

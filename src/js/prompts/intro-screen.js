@@ -10,7 +10,6 @@ class IntroScreen extends Waitable {
 
     cycle() {
         if (mouseDown) {
-            // this.message = [];
             this.clicked = true;
             setTimeout(() => this.resolve(), 1000);
         }
@@ -21,19 +20,6 @@ class IntroScreen extends Waitable {
 
         ctx.fillStyle = '#0018b0';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-
-        // if (Date.now() % 2000 > 500) {
-        //     ctx.wrap(() => {
-        //         ctx.font = '36pt Arial';
-        //         ctx.textAlign = 'left';
-        //         ctx.textBaseline = 'top';
-        //         ctx.fillStyle = '#fff';
-        //         ctx.shadowColor = '#000';
-        //         ctx.shadowOffsetX = 0;
-        //         ctx.shadowOffsetY = 8;
-        //         ctx.fillText(nomangle('NO INPUT'), 40, 40);
-        //     });
-        // }
 
         ctx.wrap(() => {
             ctx.font = nomangle('bold 48pt Courier');
