@@ -5,6 +5,7 @@ class Node {
         this.id = `n[${nextId++}]`;
 
         this.position = {'x': 0, 'y': 0};
+        this.previousPosition = {'x': 0, 'y': 0};
         this.visualPosition = {'x': 0, 'y': 0};
 
         this.minDistanceFromParent = 25;
@@ -131,8 +132,13 @@ class Node {
             return;
         }
 
-        this.position.x = readjusted.x;
-        this.position.y = readjusted.y;
+        if (world.hasObstacleXY(readjusted.x, readjusted.y)) {
+            this.position.x = this.previousPosition.x;
+            this.position.y = this.previousPosition.y;
+        } else {
+            this.position.x = readjusted.x;
+            this.position.y = readjusted.y;
+        }
 
         this.onReadjustment();
     }
@@ -168,6 +174,9 @@ class Node {
         this.visualPosition.y += distanceToTarget * Math.sin(angleToTarget);
 
         this.resolve();
+
+        this.previousPosition.x = this.position.x;
+        this.previousPosition.y = this.position.y;
 
         for (const child of this.children) {
             child.cycle(elapsed);
