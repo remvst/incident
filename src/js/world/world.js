@@ -177,6 +177,35 @@ class World extends Waitable {
                 ctx.font = '12pt Courier';
                 ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
             }
+
+            for (const element of this.elements) {
+                ctx.wrap(() => {
+                    ctx.translate(-camera.x, -camera.y);
+
+                    if (element instanceof Player) {
+                        element.computeRectangle();
+
+                        ctx.translate(element.rectangle.minX - 10, element.rectangle.minY - 10);
+                        ctx.strokeStyle = '#fff';
+                        ctx.globalAlpha = 0.2;
+                        ctx.strokeRect(
+                            0, 
+                            0, 
+                            20 + element.rectangle.maxX - element.rectangle.minX, 
+                            20 + element.rectangle.maxY - element.rectangle.minY,
+                        );
+
+                        ctx.textAlign = nomangle('left');
+                        ctx.textBaseline = nomangle('top');
+                        ctx.font = nomangle('8pt Courier');
+                        ctx.fillText(
+                            'K-31', 
+                            0,
+                            25 + element.rectangle.maxY - element.rectangle.minY,
+                        );
+                    }
+                });
+            }
         });
     }
 
@@ -344,14 +373,6 @@ class World extends Waitable {
     
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
             rooms[i]();
-        }
-    }
-
-    get hasHuman() {
-        for (const element of this.elements) {
-            if (element instanceof Human) {
-                return true;
-            }
         }
     }
 

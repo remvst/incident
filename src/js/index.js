@@ -32,7 +32,8 @@ frame = () => {
     screen.cycle(elapsed);
     ctx.wrap(() => {
         crtPrerender();
-        screen.render();
+
+        ctx.wrap(() => screen.render());
 
         if (fastForward) {
             crtLineGlitch(CANVAS_HEIGHT / 3);

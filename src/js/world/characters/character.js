@@ -14,7 +14,23 @@ class Character {
         this.speed = 200;
         this.bloodColor = '#900';
 
+        this.rectangle = {'minX': 0, 'maxX': 0, 'minY': 0, 'maxY': 0};
+
         this.resetMetrics();
+    }
+
+    computeRectangle() {
+        this.rectangle.minX = Number.MAX_SAFE_INTEGER;
+        this.rectangle.minY = Number.MAX_SAFE_INTEGER;
+        this.rectangle.maxX = Number.MIN_SAFE_INTEGER;
+        this.rectangle.maxY = Number.MIN_SAFE_INTEGER;
+
+        for (const node of this.head.allNodes()) {
+            this.rectangle.minX = Math.min(this.rectangle.minX, node.position.x);
+            this.rectangle.minY = Math.min(this.rectangle.minY, node.position.y);
+            this.rectangle.maxX = Math.max(this.rectangle.maxX, node.position.x);
+            this.rectangle.maxY = Math.max(this.rectangle.maxY, node.position.y);
+        }
     }
 
     resetMetrics() {
