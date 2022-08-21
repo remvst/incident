@@ -4,10 +4,10 @@
     "const": "let",
     "null": 0,
 
-    "CELL_SIZE": 100,
+    "CELL_SIZE": 50,
 
-    "CANVAS_WIDTH": 1600,
-    "CANVAS_HEIGHT": 1200,
+    "CANVAS_WIDTH": 800,
+    "CANVAS_HEIGHT": 600,
 
     "WORLD_PADDING": 10
 }

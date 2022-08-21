@@ -17,7 +17,7 @@ class Player extends Character {
 
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
-        this.speed = mouseDown ? 600 : 200;
+        this.speed = mouseDown ? 300 : 100;
 
         super.cycle(elapsed);
 
@@ -27,7 +27,7 @@ class Player extends Character {
         
         for (const element of world.elements) {
             if (element instanceof Human) {
-                if (dist(this.head.position, element.head.position) < 50) {
+                if (dist(this.head.position, element.head.position) < 25) {
                     element.damage(elapsed * 1, this.head.position);
                     if (element.health <= 0) {
                         this.absorb(element);
@@ -39,8 +39,8 @@ class Player extends Character {
 
     extend(addLegs) {
         const spine = new Node(this.tail);
-        spine.minDistanceFromParent = 10;
-        spine.maxDistanceFromParent = 30;
+        spine.minDistanceFromParent = 5;
+        spine.maxDistanceFromParent = 15;
         spine.visualSpeed = 100;
         spine.angleResolutionResolutionSelector = Node.pickClosest;
 
@@ -48,16 +48,16 @@ class Player extends Character {
             const leg1 = new Node(spine);
             leg1.minAngleOffset = PI / 2 + PI / 3;
             leg1.maxAngleOffset = PI / 2 - PI / 3;
-            leg1.minDistanceFromParent = 20;
-            leg1.maxDistanceFromParent = 40;
+            leg1.minDistanceFromParent = 10;
+            leg1.maxDistanceFromParent = 20;
             leg1.visualSpeed = 200;
             leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
             const leg2 = new Node(spine);
             leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
             leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
-            leg2.minDistanceFromParent = 20;
-            leg2.maxDistanceFromParent = 40;
+            leg2.minDistanceFromParent = 10;
+            leg2.maxDistanceFromParent = 20;
             leg2.visualSpeed = 200;
             leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
@@ -68,16 +68,16 @@ class Player extends Character {
                 const ext1 = new Node(leg1);
                 ext1.minAngleOffset = PI / 2 + PI / 4;
                 ext1.maxAngleOffset = PI / 2 - PI / 4;
-                ext1.minDistanceFromParent = 40;
-                ext1.maxDistanceFromParent = 60;
+                ext1.minDistanceFromParent = 20;
+                ext1.maxDistanceFromParent = 40;
                 ext1.visualSpeed = 200;
                 ext1.angleResolutionResolutionSelector = Node.pickAverage;
 
                 const ext2 = new Node(leg2);
                 ext2.minAngleOffset = PI * 3 / 2 + PI / 4;
                 ext2.maxAngleOffset = PI * 3 / 2 - PI / 4;
-                ext2.minDistanceFromParent = 40;
-                ext2.maxDistanceFromParent = 60;
+                ext2.minDistanceFromParent = 20;
+                ext2.maxDistanceFromParent = 40;
                 ext2.visualSpeed = 200;
                 ext2.angleResolutionResolutionSelector = Node.pickAverage;
             }
@@ -98,7 +98,7 @@ class Player extends Character {
 
         ctx.fillStyle = 'rgba(255,255,255,0.5)';
         ctx.beginPath();
-        ctx.arc(this.target.x, this.target.y, 20, 0, TWO_PI)
+        ctx.arc(this.target.x, this.target.y, 10, 0, TWO_PI)
         ctx.fill();
 
         // const angle = angleBetween(this.head.position, this.target);
@@ -118,12 +118,6 @@ class Player extends Character {
     absorb(human) {
         world.remove(human);
 
-        // for (let i = 0 ; i < 20 ; i++) {
-        //     world.addToBottom(new Blood(
-        //         human.head.position.x + rnd(-50, 50),
-        //         human.head.position.y + rnd(-50, 50),
-        //     ));
-        // }
         let delay = 0.5;
         const absorbedNodes = Array.from(human.head.allNodes());
         for (const absorbedNode of absorbedNodes) {

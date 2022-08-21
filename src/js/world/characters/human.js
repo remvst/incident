@@ -9,31 +9,31 @@ class Human extends Character {
         neck.maxDistanceFromParent = 5;
     
         const leftShoulder = new Node(neck);
-        leftShoulder.minDistanceFromParent = 30;
-        leftShoulder.maxDistanceFromParent = 50;
+        leftShoulder.minDistanceFromParent = 15;
+        leftShoulder.maxDistanceFromParent = 25;
         leftShoulder.minAngleOffset = Math.PI / 2 - Math.PI / 8 + Math.PI / 8;
         leftShoulder.maxAngleOffset = Math.PI / 2 + Math.PI / 8 + Math.PI / 8;
     
         const rightShoulder = new Node(neck);
-        rightShoulder.minDistanceFromParent = 30;
-        rightShoulder.maxDistanceFromParent = 50;
+        rightShoulder.minDistanceFromParent = 15;
+        rightShoulder.maxDistanceFromParent = 25;
         rightShoulder.minAngleOffset = -Math.PI / 2 - Math.PI / 8 - Math.PI / 8;
         rightShoulder.maxAngleOffset = -Math.PI / 2 + Math.PI / 8 - Math.PI / 8;
     
         const leftHand = new Node(leftShoulder);
-        leftHand.minDistanceFromParent = 10;
-        leftHand.maxDistanceFromParent = 30;
+        leftHand.minDistanceFromParent = 5;
+        leftHand.maxDistanceFromParent = 15;
         leftHand.minAngleOffset = Math.PI / 2 - Math.PI / 8;
         leftHand.maxAngleOffset = Math.PI / 2 + Math.PI / 8;
     
         const rightHand = new Node(rightShoulder);
-        rightHand.minDistanceFromParent = 10;
-        rightHand.maxDistanceFromParent = 30;
+        rightHand.minDistanceFromParent = 5;
+        rightHand.maxDistanceFromParent = 15;
         rightHand.minAngleOffset = -Math.PI / 2 - Math.PI / 8;
         rightHand.maxAngleOffset = -Math.PI / 2 + Math.PI / 8;
     
-        rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine(shoulderColor, 20);
-        neck.extraRender = renderCircle(headColor, 20);
+        rightShoulder.extraRender = leftShoulder.extraRender = leftHand.extraRender = rightHand.extraRender = renderLine(shoulderColor, 10);
+        neck.extraRender = renderCircle(headColor, 10);
 
         this.head.onReadjustment = () => this.newTarget();
 
@@ -118,7 +118,7 @@ class Janitor extends Human {
     }
 
     cycle(elapsed) {
-        this.speed = 200 * this.health;
+        this.speed = 100 * this.health;
         super.cycle(elapsed);
     }
 }
@@ -129,7 +129,7 @@ class Intern extends Human {
     }
 
     cycle(elapsed) {
-        this.speed = 200 * this.health;
+        this.speed = 100 * this.health;
         super.cycle(elapsed);
     }
 }

@@ -4,7 +4,7 @@ NOISE_PATTERN = createCanvasPattern(400, 400, (ctx) => {
     for (let i = 0 ; i < 50 ; i++) {
         ctx.globalAlpha = random() * 0.1;
 
-        const l = rnd(40, 100);
+        const l = rnd(20, 50);
         ctx.fillRect(
             random() * (400 - l),
             random() * 400,

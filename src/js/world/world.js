@@ -144,34 +144,34 @@ class World extends Waitable {
         ctx.wrap(() => {
             ctx.fillStyle = '#fff';
             ctx.globalAlpha = 1;
-            ctx.font = nomangle('48pt Courier');
+            ctx.font = nomangle('24pt Courier');
             
             ctx.textAlign = nomangle('right');
             ctx.textBaseline = nomangle('bottom');
             const t = new Date();
-            ctx.fillText(`${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}:${addZeroes(t.getSeconds(), 2)}.${addZeroes(t.getMilliseconds(), 3)}`, CANVAS_WIDTH - 40, CANVAS_HEIGHT - 40);
+            ctx.fillText(`${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}:${addZeroes(t.getSeconds(), 2)}.${addZeroes(t.getMilliseconds(), 3)}`, CANVAS_WIDTH - 35, CANVAS_HEIGHT - 35);
 
             ctx.textAlign = 'left';
             ctx.textBaseline = 'top';
-            ctx.fillText('REC', 50, 50);
+            ctx.fillText('REC', 35, 35);
 
-            ctx.fillRect(20, 20, 100, 4);
-            ctx.fillRect(20, 20, 4, 100);
+            ctx.fillRect(20, 20, 50, 4);
+            ctx.fillRect(20, 20, 4, 50);
 
-            ctx.fillRect(20, CANVAS_HEIGHT - 20, 100, -4);
-            ctx.fillRect(20, CANVAS_HEIGHT - 20, 4, -100);
+            ctx.fillRect(20, CANVAS_HEIGHT - 20, 50, -4);
+            ctx.fillRect(20, CANVAS_HEIGHT - 20, 4, -50);
 
-            ctx.fillRect(CANVAS_WIDTH - 20, 20, -100, 4);
-            ctx.fillRect(CANVAS_WIDTH - 20, 20, -4, 100);
+            ctx.fillRect(CANVAS_WIDTH - 20, 20, -50, 4);
+            ctx.fillRect(CANVAS_WIDTH - 20, 20, -4, 50);
 
-            ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -100, -4);
-            ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -4, -100);
+            ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -50, -4);
+            ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -4, -50);
 
             if (this.instruction) {
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'top';
-                ctx.font = '24pt Courier';
-                ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 200);
+                ctx.font = '12pt Courier';
+                ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
             }
         });
 

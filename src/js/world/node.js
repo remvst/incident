@@ -298,7 +298,7 @@ class Node {
 }
 
 
-function renderLine(color, thickness = 10, lineCap = 'round') {
+function renderLine(color, thickness = 5, lineCap = 'round') {
     return (node) => {
         ctx.strokeStyle = color;
         ctx.lineWidth = thickness;

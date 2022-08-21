@@ -36,24 +36,25 @@ class IntroScreen extends Waitable {
         // }
 
         ctx.wrap(() => {
-            ctx.font = nomangle('bold 96pt Courier');
+            ctx.font = nomangle('bold 48pt Courier');
             ctx.textAlign = nomangle('center');
             ctx.textBaseline = nomangle('middle');
-            ctx.fillStyle = '#fff';
-            ctx.shadowColor = '#000';
-            ctx.shadowOffsetX = 0;
-            ctx.shadowOffsetY = 16;
 
-            let y = CANVAS_HEIGHT / 2 - this.message.length / 2 * 100;
+            let y = CANVAS_HEIGHT / 2 - this.message.length / 2 * 50;
             for (const line of this.message) {
+                ctx.fillStyle = '#000';
+                ctx.fillText(line, CANVAS_WIDTH / 2, y + 8);
+
+                ctx.fillStyle = '#fff';
                 ctx.fillText(line, CANVAS_WIDTH / 2, y);
-                 y += 100;
+
+                y += 50;
             }
         });
 
         if (!this.clicked) {
             ctx.wrap(() => {
-                ctx.font = nomangle('24pt Courier');
+                ctx.font = nomangle('12pt Courier');
                 ctx.textAlign = nomangle('center');
                 ctx.textBaseline = nomangle('bottom');
                 ctx.fillStyle = '#fff';
@@ -64,37 +65,33 @@ class IntroScreen extends Waitable {
             });
 
             ctx.wrap(() => {
-                ctx.font = nomangle('36pt Arial');
+                ctx.font = nomangle('18pt Arial');
                 ctx.textAlign = nomangle('left');
                 ctx.textBaseline = nomangle('middle');
                 ctx.shadowColor = '#000';
                 ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 8;
+                ctx.shadowOffsetY = 4;
                 ctx.fillStyle = '#fff';
-                ctx.fillRect(40, 40, 10, 50);
-                ctx.fillRect(60, 40, 10, 50);
-                ctx.fillText(nomangle('PAUSED'), 100, 65);
+                ctx.fillRect(20, 20, 5, 25);
+                ctx.fillRect(30, 20, 5, 25);
+                ctx.fillText(nomangle('PAUSED'), 50, 33);
             });
+
+            // ctx.drawImage(PAUSE_ICON, 0, 0);
         } else {
             ctx.wrap(() => {
                 ctx.shadowColor = '#000';
                 ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 8;
+                ctx.shadowOffsetY = 4;
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
-                ctx.moveTo(40, 40);
-                ctx.lineTo(40, 90);
-                ctx.lineTo(80, 65);
+                ctx.moveTo(20, 20);
+                ctx.lineTo(20, 45);
+                ctx.lineTo(40, 32);
                 ctx.fill();
             });
         }
 
         crtOverlay();
-
-        // ctx.font = '24pt Arial';
-        // ctx.textAlign = 'left';
-        // ctx.textBaseline = 'top';
-        // ctx.fillStyle = '#0f0';
-        // ctx.fillText('NO INPUT', 50, 50);
     }
 }

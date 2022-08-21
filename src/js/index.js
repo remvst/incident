@@ -26,5 +26,13 @@ frame = () => {
     screen.cycle(elapsed);
     ctx.wrap(() => screen.render());
 
+    if (DEBUG) {
+        ctx.fillStyle = '#fff';
+        ctx.textAlign = nomangle('right');
+        ctx.textBaseline = nomangle('top');
+        ctx.font = nomangle('24pt Arial');
+        ctx.fillText(~~(1 / elapsed), CANVAS_WIDTH - 10, 10);
+    }
+
     requestAnimationFrame(frame);
 }

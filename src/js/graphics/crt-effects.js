@@ -13,7 +13,7 @@ GRADIENT_OVERLAY = createCanvas(CANVAS_HEIGHT, CANVAS_HEIGHT, (ctx, can) => {
 
 crtPrerender = () => {
     if (Date.now() % 1000 < 500) {
-        ctx.translate(0, rnd(-2, 2));
+        ctx.translate(0, rnd(-1, 1));
     }
 };
 
@@ -30,7 +30,7 @@ crtOverlay = () => {
         ctx.globalAlpha = 0.2;
         ctx.fillStyle = '#fff';
         ctx.globalAlpha = 0.03;
-        ctx.fillRect(0, (Date.now() % 10000 / 10000) * (CANVAS_HEIGHT + 300) - 300, CANVAS_WIDTH, 300);
+        ctx.fillRect(0, (Date.now() % 10000 / 10000) * (CANVAS_HEIGHT + 150) - 150, CANVAS_WIDTH, 150);
 
         // Screen tearing
         ctx.globalAlpha = 1;
@@ -54,7 +54,7 @@ crtOverlay = () => {
         ctx.fillRect(-x, -y, CANVAS_WIDTH, CANVAS_HEIGHT);
     });
 
-    for (let offY = 0 ; offY < 5 ; offY++) {
+    for (let offY = 0 ; offY < 2 ; offY++) {
         for (let i = 0 ; i < 25 ; i++) {
             const x = random() * 400;
             const y = random() * 400;
@@ -65,7 +65,7 @@ crtOverlay = () => {
             });
         }
     }
-    
+
     ctx.drawImage(
         GRADIENT_OVERLAY, 
         0, 0, GRADIENT_OVERLAY.width, GRADIENT_OVERLAY.height,
