@@ -7,8 +7,8 @@ class Node {
         this.position = {'x': 0, 'y': 0};
         this.visualPosition = {'x': 0, 'y': 0};
 
-        this.minDistanceFromParent = 50;
-        this.maxDistanceFromParent = 70;
+        this.minDistanceFromParent = 25;
+        this.maxDistanceFromParent = 35;
 
         this.angleResolutionResolutionSelector = Node.pickAverage;
         this.minAngleOffset = -Math.PI / 4;
@@ -116,45 +116,16 @@ class Node {
             return Math.abs(angleOffsetA) - Math.abs(angleOffsetB);
         });
 
-        // const resolutionOffsets = resolutions.map((a) => {
-        //     return normalize(angleBetween(a, this.parent.position) - parentAngle);
-        // })
-
         const resolution = this.angleResolutionResolutionSelector(resolutions);
         
         this.position.x = resolution.x;
         this.position.y = resolution.y;
-
-        const newAngleOffset = normalize(this.angle - parentAngle);
-        // console.log('resolved angle', angleOffset, newAngleOffset, resolutionOffsets);
-
-        // if (this.id === 'n[3]') throw new Error();
-    }
-
-    needsCollisionResolution() {
-        // return world.hasObstacleXY(this.position.x, this.position.y, 50);
     }
 
     resolveCollision() {
         const {x, y} = this.position;
 
-        const radius = 30;
-        // const left = x - radius;
-        // const right = x + radius;
-        // const top = y - radius;
-        // const bottom = y + radius;
-
-        // const leftObstacle = world.hasObstacleXY(left, y);
-        // const rightObstacle = world.hasObstacleXY(right, y);
-
-        // if (world.hasObstacleXY(x, y, 0)) {
-        //     return; // Not much we can do
-        // }
-
-        // if (world.hasObstacleXY(left, y)) {
-        //     this.position.x = x + radius;
-        // }
-
+        const radius = 15;
         const readjusted = world.readjust(x, y, radius);
         if (!readjusted) {
             return;
