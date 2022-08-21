@@ -125,14 +125,14 @@ class Player extends Character {
 
             const hostingNode = pick(Array.from(this.head.children[0].allNodes()));
 
-            setTimeout(() => {
+            timeout(delay).then(() => {
                 hostingNode.children.push(absorbedNode);
                 absorbedNode.parent = hostingNode;
-            }, delay * 1000);
+            });
             delay += 0.5;
         }
 
-        setTimeout(() => this.extend(true), 500);
+        timeout(0.5).then(() => this.extend(true));
     }
 
     damage(amount, source) {

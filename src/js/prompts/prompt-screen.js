@@ -2,20 +2,10 @@ class PromptScreen extends Waitable {
     constructor(message) {
         super();
         this.message = message;
-        this.age = 0;
     }
 
-    cycle(elapsed) {
-        this.age += elapsed;
-
-        if (this.message.length && this.age > 3) {
-            this.message = '';
-            setTimeout(() => this.resolve(), 1000);
-        }
-    }
-
-    get displayedMessage() {
-        return this.message.slice(0, ~~(this.age * 20));
+    cycle() {
+        
     }
 
     render() {

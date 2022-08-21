@@ -1,7 +1,9 @@
-fullScreenMessage = (message) => {
+fullScreenMessage = async (message) => {
     mouseDown = false;
     screen = new PromptScreen(message);
-    return screen.wait();
+    await timeout(3);
+    screen.message = [];
+    await timeout(1);
 }
 
 fullScreenTimedMessage = (message) => {
@@ -22,8 +24,6 @@ worldScreen = async (
     screen.instruction = null;
 };
 
-wait = (x) => new Promise(r => setTimeout(r, x))
-
 spawnHumanGroup = (humanType, centerX, centerY, count) => {
     return world.addAll(mappable(count).map((_, i) => {
         const angle = (i / count) * TWO_PI;
@@ -43,6 +43,9 @@ spawnHumanGroup = (humanType, centerX, centerY, count) => {
 };
 
 story = async () => {
+    tapeTime = 6 * 3600 + 24 * 60;
+    timeouts = [];
+
     while (true) {
         try {
             world = new World();
@@ -55,7 +58,8 @@ story = async () => {
             player.head.realign();
             world.add(player);
 
-            await (screen = new IntroScreen).wait();
+            screen = new IntroScreen();
+            await timeout(1);
 
             // Test stuff
             // {
@@ -66,7 +70,7 @@ story = async () => {
             //     // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
             //     const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
-            //     await wait(999999);
+            //     await timeout(999999);
             // }
             // {
             //     world.expand(4);
@@ -76,7 +80,7 @@ story = async () => {
             //     const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
             //     await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
-            //     await wait(2000);
+            //     await timeout(2000);
             //     await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
             //     world.expand(5);
             // }
@@ -87,14 +91,14 @@ story = async () => {
             {
                 await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment'));
                 await worldScreen(nomangle('[Use mouse to move]'), () => player.travelledDistance > CELL_SIZE * 10);
-                await wait(2000);
+                await timeout(2);
             }
 
             // Dash tutorial
             {
                 await fullScreenTimedMessage(nomangle('Specimen K-31 demonstrates fast movement'));
                 await worldScreen(nomangle('[Click to dash]'), () => player.dashDistance > CELL_SIZE * 10);
-                await wait(2000);
+                await timeout(2);
             }
 
             // Janitors: learn to absorb
@@ -102,7 +106,7 @@ story = async () => {
                 const janitors = spawnHumanGroup(Janitor, world.initialRoom.centerX, world.initialRoom.centerY, 2);
                 await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
                 await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
-                await wait(2000);
+                await timeout(2);
                 await fullScreenTimedMessage(nomangle(`K-31 starts showing absorption behavior`));
             }
 
@@ -111,7 +115,7 @@ story = async () => {
                 const interns = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 2);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
                 await worldScreen(null, () => !world.hasAny(interns));
-                await wait(2000);
+                await timeout(2);
                 await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} removed from payroll`));
             }
 
@@ -147,14 +151,14 @@ story = async () => {
                 }
                 
                 console.log('KILLED EM')
-                await wait(2000);
+                await timeout(2);
                 await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
             }
 
             // Progress through map
             {
                 world.expand(5);
-                await wait(99999999);
+                await timeout(99999999);
             }
 
             continue;
@@ -184,6 +188,18 @@ story = async () => {
 mappable = size => Array(size).fill(0);
 
 timeLabel = () => {
-    const t = new Date();
-    return `${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}`;
+    const decomposed = decomposeTime(tapeTime);
+    return `${addZeroes(decomposed.hours, 2)}:${addZeroes(decomposed.minutes, 2)}`;
 };
+
+decomposeTime = () => {
+    let time = tapeTime;
+    const hours = ~~(time / 3600);
+    time -= hours * 3600;
+    const minutes = ~~(time / 60);
+    time -= minutes * 60;
+    const seconds = ~~time;
+    time -= seconds;
+    const milliseconds = time;
+    return { hours, minutes, seconds, milliseconds };
+}

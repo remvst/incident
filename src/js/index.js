@@ -23,6 +23,12 @@ frame = () => {
         elapsed *= 4;
     }
 
+    if (tapePlaying) {
+        tapeTime += elapsed;
+    }
+
+    cycleTimeouts();
+
     screen.cycle(elapsed);
     ctx.wrap(() => {
         crtPrerender();

@@ -10,8 +10,7 @@ class IntroScreen extends Waitable {
 
     cycle() {
         if (mouseDown) {
-            this.clicked = true;
-            setTimeout(() => this.resolve(), 1000);
+            tapePlaying = true;
         }
     }
 
@@ -36,7 +35,7 @@ class IntroScreen extends Waitable {
             }
         });
 
-        if (!this.clicked) {
+        if (!tapePlaying) {
             ctx.wrap(() => {
                 ctx.font = nomangle('12pt Courier');
                 ctx.textAlign = nomangle('center');

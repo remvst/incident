@@ -15,6 +15,10 @@ crtPrerender = () => {
     if (Date.now() % 1000 < 500) {
         ctx.translate(0, rnd(-1, 1));
     }
+
+    if (fastForward) {
+        ctx.translate(0, rnd(-3, 3));
+    }
 };
 
 crtOverlay = () => {

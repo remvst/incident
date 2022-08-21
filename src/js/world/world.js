@@ -146,8 +146,13 @@ class World extends Waitable {
             
             ctx.textAlign = nomangle('right');
             ctx.textBaseline = nomangle('bottom');
-            const t = new Date();
-            ctx.fillText(`${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}:${addZeroes(t.getSeconds(), 2)}.${addZeroes(t.getMilliseconds(), 3)}`, CANVAS_WIDTH - 35, CANVAS_HEIGHT - 35);
+
+            const decomposed = decomposeTime(tapeTime);
+            ctx.fillText(
+                `${addZeroes(decomposed.hours, 2)}:${addZeroes(decomposed.minutes, 2)}:${addZeroes(decomposed.seconds, 2)}.${addZeroes(~~(decomposed.milliseconds * 1000), 3)}`, 
+                CANVAS_WIDTH - 35, 
+                CANVAS_HEIGHT - 35,
+            );
 
             ctx.textAlign = 'left';
             ctx.textBaseline = 'top';

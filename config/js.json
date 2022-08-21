@@ -9,6 +9,7 @@
     "src/js/util/resizer.js",
     "src/js/util/interp.js",
     "src/js/util/add-zeroes.js",
+    "src/js/util/timeout.js",
 
     "src/js/graphics/wrap.js",
     "src/js/graphics/create-canvas.js",
