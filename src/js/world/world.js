@@ -301,11 +301,32 @@ class World extends Waitable {
                     .makeWall(9, 3, 2, 2)
                     .makeWall(3, 9, 2, 2)
                     .makeWall(9, 9, 2, 2);
-                this.centerWallRoom = this.securityRoom.connectDown(6, 1, 2).connectDown(-3, 12, 12);
-                this.centerWallRoom.makeWall(4, 2, 4, 1);
-                this.centerWallRoom.makeWall(2, 4, 1, 4);
-                this.centerWallRoom.makeWall(4, 9, 4, 1);
-                this.centerWallRoom.makeWall(9, 4, 1, 4);
+                this.centerWallRoom = this.securityRoom.connectDown(6, 1, 2)
+                    .connectDown(-3, 12, 12)
+                    .makeWall(4, 2, 4, 1)
+                    .makeWall(2, 4, 1, 4)
+                    .makeWall(4, 9, 4, 1)
+                    .makeWall(9, 4, 1, 4);
+
+                this.centerWallRoom.connectRight(5, 2, 1).connectRight(-2, 6, 4);
+                this.centerWallRoom.connectLeft(5, 2, 1).connectLeft(-2, 6, 4);
+
+                this.longWallHallway = this.centerWallRoom.connectDown(5, 1, 2)
+                    .connectDown(-3, 5, 20)
+                    .makeWall(2, 2, 1, 7)
+                    .makeWall(2, 11, 1, 7);
+
+                this.officesHallway = this.longWallHallway.connectRight(1, 3, 1)
+                    .connectRight(-20, 25, 3);
+                this.officesHallway.connectLeft(2, 2, 1).connectLeft(-1, 4, 3);
+                this.officesHallway.connectLeft(7, 2, 1).connectLeft(-1, 4, 3);
+                this.officesHallway.connectLeft(12, 2, 1).connectLeft(-1, 4, 3);
+
+                this.officesHallway.connectRight(2, 2, 1).connectRight(-1, 4, 3);
+                this.officesHallway.connectRight(7, 2, 1).connectRight(-1, 4, 3);
+                this.officesHallway.connectRight(12, 2, 1).connectRight(-1, 4, 3);
+
+                this.officesHallway.connectUp(1, 1, 1);
             },
         ];
     

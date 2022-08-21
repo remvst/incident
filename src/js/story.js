@@ -59,6 +59,8 @@ story = async () => {
             // Test stuff
             {
                 world.expand(999);
+                player.head.position.x = world.centerWallRoom.centerX;
+                player.head.position.y = world.centerWallRoom.centerY;
 
                 // const securityTeam = spawnHumanGroup(SecurityDude, world.initialRoom.centerX, world.initialRoom.centerY, 1);
                 const securityTeam = spawnHumanGroup(Intern, world.initialRoom.centerX, world.initialRoom.centerY, 5);
