@@ -130,6 +130,7 @@ class World extends Waitable {
                 this.renderObstacleSides(row, col);
             }
             
+            // Obstacle tops
             ctx.fillStyle = '#000';
             ctx.strokeStyle = 'rgba(255,255,255, 0.1)';
             ctx.strokeStyle = 'rgba(255,255,255, 0)';

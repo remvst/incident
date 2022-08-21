@@ -150,7 +150,6 @@ story = async () => {
                     }
                 }
                 
-                console.log('KILLED EM')
                 await timeout(2);
                 await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
             }
@@ -158,6 +157,7 @@ story = async () => {
             // Progress through map
             {
                 world.expand(5);
+                await worldScreen(null, () => false);
                 await timeout(99999999);
             }
 

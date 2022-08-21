@@ -3,6 +3,7 @@ class Character {
         this.target = {'x': 0, 'y': 0, 'radius': CELL_SIZE / 2};
 
         this.head = new Node();
+        this.head.supersafeCollisions = true;
         this.head.position.x = -50;
         this.head.position.y = 0;
 
