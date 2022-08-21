@@ -3,7 +3,7 @@ class Blood {
     constructor(x, y, color) {
         this.x = x;
         this.y = y;
-        this.radius = rnd(5, 10);
+        this.radius = rnd(2, 5);
         this.alpha = rnd(0.5, 1);
         this.color = color;
     }

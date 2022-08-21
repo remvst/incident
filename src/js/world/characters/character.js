@@ -41,7 +41,7 @@ class Character {
             'y': [source.y + rnd(-10, 10), rnd(-80, 80)],
             'duration': rnd(0.2, 0.4),
             'color': this.bloodColor,
-            'size': [rnd(20, 30), 5],
+            'size': [rnd(10, 15), 3],
             'alpha': [1, -1],
         }));
     }
