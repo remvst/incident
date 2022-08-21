@@ -24,6 +24,10 @@ class World extends Waitable {
         this.freeSpots.add(`${row},${col}`);
     }
 
+    removeFreeCell(row, col) {
+        this.freeSpots.delete(`${row},${col}`);
+    }
+
     hasObstacle(row, col) {
         return !this.freeSpots.has(`${row},${col}`);
     }
@@ -286,15 +290,27 @@ class World extends Waitable {
             () => this.initialConnection = this.initialRoom.connectRight(5, 2, 1), 
             () => {
                 this.secondRoom = this.initialConnection.connectRight(-1, 15, 10);
-                this.secondRoom.connectDown(2, 1, 2);
-                this.secondRoom.connectLeft(7, 2, 1);
-                this.secondRoom.connectUp(1, 1, 2).connectUp(0, 10, 10);
+                this.secondRoom.connectLeft(8, 2, 1).connectLeft(-1, 5, 5);
+                this.secondRoom.connectUp(1, 1, 2).connectUp(0, 8, 8);
+                this.secondRoom.connectRight(6, 2, 1).connectRight(-3, 6, 6).connectUp(2, 1, 1 ).connectUp(-2, 3, 6);
+                this.longHallwayExit = this.secondRoom.connectDown(2, 1, 2).connectDown(-3, 3, 20).connectRight(1, 1, 1);
+            },
+            () => {
+                this.securityRoom = this.longHallwayExit.connectRight(-2, 14, 14)
+                    .makeWall(3, 3, 2, 2)
+                    .makeWall(9, 3, 2, 2)
+                    .makeWall(3, 9, 2, 2)
+                    .makeWall(9, 9, 2, 2);
+                this.centerWallRoom = this.securityRoom.connectDown(6, 1, 2).connectDown(-3, 12, 12);
+                this.centerWallRoom.makeWall(4, 2, 4, 1);
+                this.centerWallRoom.makeWall(2, 4, 1, 4);
+                this.centerWallRoom.makeWall(4, 9, 4, 1);
+                this.centerWallRoom.makeWall(9, 4, 1, 4);
             },
         ];
     
-        let res;
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
-            res = rooms[i](res);
+            rooms[i]();
         }
     }
 
@@ -343,6 +359,15 @@ class Room {
         this.asTarget = new Target(row, col, rows, cols);
 
         world.lastRoom = this;
+    }
+
+    makeWall(row, col, rows, cols) {
+        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
+            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
+                world.removeFreeCell(this.row + row + rowOffset, this.col + col + colOffset);
+            }
+        }
+        return this;
     }
 
     connectLeft(rowOffset, rows, cols) {
