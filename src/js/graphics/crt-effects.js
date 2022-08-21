@@ -1,8 +1,21 @@
+GRADIENT_OVERLAY = createCanvas(CANVAS_HEIGHT, CANVAS_HEIGHT, (ctx, can) => {
+    const grad = ctx.createRadialGradient(
+        can.width / 2, can.height / 2, 0,
+        can.width / 2, can.height / 2, can.width,
+    );
+    grad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    grad.addColorStop(0.5, 'rgba(0, 0, 0, 0)');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0.8)');
+
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, can.width, can.height);
+});
+
 crtPrerender = () => {
     if (Date.now() % 1000 < 500) {
         ctx.translate(0, rnd(-2, 2));
     }
-}
+};
 
 crtOverlay = () => {
     const t = ~~(Date.now() / (1000 / 50));
@@ -52,4 +65,10 @@ crtOverlay = () => {
             });
         }
     }
+    
+    ctx.drawImage(
+        GRADIENT_OVERLAY, 
+        0, 0, GRADIENT_OVERLAY.width, GRADIENT_OVERLAY.height,
+        0, 0, CANVAS_WIDTH, CANVAS_HEIGHT,
+    );
 }
