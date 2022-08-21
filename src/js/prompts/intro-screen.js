@@ -16,8 +16,6 @@ class IntroScreen extends Waitable {
     }
 
     render() {
-        crtPrerender();
-
         ctx.fillStyle = '#0018b0';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -77,7 +75,5 @@ class IntroScreen extends Waitable {
                 ctx.fill();
             });
         }
-
-        crtOverlay();
     }
 }

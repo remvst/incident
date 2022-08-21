@@ -6,13 +6,7 @@ window.addEventListener('load', () => {
     ctx = can.getContext('2d');
 
     onresize();
-
-    // screen = new PromptScreen(
-    //     nomangle('On August 13th 2022, research facility BIOTHIRTEEN experienced a biohazard incident'),
-    // );
-
     story();
-
     frame();
 });
 
@@ -20,11 +14,29 @@ let lastFrame = performance.now();
 
 frame = () => {
     const now = performance.now();
-    const elapsed = Math.min((now - lastFrame) / 1000, 1 / 30);
+    let elapsed = Math.min((now - lastFrame) / 1000, 1 / 30);
     lastFrame = now;
 
+    fastForward = DOWN[70];
+
+    if (fastForward) {
+        elapsed *= 4;
+    }
+
     screen.cycle(elapsed);
-    ctx.wrap(() => screen.render());
+    ctx.wrap(() => {
+        crtPrerender();
+        screen.render();
+
+        if (fastForward) {
+            crtLineGlitch(CANVAS_HEIGHT / 3);
+            crtLineGlitch(CANVAS_HEIGHT * 2 / 3);
+            // crtLineGlitch(CANVAS_HEIGHT / 2);
+            // crtLineGlitch(CANVAS_HEIGHT * 3 / 4);
+        }
+
+        crtOverlay();
+    });
 
     if (DEBUG) {
         ctx.fillStyle = '#fff';

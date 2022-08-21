@@ -2,6 +2,7 @@
     "src/js/globals.js",
     "src/js/math.js",
     "src/js/mouse.js",
+    "src/js/keyboard.js",
     "src/js/waitable.js",
     "src/js/story.js",
 
@@ -23,6 +24,7 @@
 
     "src/js/world/node.js",
     "src/js/world/world.js",
+    "src/js/world/room.js",
     "src/js/world/generate.js",
     "src/js/world/raycaster.js",
     "src/js/world/target.js",

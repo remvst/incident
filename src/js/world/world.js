@@ -105,8 +105,6 @@ class World extends Waitable {
     }
 
     render() {
-        crtPrerender();
-
         // Clear
         ctx.wrap(() => {
             ctx.translate(-camera.x, -camera.y);
@@ -174,8 +172,6 @@ class World extends Waitable {
                 ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
             }
         });
-
-        crtOverlay();
     }
 
     * renderableObstacles() {
@@ -359,77 +355,5 @@ class World extends Waitable {
                 return true;
             }
         }
-    }
-}
-
-class Room {
-    constructor(row, col, rows, cols) {
-        if (rows < 0) {
-            row += rows;
-            rows *= -1;
-        }
-        if (cols < 0) {
-            col += cols;
-            cols *= -1;
-        }
-
-        this.row = row;
-        this.col = col;
-        this.rows = rows;
-        this.cols = cols;
-
-        this.centerX = (this.col + this.cols / 2) * CELL_SIZE;
-        this.centerY = (this.row + this.rows / 2) * CELL_SIZE;
-
-        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
-            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
-                world.addFreeCell(row + rowOffset, col + colOffset)
-            }
-        }
-
-        this.asTarget = new Target(row, col, rows, cols);
-
-        world.lastRoom = this;
-    }
-
-    makeWall(row, col, rows, cols) {
-        if (rows < 0) {
-            row += rows;
-            rows *= -1;
-        }
-        if (cols < 0) {
-            col += cols;
-            cols *= -1;
-        }
-
-        for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
-            for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
-                world.removeFreeCell(this.row + row + rowOffset, this.col + col + colOffset);
-            }
-        }
-        return this;
-    }
-
-    makeWallWithSymetry(row, col, rows, cols) {
-        return this.makeWall(row, col, rows, cols)
-            .makeWall(col, row, cols, rows)
-            .makeWall(this.rows - row, col, -rows, cols)
-            .makeWall(col, this.rows - row, cols, -rows);
-    }
-
-    connectLeft(rowOffset, rows, cols) {
-        return new Room(this.row + rowOffset, this.col - cols, rows, cols);
-    }
-
-    connectRight(rowOffset, rows, cols) {
-        return new Room(this.row + rowOffset, this.col + this.cols, rows, cols);
-    }
-
-    connectUp(colOffset, rows, cols) {
-        return new Room(this.row - rows, this.col + colOffset, rows, cols);
-    }
-
-    connectDown(colOffset, rows, cols) {
-        return new Room(this.row + this.rows, this.col + colOffset, rows, cols);
     }
 }

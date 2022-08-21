@@ -19,8 +19,6 @@ class PromptScreen extends Waitable {
     }
 
     render() {
-        crtPrerender();
-
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
@@ -36,7 +34,5 @@ class PromptScreen extends Waitable {
                  y += 30;
             }
         });
-
-        crtOverlay();
     }
 }

@@ -50,21 +50,12 @@ crtOverlay = () => {
 
     ctx.wrap(() => {
         ctx.translate(x, y);
+        ctx.globalAlpha = 0.1;
         ctx.fillStyle = NOISE_PATTERN;
         ctx.fillRect(-x, -y, CANVAS_WIDTH, CANVAS_HEIGHT);
     });
 
-    for (let offY = 0 ; offY < 2 ; offY++) {
-        for (let i = 0 ; i < 25 ; i++) {
-            const x = random() * 400;
-            const y = random() * 400;
-            ctx.wrap(() => {
-                ctx.translate(x, y + offY);
-                ctx.fillStyle = NOISE_PATTERN;
-                ctx.fillRect(-x, -y, CANVAS_WIDTH, 4);
-            });
-        }
-    }
+    crtLineGlitch(0);
 
     ctx.drawImage(
         GRADIENT_OVERLAY, 
@@ -72,3 +63,20 @@ crtOverlay = () => {
         0, 0, CANVAS_WIDTH, CANVAS_HEIGHT,
     );
 }
+
+crtLineGlitch = (lineY) => {
+    ctx.wrap(() => {
+        ctx.globalAlpha = 0.2;
+        for (let offY = 0 ; offY < 2 ; offY++) {
+            for (let i = 0 ; i < 25 ; i++) {
+                const x = random() * 400;
+                const y = random() * 400;
+                ctx.wrap(() => {
+                    ctx.translate(x, y + offY);
+                    ctx.fillStyle = NOISE_PATTERN;
+                    ctx.fillRect(-x, lineY - y, CANVAS_WIDTH, 4);
+                });
+            }
+        }
+    });
+};
