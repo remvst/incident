@@ -16,6 +16,7 @@
     "src/js/graphics/overlay.js",
     "src/js/graphics/particle.js",
     "src/js/graphics/noise.js",
+    "src/js/graphics/crt-effects.js",
 
     "src/js/prompts/prompt-screen.js",
     "src/js/prompts/intro-screen.js",

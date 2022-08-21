@@ -101,11 +101,7 @@ class World extends Waitable {
     }
 
     render() {
-        if (Date.now() % 1000 < 500) {
-            ctx.translate(0, rnd(-2, 2));
-        }
-
-        const t = ~~(Date.now() / (1000 / 50));
+        crtPrerender();
 
         // Clear
         ctx.wrap(() => {
@@ -140,31 +136,14 @@ class World extends Waitable {
             }
         });
 
-        // Camera feed effects
+        // Camera feed overlay
         ctx.wrap(() => {
-            ctx.fillStyle = OVERLAY_PATTERN;
-            ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    
-            ctx.globalAlpha = 0.2;
             ctx.fillStyle = '#fff';
-            ctx.fillRect(0, (Date.now() % 4000 / 4000) * CANVAS_HEIGHT, CANVAS_WIDTH, 1);
-
             ctx.globalAlpha = 1;
-            if (Date.now() % 4000 < 200) {
-                for (let y = 0 ; y < CANVAS_WIDTH ; y += 200) {
-                    ctx.drawImage(
-                        can, 
-                        0, y, CANVAS_WIDTH, 100,
-                        40, y, CANVAS_WIDTH, 100,
-                    );
-                }
-            }
-
-            ctx.globalAlpha = 1;
-            ctx.font = '48pt Courier';
+            ctx.font = nomangle('48pt Courier');
             
-            ctx.textAlign = 'right';
-            ctx.textBaseline = 'bottom';
+            ctx.textAlign = nomangle('right');
+            ctx.textBaseline = nomangle('bottom');
             const t = new Date();
             ctx.fillText(`${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}:${addZeroes(t.getSeconds(), 2)}.${addZeroes(t.getMilliseconds(), 3)}`, CANVAS_WIDTH - 40, CANVAS_HEIGHT - 40);
 
@@ -192,14 +171,7 @@ class World extends Waitable {
             }
         });
 
-        const x = ~~(sin(t) * 400);
-        const y = ~~(cos(t) * 400);
-
-        ctx.wrap(() => {
-            ctx.translate(x, y);
-            ctx.fillStyle = NOISE_PATTERN;
-            ctx.fillRect(-x, -y, CANVAS_WIDTH, CANVAS_HEIGHT);
-        });
+        crtOverlay();
     }
 
     * renderableObstacles() {

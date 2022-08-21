@@ -5,7 +5,7 @@ fullScreenMessage = (message) => {
 }
 
 fullScreenTimedMessage = (message) => {
-    return fullScreenMessage(timeLabel() + message);
+    return fullScreenMessage([timeLabel(), message]);
 };
 
 worldScreen = async (
@@ -56,7 +56,7 @@ story = async () => {
 
             await (screen = new IntroScreen).wait();
 
-            await fullScreenMessage(nomangle('August 13th 2022 - BIO13K research lab'));
+            await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
             // Test stuff
             // {
@@ -133,3 +133,8 @@ story = async () => {
 };
 
 mappable = size => Array(size).fill(0);
+
+timeLabel = () => {
+    const t = new Date();
+    return `${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)}`;
+};

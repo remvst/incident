@@ -28,8 +28,3 @@ frame = () => {
 
     requestAnimationFrame(frame);
 }
-
-timeLabel = () => {
-    const t = new Date();
-    return `${addZeroes(t.getHours(), 2)}:${addZeroes(t.getMinutes(), 2)} - `;
-};

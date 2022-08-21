@@ -8,13 +8,9 @@ class PromptScreen extends Waitable {
     cycle(elapsed) {
         this.age += elapsed;
 
-        if (mouseDown) {
-            if (this.promptReady) {
-                this.resolve();
-            } else {
-                this.age = 10;
-            }
-            mouseDown = false;
+        if (this.message.length && this.age > 3) {
+            this.message = '';
+            setTimeout(() => this.resolve(), 1000);
         }
     }
 
@@ -22,28 +18,33 @@ class PromptScreen extends Waitable {
         return this.message.slice(0, ~~(this.age * 20));
     }
 
-    get promptReady()  {
-        return this.displayedMessage === this.message;
-    }
-
     render() {
+        crtPrerender();
+
         ctx.fillStyle = '#000';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
-        ctx.font = nomangle('24pt Courier');
+        ctx.fillStyle = '#fff';
         ctx.textAlign = nomangle('left');
         ctx.textBaseline = nomangle('middle');
+        ctx.font = nomangle('36pt Courier');
 
-        ctx.fillStyle = '#fff';
-
-        const textSize = ctx.measureText(this.message);
-        const { displayedMessage } = this;
-        ctx.fillText(displayedMessage, (CANVAS_WIDTH - textSize.width) / 2, CANVAS_HEIGHT / 2);
-
-        if (this.promptReady) {
+        ctx.wrap(() => {
+            ctx.font = nomangle('36pt Courier');
             ctx.textAlign = nomangle('center');
-            ctx.textBaseline = nomangle('bottom');
-            ctx.fillText(nomangle('[CLICK TO CONTINUE]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 20);
-        }
+            ctx.textBaseline = nomangle('middle');
+            ctx.fillStyle = '#fff';
+            ctx.shadowColor = '#000';
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 16;
+
+            let y = CANVAS_HEIGHT / 2 - this.message.length / 2 * 60;
+            for (const line of this.message) {
+                ctx.fillText(line, CANVAS_WIDTH / 2, y);
+                 y += 60;
+            }
+        });
+
+        crtOverlay();
     }
 }
