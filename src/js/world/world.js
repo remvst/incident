@@ -326,7 +326,21 @@ class World extends Waitable {
                 this.officesHallway.connectRight(7, 2, 1).connectRight(-1, 4, 3);
                 this.officesHallway.connectRight(12, 2, 1).connectRight(-1, 4, 3);
 
-                this.officesHallway.connectUp(1, 1, 1);
+                this.flamethrowersConnection = this.officesHallway.connectUp(1, 1, 1);
+            },
+            () => {
+                this.flamethrowerRoom = this.flamethrowersConnection.connectUp(-5, 19, 19);
+                this.flamethrowerRoom
+                    // Top left L
+                    .makeWallWithSymetry(2, 2, 3, 1)
+                    .makeWallWithSymetry(2, 2, 1, 3)
+
+                    // Top T
+                    .makeWallWithSymetry(2, 7, 1, 5)
+                    .makeWallWithSymetry(3, 9, 2, 1)
+
+                    // Center +
+                    .makeWallWithSymetry(7, 9, 5, 1)
             },
         ];
     
@@ -383,12 +397,28 @@ class Room {
     }
 
     makeWall(row, col, rows, cols) {
+        if (rows < 0) {
+            row += rows;
+            rows *= -1;
+        }
+        if (cols < 0) {
+            col += cols;
+            cols *= -1;
+        }
+
         for (let rowOffset = 0 ; rowOffset < rows ; rowOffset++) {
             for (let colOffset = 0 ; colOffset < cols ; colOffset++) {
                 world.removeFreeCell(this.row + row + rowOffset, this.col + col + colOffset);
             }
         }
         return this;
+    }
+
+    makeWallWithSymetry(row, col, rows, cols) {
+        return this.makeWall(row, col, rows, cols)
+            .makeWall(col, row, cols, rows)
+            .makeWall(this.rows - row, col, -rows, cols)
+            .makeWall(col, this.rows - row, cols, -rows);
     }
 
     connectLeft(rowOffset, rows, cols) {
