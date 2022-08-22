@@ -41,16 +41,20 @@ class Character {
         this.health -= amount;
 
         for (let i = 0 ; i < 5 ; i++) {
-            const blood = new Blood(
-                source.x + rnd(-50, 50),
-                source.y + rnd(-50, 50),
-                this.bloodColor,
-            )
-
-            timeout(0).then(() => world.addToBottom(blood));
-            timeout(60).then(() => world.remove(blood));
+            this.addBloodDroop(this.bloodColor, source);
         }
         this.addBloodParticle(source);
+    }
+
+    addBloodDroop(color, position) {
+        const blood = new Blood(
+            position.x + rnd(-50, 50),
+            position.y + rnd(-50, 50),
+            color,
+        )
+
+        timeout(0).then(() => world.addToBottom(blood));
+        timeout(60).then(() => world.remove(blood));
     }
 
     addBloodParticle(source) {

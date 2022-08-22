@@ -57,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            {
-                world.expand(99);
-                // player.head.position.x = world.centerWallRoom.centerX;
-                // player.head.position.y = world.centerWallRoom.centerY;
-                world.initialRoom.spawnHumanGroup(SecurityDude, 10);
-                await worldScreen(null, () => false);
-                await timeout(9999999);
-            }
+            // {
+            //     world.expand(99);
+            //     // player.head.position.x = world.centerWallRoom.centerX;
+            //     // player.head.position.y = world.centerWallRoom.centerY;
+            //     world.initialRoom.spawnHumanGroup(FireDude, 3);
+            //     await worldScreen(null, () => false);
+            //     await timeout(9999999);
+            // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
@@ -163,12 +163,14 @@ story = async () => {
 
             // Flamethrowers tutorial
             {
-                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(SecurityDude, 3); // TODO change type
+                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 3); // TODO change type
                 world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
                 await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(flamethrowers));
                 await timeout(2);
             }
+
+            // TODO add more story
 
             await timeout(99999999);
 

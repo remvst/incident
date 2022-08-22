@@ -13,6 +13,9 @@ class Player extends Character {
 
         this.tail = this.neck;
 
+        this.nextFireDamage = 0;
+        this.bloodTrailTimeleft = 0;
+
         this.extend();
         this.extend();
 
@@ -64,6 +67,27 @@ class Player extends Character {
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
         this.speed = mouseDown ? 300 : 100;
+
+        if (this.burningTimeleft >= 0) {
+            this.burningTimeleft -= elapsed;
+
+            // Fire particle
+            const node = pick(Array.from(this.head.allNodes()));
+            world.add(new Particle({
+                'x': [node.position.x, rnd(-40, 40)],
+                'y': [node.position.y, rnd(-40, 40)],
+                'duration': rnd(0.3, 0.4),
+                'color': pick(['#ff0', '#f00', '#000']),
+                'size': [rnd(5, 10), 5],
+                'alpha': [1, 0],
+            }));
+
+            this.nextFireDamage -= elapsed;
+            if (this.nextFireDamage <= 0) {
+                this.nextFireDamage = 1;
+                this.damage(1, this.head.position);
+            }
+        }
 
         super.cycle(elapsed);
 
@@ -186,6 +210,14 @@ class Player extends Character {
         }
 
         timeout(0.5).then(() => this.extend(true));
+
+        for (let delay = 0 ; delay < 3 ; delay += 0.2) {
+            timeout(delay).then(() => this.addBloodDroop('#900', this.head.position));
+        }
+    }
+
+    burn() {
+        this.burningTimeleft = 1;
     }
 
     damage(amount, source) {

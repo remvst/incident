@@ -55,7 +55,7 @@ class Human extends Character {
     newTarget() {
         const angleToTarget = angleBetween(this.head.position, this.target);
         const newAngle = roundToNearest(angleToTarget, PI / 2) + pick([-1, 1]) * PI / 2;
-        
+
         this.target.x = this.head.position.x + Math.cos(newAngle) * 200;
         this.target.y = this.head.position.y + Math.sin(newAngle) * 200;
     }
@@ -79,7 +79,7 @@ class Human extends Character {
         const angleToPlayer = normalize(angleBetween(this.head.position, player.head.position));
         const angleToTarget = normalize(angleBetween(this.head.position, this.target));
 
-        return normalize(angleToPlayer - angleToTarget) < this.visionAngle / 2;
+        return Math.abs(normalize(angleToPlayer - angleToTarget)) < this.visionAngle / 2;
     }
 
     couldSeePlayer() {
@@ -138,6 +138,11 @@ class Intern extends Human {
 }
 
 class AttackingHuman extends Human {
+    constructor(shoulderColor) {
+        super(shoulderColor);
+        this.shotCount = 0;
+    }
+
     damage(amount, source) {
         super.damage(amount, source);
         this.nextShot = 1;
@@ -158,11 +163,8 @@ class AttackingHuman extends Human {
 
         this.nextShot -= elapsed;
         if ((this.nextShot -= elapsed) <= 0) {
-            this.nextShot = this.shotCount % 3 ? 0.5 : 2;
             if (seesPlayer) {
-                const angleToPlayer = angleBetween(this.head.position, player.head.position);
-                world.add(new this.bulletType(this.head.position.x, this.head.position.y, angleToPlayer));
-                this.shotCount++;
+                this.doShoot();
             }
         }
     }
@@ -191,5 +193,28 @@ class SecurityDude extends AttackingHuman {
         this.nextShot = 0;
         this.name = nomangle('Security #') + ~~(random() * 300);
         this.bulletType = Bullet;
+    }
+
+    doShoot() {
+        this.nextShot = this.shotCount % 3 ? 0.5 : 2;
+        const angleToPlayer = angleBetween(this.head.position, player.head.position);
+        world.add(new Bullet(this.head.position.x, this.head.position.y, angleToPlayer));
+        this.shotCount++;
+    }
+}
+
+class FireDude extends AttackingHuman {
+    constructor() {
+        super('#f80');
+        this.nextShot = 0;
+        this.name = nomangle('Security #') + ~~(random() * 300);
+        this.bulletType = Fireball;
+    }
+
+    doShoot() {
+        this.nextShot = this.shotCount % 10 ? 0.2 : 2;
+        const angleToPlayer = angleBetween(this.head.position, player.head.position);
+        world.add(new Fireball(this.head.position.x, this.head.position.y, angleToPlayer));
+        this.shotCount++;
     }
 }

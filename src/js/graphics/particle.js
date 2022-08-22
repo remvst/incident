@@ -25,9 +25,9 @@ class Particle {
     render() {
         ctx.globalAlpha = this.alpha;
         ctx.fillStyle = (this.color);
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size / 2, 0, TWO_PI);
-        ctx.fill();
-        // ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
+        // ctx.beginPath();
+        // ctx.arc(this.x, this.y, this.size / 2, 0, TWO_PI);
+        // ctx.fill();
+        ctx.fillRect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
     }
 }
