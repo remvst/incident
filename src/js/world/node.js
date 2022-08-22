@@ -132,7 +132,7 @@ class Node {
             return;
         }
 
-        if (this.supersafeCollisions = world.hasObstacleXY(readjusted.x, readjusted.y)) {
+        if (this.supersafeCollisions && world.hasObstacleXY(readjusted.x, readjusted.y)) {
             this.position.x = this.previousPosition.x;
             this.position.y = this.previousPosition.y;
         } else {
