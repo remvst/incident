@@ -53,10 +53,11 @@ class Human extends Character {
     }
 
     newTarget() {
-        const angle = rnd(0, TWO_PI);
-        this.target.x = this.head.position.x + Math.cos(angle) * 200;
-        this.target.y = this.head.position.y + Math.sin(angle) * 200;
-        this.target.radius = CELL_SIZE / 2;
+        const angleToTarget = angleBetween(this.head.position, this.target);
+        const newAngle = roundToNearest(angleToTarget, PI / 2) + pick([-1, 1]) * PI / 2;
+        
+        this.target.x = this.head.position.x + Math.cos(newAngle) * 200;
+        this.target.y = this.head.position.y + Math.sin(newAngle) * 200;
     }
 
     cycle(elapsed) {
