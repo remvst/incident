@@ -143,6 +143,11 @@ class SecurityDude extends Human {
         this.name = nomangle('Security #') + ~~(random() * 300);
     }
 
+    damage(amount, source) {
+        super.damage(amount, source);
+        this.nextShot = 1;
+    }
+
     cycle(elapsed) {
         const seesPlayer = this.seesPlayer();
         this.speed = seesPlayer ? 0 : 100;

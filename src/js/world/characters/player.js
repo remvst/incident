@@ -28,7 +28,7 @@ class Player extends Character {
         
         for (const element of world.elements) {
             if (element instanceof Human) {
-                if (dist(this.target, element.head.position) < 25) {
+                if (dist(this.target, element.head.position) < CELL_SIZE) {
                     this.target.x = element.head.position.x;
                     this.target.y = element.head.position.y;
                 }
