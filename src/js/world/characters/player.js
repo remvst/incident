@@ -28,6 +28,11 @@ class Player extends Character {
         
         for (const element of world.elements) {
             if (element instanceof Human) {
+                if (dist(this.target, element.head.position) < 25) {
+                    this.target.x = element.head.position.x;
+                    this.target.y = element.head.position.y;
+                }
+
                 if (dist(this.head.position, element.head.position) < 25) {
                     element.damage(elapsed * 1, this.head.position);
                     if (element.health <= 0) {
@@ -155,8 +160,6 @@ class Player extends Character {
 
         // const index = leaf.parent.children.indexOf(leaf);
         // leaf.parent.children.splice(index, 1);
-
-        console.log(this.tail.depth);
 
         if (this.tail.parent === this.head) {
             this.health = 0;
