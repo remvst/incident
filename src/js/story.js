@@ -25,24 +25,6 @@ worldScreen = async (
     screen.instruction = null;
 };
 
-spawnHumanGroup = (humanType, centerX, centerY, count) => {
-    return world.addAll(mappable(count).map((_, i) => {
-        const angle = (i / count) * TWO_PI;
-
-        const human = new humanType();
-        human.head.position.x = centerX + Math.cos(angle) * CELL_SIZE * 2;
-        human.head.position.y = centerY + Math.sin(angle) * CELL_SIZE * 2;
-        human.head.resolve();
-        human.head.realign();
-
-        if (world.hasObstacleXY(human.head.position.x, human.head.position.y)) {
-            console.warn('Human spawned in obstacle');
-        }
-
-        return human;
-    }));
-};
-
 story = async () => {
     tapeTime = 6 * 3600 + 24 * 60;
     timeouts = [];
@@ -75,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            // {
-            //     world.expand(99);
-            //     // player.head.position.x = world.centerWallRoom.centerX;
-            //     // player.head.position.y = world.centerWallRoom.centerY;
-            //     world.initialRoom.spawnHumanGroup(Intern, 1);
-            //     await worldScreen(null, () => false);
-            //     await timeout(9999999);
-            // }
+            {
+                world.expand(99);
+                // player.head.position.x = world.centerWallRoom.centerX;
+                // player.head.position.y = world.centerWallRoom.centerY;
+                world.initialRoom.spawnHumanGroup(Intern, 10);
+                await worldScreen(null, () => false);
+                await timeout(9999999);
+            }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 

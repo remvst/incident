@@ -90,7 +90,7 @@ class Room {
             throw new Error('No cell to spawn at');
         }
 
-        return world.addAll(mappable(count).map(() => {
+        return world.addAllToBottom(mappable(count).map(() => {
             const [row, col] = pick(freeCells);
             const human = new humanType();
             human.head.position.x = (col + 0.5) * CELL_SIZE;

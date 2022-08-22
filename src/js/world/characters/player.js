@@ -4,8 +4,47 @@ class Player extends Character {
         this.bloodColor = '#fffb23';
         this.name = 'K-31';
         this.tail = this.head;
+
+        this.neck = new Node(this.head);
+        this.neck.minDistanceFromParent = 1;
+        this.neck.maxDistanceFromParent = 2;
+        this.neck.visualSpeed = 100;
+        this.neck.angleResolutionResolutionSelector = Node.pickClosest;
+
+        this.tail = this.neck;
+
         this.extend();
         this.extend();
+
+        this.leftClaw = new Node(this.neck);
+        this.leftClaw.minDistanceFromParent = 10;
+        this.leftClaw.maxDistanceFromParent = 15;
+        this.leftClaw.visualSpeed = 100;
+        this.leftClaw.minAngleOffset = PI - PI / 5 + PI / 8;
+        this.leftClaw.maxAngleOffset = PI - PI / 5 - PI / 8;
+        this.leftClaw.angleResolutionResolutionSelector = Node.pickClosest;
+
+        const leftClawEnd = new Node(this.leftClaw);
+        leftClawEnd.minDistanceFromParent = 10;
+        leftClawEnd.maxDistanceFromParent = 15;
+        leftClawEnd.visualSpeed = 100;
+        leftClawEnd.minAngleOffset = leftClawEnd.maxAngleOffset = PI / 2;
+        leftClawEnd.angleResolutionResolutionSelector = Node.pickClosest;
+
+        this.rightClaw = new Node(this.neck);
+        this.rightClaw.minDistanceFromParent = 10;
+        this.rightClaw.maxDistanceFromParent = 15;
+        this.rightClaw.visualSpeed = 100;
+        this.rightClaw.minAngleOffset = PI + PI / 5 + PI / 8;
+        this.rightClaw.maxAngleOffset = PI + PI / 5 - PI / 8;
+        this.rightClaw.angleResolutionResolutionSelector = Node.pickClosest;
+
+        const rightClawEnd = new Node(this.rightClaw);
+        rightClawEnd.minDistanceFromParent = 10;
+        rightClawEnd.maxDistanceFromParent = 15;
+        rightClawEnd.visualSpeed = 100;
+        rightClawEnd.minAngleOffset = rightClawEnd.maxAngleOffset = -PI / 2;
+        rightClawEnd.angleResolutionResolutionSelector = Node.pickClosest;
     }
 
     resetMetrics() {
@@ -15,6 +54,12 @@ class Player extends Character {
 
     cycle(elapsed) {
         const { x, y } = this.head.position;
+
+        this.leftClaw.minAngleOffset = PI - PI / 5 + PI / 8 + Math.sin(tapeTime * PI * 2 * 4) * PI / 3;
+        this.leftClaw.maxAngleOffset = PI - PI / 5 - PI / 8 + Math.sin(tapeTime * PI * 2 * 4) * PI / 3;
+
+        this.rightClaw.minAngleOffset = PI + PI / 5 + PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
+        this.rightClaw.maxAngleOffset = PI + PI / 5 - PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
 
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
@@ -131,7 +176,7 @@ class Player extends Character {
         for (const absorbedNode of absorbedNodes) {
             absorbedNode.children = [];
 
-            const hostingNode = pick(Array.from(this.head.children[0].allNodes()));
+            const hostingNode = pick(Array.from(this.neck.children[0].allNodes()));
 
             timeout(delay).then(() => {
                 hostingNode.children.push(absorbedNode);
@@ -161,7 +206,7 @@ class Player extends Character {
         // const index = leaf.parent.children.indexOf(leaf);
         // leaf.parent.children.splice(index, 1);
 
-        if (this.tail.parent === this.head) {
+        if (this.tail.parent === this.neck) {
             this.health = 0;
 
             world.remove(this);

@@ -81,8 +81,8 @@ class World extends Waitable {
         return element;
     }
 
-    addAll(elements) {
-        elements.forEach(x => this.add(x));
+    addAllToBottom(elements) {
+        elements.forEach(x => this.addToBottom(x));
         return elements;
     }
 
