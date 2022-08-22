@@ -115,10 +115,11 @@ class Human extends Character {
 class Janitor extends Human {
     constructor() {
         super('#00f');
+        this.name = nomangle('Janitor #') + ~~(random() * 300);
     }
 
     cycle(elapsed) {
-        this.speed = 100 * this.health;
+        this.speed = 50 * this.health;
         super.cycle(elapsed);
     }
 }
@@ -126,10 +127,11 @@ class Janitor extends Human {
 class Intern extends Human {
     constructor() {
         super(pick(['#080', '#00f', '#8f0', '#808']));
+        this.name = nomangle('Intern #') + ~~(random() * 300);
     }
 
     cycle(elapsed) {
-        this.speed = 100 * this.health;
+        this.speed = 50 * this.health;
         super.cycle(elapsed);
     }
 }
@@ -138,6 +140,7 @@ class SecurityDude extends Human {
     constructor() {
         super('#000');
         this.nextShot = 0;
+        this.name = nomangle('Security #') + ~~(random() * 300);
     }
 
     cycle(elapsed) {

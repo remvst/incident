@@ -1,7 +1,8 @@
 class Player extends Character {
     constructor() {
         super();
-        this.bloodColor = '#fffb23'
+        this.bloodColor = '#fffb23';
+        this.name = 'K-31';
         this.tail = this.head;
         this.extend();
         this.extend();

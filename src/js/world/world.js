@@ -178,11 +178,18 @@ class World extends Waitable {
                 ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
             }
 
-            for (const element of this.elements) {
-                ctx.wrap(() => {
-                    ctx.translate(-camera.x, -camera.y);
+            for (const element of this.elements) {                
+                if (element instanceof Character) {
+                    if (
+                        !isBetween(camera.x, element.head.position.x, camera.x + CANVAS_WIDTH) ||
+                        !isBetween(camera.y, element.head.position.y, camera.y + CANVAS_HEIGHT)
+                    ) {
+                        continue;
+                    }
 
-                    if (element instanceof Player) {
+                    ctx.wrap(() => {
+                        ctx.translate(-camera.x, -camera.y);
+
                         element.computeRectangle();
 
                         ctx.translate(element.rectangle.minX - 10, element.rectangle.minY - 10);
@@ -199,12 +206,12 @@ class World extends Waitable {
                         ctx.textBaseline = nomangle('top');
                         ctx.font = nomangle('8pt Courier');
                         ctx.fillText(
-                            'K-31', 
+                            element.name, 
                             0,
                             25 + element.rectangle.maxY - element.rectangle.minY,
                         );
-                    }
-                });
+                    });
+                }
             }
         });
     }
