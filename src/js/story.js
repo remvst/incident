@@ -177,14 +177,13 @@ story = async () => {
                 const target = world.add(world.flamethrowersConnection.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(8);
-                await timeout(2);
             }
 
             // Flamethrowers tutorial
             {
                 const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(SecurityDude, 3); // TODO change type
                 world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
-                await fullScreenTimedMessage(nomangle(`Emergency response team dispatched`));
+                await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(flamethrowers));
                 await timeout(2);
             }
