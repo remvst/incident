@@ -17,6 +17,7 @@ class Bullet {
             if (dist(node.position, this) < 20) {
                 player.damage(0.5, this);
                 world.remove(this);
+                return;
             }
         }
     }

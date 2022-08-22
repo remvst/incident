@@ -79,7 +79,7 @@ story = async () => {
             //     world.expand(99);
             //     // player.head.position.x = world.centerWallRoom.centerX;
             //     // player.head.position.y = world.centerWallRoom.centerY;
-            //     world.initialRoom.spawnHumanGroup(SecurityDude, 2);
+            //     world.initialRoom.spawnHumanGroup(SecurityDude, world.initialRoom);
             //     await worldScreen(null, () => false);
             //     await timeout(9999999);
             // }
@@ -175,7 +175,7 @@ story = async () => {
                 world.officesHallway.spawnHumanGroup(Intern, 4);
 
                 const target = world.add(world.flamethrowersConnection.asTarget);
-                await worldScreen(null, () => !world.hasAny(target));
+                await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(8);
                 await timeout(2);
             }

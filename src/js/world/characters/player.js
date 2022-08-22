@@ -145,17 +145,20 @@ class Player extends Character {
             this.addBloodParticle(source);
         }
 
-        const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length));
-        if (!leaf) return; // For safety
+        // const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length));
+        // if (!leaf) return; // For safety
 
-        if (leaf === this.tail) {
-            this.tail = leaf.parent;
-        }
+        // if (leaf === this.tail) {
+        //     this.tail = leaf.parent;
+        // }
 
-        const index = leaf.parent.children.indexOf(leaf);
-        leaf.parent.children.splice(index, 1);
 
-        if (!this.head.children.length) {
+        // const index = leaf.parent.children.indexOf(leaf);
+        // leaf.parent.children.splice(index, 1);
+
+        console.log(this.tail.depth);
+
+        if (this.tail.parent === this.head) {
             this.health = 0;
 
             world.remove(this);
@@ -167,6 +170,10 @@ class Player extends Character {
             timeout(2).then(() => world.reject(new Error()));
         } else {
             this.health = 1;
+
+            const index = this.tail.parent.children.indexOf(this.tail);
+            if (index >= 0) this.tail.parent.children.splice(index, 1);
+            this.tail = this.tail.parent;
         }
     }
 }
