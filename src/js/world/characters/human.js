@@ -137,13 +137,7 @@ class Intern extends Human {
     }
 }
 
-class SecurityDude extends Human {
-    constructor() {
-        super('#000');
-        this.nextShot = 0;
-        this.name = nomangle('Security #') + ~~(random() * 300);
-    }
-
+class AttackingHuman extends Human {
     damage(amount, source) {
         super.damage(amount, source);
         this.nextShot = 1;
@@ -167,7 +161,7 @@ class SecurityDude extends Human {
             this.nextShot = this.shotCount % 3 ? 0.5 : 2;
             if (seesPlayer) {
                 const angleToPlayer = angleBetween(this.head.position, player.head.position);
-                world.add(new Bullet(this.head.position.x, this.head.position.y, angleToPlayer));
+                world.add(new this.bulletType(this.head.position.x, this.head.position.y, angleToPlayer));
                 this.shotCount++;
             }
         }
@@ -188,5 +182,14 @@ class SecurityDude extends Human {
         });
 
         super.render();
+    }
+}
+
+class SecurityDude extends AttackingHuman {
+    constructor() {
+        super('#000');
+        this.nextShot = 0;
+        this.name = nomangle('Security #') + ~~(random() * 300);
+        this.bulletType = Bullet;
     }
 }

@@ -61,7 +61,7 @@ story = async () => {
                 world.expand(99);
                 // player.head.position.x = world.centerWallRoom.centerX;
                 // player.head.position.y = world.centerWallRoom.centerY;
-                world.initialRoom.spawnHumanGroup(Intern, 10);
+                world.initialRoom.spawnHumanGroup(SecurityDude, 10);
                 await worldScreen(null, () => false);
                 await timeout(9999999);
             }
