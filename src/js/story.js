@@ -114,7 +114,7 @@ story = async () => {
 
             // Dash tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing fast movement capabilities'));
+                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing faster movement'));
                 await worldScreen(nomangle('Hold click to dash'), () => player.dashDistance > CELL_SIZE * 10);
                 await timeout(2);
             }
@@ -174,9 +174,22 @@ story = async () => {
                 world.officesHallway.spawnHumanGroup(SecurityDude, 2);
                 world.officesHallway.spawnHumanGroup(Intern, 4);
 
-                await worldScreen(null, () => false);
-                await timeout(99999999);
+                const target = world.add(world.flamethrowersConnection.asTarget);
+                await worldScreen(null, () => !world.hasAny(target));
+                world.expand(8);
+                await timeout(2);
             }
+
+            // Flamethrowers tutorial
+            {
+                const flamethrowers = world.flamethrowers.spawnHumanGroup(SecurityDude, 3); // TODO change type
+                world.flamethrowers.spawnHumanGroup(Intern, 4);
+                await fullScreenTimedMessage(nomangle(`Emergency response team dispatched`));
+                await worldScreen(null, () => !world.hasAny(flamethrowers));
+                await timeout(2);
+            }
+
+            await timeout(99999999);
 
             continue;
 
