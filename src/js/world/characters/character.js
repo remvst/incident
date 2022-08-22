@@ -59,7 +59,7 @@ class Character {
             'y': [source.y + rnd(-5, 5), rnd(-40, 40)],
             'duration': rnd(0.2, 0.4),
             'color': this.bloodColor,
-            'size': [rnd(5, 8), 2],
+            'size': [rnd(10, 15), 5],
             'alpha': [1, -1],
         }));
     }

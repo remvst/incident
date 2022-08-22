@@ -73,14 +73,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            {
-                world.expand(99);
-                // player.head.position.x = world.centerWallRoom.centerX;
-                // player.head.position.y = world.centerWallRoom.centerY;
-                world.initialRoom.spawnHumanGroup(SecurityDude, 2);
-                await worldScreen(null, () => false);
-                await timeout(9999999);
-            }
+            // {
+            //     world.expand(99);
+            //     // player.head.position.x = world.centerWallRoom.centerX;
+            //     // player.head.position.y = world.centerWallRoom.centerY;
+            //     world.initialRoom.spawnHumanGroup(SecurityDude, 2);
+            //     await worldScreen(null, () => false);
+            //     await timeout(9999999);
+            // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
