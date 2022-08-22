@@ -79,7 +79,7 @@ story = async () => {
             //     world.expand(99);
             //     // player.head.position.x = world.centerWallRoom.centerX;
             //     // player.head.position.y = world.centerWallRoom.centerY;
-            //     world.initialRoom.spawnHumanGroup(SecurityDude, world.initialRoom);
+            //     world.initialRoom.spawnHumanGroup(Intern, 1);
             //     await worldScreen(null, () => false);
             //     await timeout(9999999);
             // }
@@ -97,7 +97,7 @@ story = async () => {
             {
                 world.expand(2);
                 const target = world.add(world.containmentRoomExit.asTarget);
-                await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment cell'));
+                await fullScreenTimedMessage(nomangle('K-31 escapes containment cell'));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(3);
                 await timeout(2);
@@ -114,7 +114,7 @@ story = async () => {
 
             // Dash tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing faster movement'));
+                await fullScreenTimedMessage(nomangle('K-31 starts showing faster movement'));
                 await worldScreen(nomangle('Hold click to dash'), () => player.dashDistance > CELL_SIZE * 10);
                 await timeout(2);
             }
@@ -182,8 +182,8 @@ story = async () => {
 
             // Flamethrowers tutorial
             {
-                const flamethrowers = world.flamethrowers.spawnHumanGroup(SecurityDude, 3); // TODO change type
-                world.flamethrowers.spawnHumanGroup(Intern, 4);
+                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(SecurityDude, 3); // TODO change type
+                world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
                 await fullScreenTimedMessage(nomangle(`Emergency response team dispatched`));
                 await worldScreen(null, () => !world.hasAny(flamethrowers));
                 await timeout(2);
@@ -208,6 +208,7 @@ story = async () => {
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
             await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`));
         } catch (e) {
+            console.error(e);
             await fullScreenTimedMessage(nomangle(`Specimen contained`));
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
         }
