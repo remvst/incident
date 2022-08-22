@@ -155,6 +155,7 @@ story = async () => {
                 await worldScreen(null, () => !world.hasAny(securityTeam));
                 await timeout(2);
                 await fullScreenTimedMessage(nomangle(`Security team is terminated by K-31`));
+                await fullScreenTimedMessage(nomangle(`Shooting K-31 seems to decrease its body mass`));
             }
 
             // Progress through map
