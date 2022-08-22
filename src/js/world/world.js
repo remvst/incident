@@ -155,8 +155,8 @@ class World extends Waitable {
                 CANVAS_HEIGHT - 35,
             );
 
-            ctx.textAlign = 'left';
-            ctx.textBaseline = 'top';
+            ctx.textAlign = nomangle('left');
+            ctx.textBaseline = nomangle('top');
             ctx.fillText('REC', 35, 35);
 
             ctx.fillRect(20, 20, 50, 4);
@@ -172,9 +172,9 @@ class World extends Waitable {
             ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -4, -50);
 
             if (this.instruction) {
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'top';
-                ctx.font = '12pt Courier';
+                ctx.textAlign = nomangle('center');
+                ctx.textBaseline = nomangle('top');
+                ctx.font = nomangle('12pt Courier');
                 ctx.fillText(this.instruction.toUpperCase(), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 100);
             }
 
