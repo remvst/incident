@@ -15,7 +15,7 @@ class Bullet {
 
         for (const node of player.head.allNodes()) {
             if (dist(node.position, this) < 20) {
-                player.damage(0.2, this);
+                player.damage(0.5, this);
                 world.remove(this);
             }
         }
@@ -23,6 +23,6 @@ class Bullet {
 
     render() {
         ctx.fillStyle = pick(['#f00', '#fff']);
-        ctx.fillRect(this.x - 8, this.y - 8, 16, 16);
+        ctx.fillRect(this.x - 4, this.y - 4, 8, 8);
     }
 }

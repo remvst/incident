@@ -55,11 +55,11 @@ class Character {
 
     addBloodParticle(source) {
         world.add(new Particle({
-            'x': [source.x + rnd(-10, 10), rnd(-80, 80)],
-            'y': [source.y + rnd(-10, 10), rnd(-80, 80)],
+            'x': [source.x + rnd(-5, 5), rnd(-40, 40)],
+            'y': [source.y + rnd(-5, 5), rnd(-40, 40)],
             'duration': rnd(0.2, 0.4),
             'color': this.bloodColor,
-            'size': [rnd(10, 15), 3],
+            'size': [rnd(5, 8), 2],
             'alpha': [1, -1],
         }));
     }

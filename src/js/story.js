@@ -7,6 +7,7 @@ fullScreenMessage = async (message) => {
 }
 
 fullScreenTimedMessage = (message) => {
+    tapeTime += 60 * 2;
     return fullScreenMessage([timeLabel(), message]);
 };
 
@@ -72,27 +73,31 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            // {
-            //     world.expand(99);
-            //     player.head.position.x = world.centerWallRoom.centerX;
-            //     player.head.position.y = world.centerWallRoom.centerY;
-            //     await worldScreen(null, () => false);
-            //     await timeout(9999999);
-            // }
+            {
+                world.expand(99);
+                // player.head.position.x = world.centerWallRoom.centerX;
+                // player.head.position.y = world.centerWallRoom.centerY;
+                world.initialRoom.spawnHumanGroup(SecurityDude, 2);
+                await worldScreen(null, () => false);
+                await timeout(9999999);
+            }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
             // Movement tutorial
             {
-                await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment'));
-                await worldScreen(nomangle('[Use mouse to move]'), () => player.travelledDistance > CELL_SIZE * 10);
+                await fullScreenTimedMessage(nomangle('Specimen K-31 is held in containment'));
+                await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
                 await timeout(2);
             }
 
-            // Dash tutorial
+            // Escape containment
             {
-                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing dashing capabilities'));
-                await worldScreen(nomangle('[Click to dash]'), () => player.dashDistance > CELL_SIZE * 10);
+                world.expand(2);
+                const target = world.add(world.containmentRoomExit.asTarget);
+                await fullScreenTimedMessage(nomangle('Specimen K-31 escapes containment cell'));
+                await worldScreen(null, () => !world.hasAny([target]));
+                world.expand(3);
                 await timeout(2);
             }
 
@@ -100,9 +105,16 @@ story = async () => {
             {
                 const janitors = world.initialRoom.spawnHumanGroup(Janitor, 2);
                 await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
-                await worldScreen(nomangle('Move towards humans to attack them'), () => !world.hasAny(janitors));
+                await worldScreen(nomangle('Move towards humans to interact with them'), () => !world.hasAny(janitors));
                 await timeout(2);
-                await fullScreenTimedMessage(nomangle(`K-31 starts showing absorption behavior`));
+                await fullScreenTimedMessage(nomangle(`K-31 shows significant increase in body mass`));
+            }
+
+            // Dash tutorial
+            {
+                await fullScreenTimedMessage(nomangle('Specimen K-31 starts showing fast movement capabilities'));
+                await worldScreen(nomangle('Hold click to dash'), () => player.dashDistance > CELL_SIZE * 10);
+                await timeout(2);
             }
 
             // Interns: absorb more
@@ -116,11 +128,11 @@ story = async () => {
 
             // Escape from initial room
             {
-                world.expand(2);
+                world.expand(4);
                 const target = world.add(world.lastRoom.asTarget);
                 await fullScreenTimedMessage(nomangle(`K-31 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
-                world.expand(3);
+                world.expand(5);
 
                 world.secondRoom.spawnHumanGroup(Intern, 2);
                 world.secondRoomLeft.spawnHumanGroup(Intern, 2);
@@ -137,17 +149,28 @@ story = async () => {
 
             // Security is dispatched
             {
-                world.expand(4);
-                const securityTeam = spawnHumanGroup(SecurityDude, world.securityRoom.centerX, world.securityRoom.centerY, 2);
+                world.expand(6);
+                const securityTeam = world.securityRoom.spawnHumanGroup(SecurityDude, 2);
                 await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(securityTeam));
                 await timeout(2);
-                await fullScreenTimedMessage(nomangle(`Security team terminated by K-31`));
+                await fullScreenTimedMessage(nomangle(`Security team is terminated by K-31`));
             }
 
             // Progress through map
             {
-                world.expand(5);
+                world.expand(7);
+
+                world.centerWallRoomRight.spawnHumanGroup(Intern, 1);
+                world.centerWallRoomLeft.spawnHumanGroup(Intern, 1)
+                world.centerWallRoom.spawnHumanGroup(SecurityDude, 2);
+
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 2);
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 2);
+
+                world.officesHallway.spawnHumanGroup(SecurityDude, 2);
+                world.officesHallway.spawnHumanGroup(Intern, 4);
+
                 await worldScreen(null, () => false);
                 await timeout(99999999);
             }
@@ -169,10 +192,11 @@ story = async () => {
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
             await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`));
         } catch (e) {
-            console.error(e);
             await fullScreenTimedMessage(nomangle(`Specimen contained`));
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
         }
+
+        tapePlaying = false;
     }
 };
 

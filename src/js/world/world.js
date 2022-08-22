@@ -324,8 +324,18 @@ class World extends Waitable {
 
     expand(roomCount) {
         const rooms = [
-            () => this.initialRoom = new Room(-5, -5, 10, 10), 
-            () => this.initialConnection = this.initialRoom.connectRight(5, 2, 1), 
+            () => {
+                this.containmentRoom = new Room(0, 0, 5, 5);
+            },
+            () => {
+                this.containmentRoomExit = this.containmentRoom.connectRight(2, 1, 1);
+            },
+            () => {
+                this.initialRoom = this.containmentRoomExit.connectRight(-5, 10, 10);
+            },
+            () => {
+                this.initialConnection = this.initialRoom.connectRight(5, 2, 1);
+            },
             () => {
                 this.secondRoom = this.initialConnection.connectRight(-1, 15, 10);
                 this.secondRoomLeft = this.secondRoom.connectLeft(8, 2, 1).connectLeft(-1, 5, 5);
@@ -342,8 +352,8 @@ class World extends Waitable {
                     .connectDown(-3, 12, 12)
                     .makeWallWithSymetry(4, 2, 4, 1);
 
-                this.centerWallRoom.connectRight(5, 2, 1).connectRight(-2, 6, 4);
-                this.centerWallRoom.connectLeft(5, 2, 1).connectLeft(-2, 6, 4);
+                this.centerWallRoomRight = this.centerWallRoom.connectRight(5, 2, 1).connectRight(-2, 6, 4);
+                this.centerWallRoomLeft = this.centerWallRoom.connectLeft(5, 2, 1).connectLeft(-2, 6, 4);
 
                 this.longWallHallway = this.centerWallRoom.connectDown(5, 1, 2)
                     .connectDown(-3, 5, 20)

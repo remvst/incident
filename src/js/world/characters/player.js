@@ -39,6 +39,8 @@ class Player extends Character {
     }
 
     extend(addLegs) {
+        this.health += 1;
+
         const spine = new Node(this.tail);
         spine.minDistanceFromParent = 5;
         spine.maxDistanceFromParent = 15;
@@ -139,19 +141,32 @@ class Player extends Character {
     damage(amount, source) {
         super.damage(amount, source);
 
-        if (this.health <= 0) {
+        for (let i = 0 ; i < 10 ; i++) {
+            this.addBloodParticle(source);
+        }
+
+        const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length));
+        if (!leaf) return; // For safety
+
+        if (leaf === this.tail) {
+            this.tail = leaf.parent;
+        }
+
+        const index = leaf.parent.children.indexOf(leaf);
+        leaf.parent.children.splice(index, 1);
+
+        if (!this.head.children.length) {
+            this.health = 0;
+
             world.remove(this);
 
-            for (let i = 0 ; i < 20 ; i++) {
+            for (let i = 0 ; i < 100 ; i++) {
                 this.addBloodParticle(source);
             }
 
-            return;
+            timeout(2).then(() => world.reject(new Error()));
+        } else {
+            this.health = 1;
         }
-
-        const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length && node !== this.tail));
-        if (!leaf) return; // For safety
-        const index = leaf.parent.children.indexOf(leaf);
-        leaf.parent.children.splice(index, 1);
     }
 }

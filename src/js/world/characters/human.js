@@ -131,7 +131,7 @@ class Intern extends Human {
     }
 
     cycle(elapsed) {
-        this.speed = 50 * this.health;
+        this.speed = 100 * this.health;
         super.cycle(elapsed);
     }
 }
@@ -146,7 +146,7 @@ class SecurityDude extends Human {
     cycle(elapsed) {
         const seesPlayer = this.seesPlayer();
         this.speed = seesPlayer ? 0 : 100;
-        this.visionRange = seesPlayer ? CELL_SIZE * 5 : CELL_SIZE * 3;
+        this.visionRange = seesPlayer ? CELL_SIZE * 8 : CELL_SIZE * 5;
 
         super.cycle(elapsed);
 
