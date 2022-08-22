@@ -59,6 +59,8 @@ story = async () => {
             player.head.realign();
             world.add(player);
 
+            camera.cycle(10);
+
             screen = new IntroScreen();
             await timeout(1);
 
