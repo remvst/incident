@@ -95,6 +95,8 @@ class Room {
             const human = new humanType();
             human.head.position.x = (col + 0.5) * CELL_SIZE;
             human.head.position.y = (row + 0.5) * CELL_SIZE;
+            human.head.cycle(0);
+            human.head.realign();
             return human;
         }));
     };
