@@ -387,8 +387,11 @@ class World extends Waitable {
                     .makeWallWithSymetry(7, 9, 5, 1)
             },
             () => {
-                this.afterFlameThrowersRoom = this.flamethrowerRoom
-                    .connectRight(2, 2, 1)
+                this.afterFlamethrowersConnection = this.flamethrowerRoom
+                    .connectRight(2, 2, 1);
+            },
+            () => {
+                this.afterFlameThrowersRoom = this.afterFlamethrowersConnection
                     .connectRight(-3, 8, 12)
                     .makeWall(2, 2, 1, 8)
                     .makeWall(5, 2, 1, 8);
@@ -442,7 +445,8 @@ class World extends Waitable {
                     .makeWall(8, 14, 1, 2)
                     .makeWall(6, 8, 1, 2)
 
-                this.lastConnection = this.lastRoom.connectUp(7, 3, 2);
+                this.lastConnection = this.lastRoom.connectUp(7, 3, 2)
+                    .connectUp(0, 2, 2);
             },
         ];
     

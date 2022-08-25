@@ -57,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            {
-                world.expand(99);
-                player.head.position.x = world.lastRoom.centerX;
-                player.head.position.y = world.lastRoom.centerY;
-                // world.initialRoom.spawnHumanGroup(FireDude, 3);
-                await worldScreen(null, () => false);
-                await timeout(9999999);
-            }
+            // {
+            //     world.expand(99);
+            //     player.head.position.x = world.lastRoom.centerX;
+            //     player.head.position.y = world.lastRoom.centerY;
+            //     // world.initialRoom.spawnHumanGroup(FireDude, 3);
+            //     await worldScreen(null, () => false);
+            //     await timeout(9999999);
+            // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
@@ -168,33 +168,45 @@ story = async () => {
                 await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(flamethrowers));
                 await timeout(2);
+
+                await fullScreenTimedMessage(nomangle(`Emergency response team terminated`));
+                world.expand(9);
             }
 
-            // TODO add more story
+            // Exit flamethrowers room
+            {
+                // TODO spawn a few people
+                const target = world.add(world.flamethrowersExit.asTarget);
+                await fullScreenTimedMessage(nomangle(`K-31 continues its progress through the building`));
+                await worldScreen(null, () => !world.hasAny([target]));
+                world.expand(10);
+            }
 
-            await timeout(99999999);
+            // Progress until final hallway
+            {
+                // TODO spawn a ton of enemies
+                const target = world.add(world.connectionToLastRoom.asTarget);
+                await worldScreen(null, () => !world.hasAny([target]));
+                await fullScreenTimedMessage(nomangle(`K-31 reaches the top floor`));
+                world.expand(11);
+            }
 
-            continue;
-
-            // await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`Security team is dispatched`));
-            // await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`Security team terminated by specimen`));
-            await fullScreenTimedMessage(nomangle(`K-31 starts navigating to upper lab floors`));
-            await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`Emergency response team dispatched`));
-            await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`Emergency team terminated by specimen`));
-            await fullScreenTimedMessage(nomangle(`Specimen starts navigating to lab exit`));
-            await worldScreen(new AttackTutorialWorld()); // TODO pass target tutorial
-            await fullScreenTimedMessage(nomangle(`K-31 location lost`));
-            await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
-            await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`));
+            // Final exit
+            {
+                const target = world.add(world.finalRoom.asTarget);
+                await worldScreen(null, () => !world.hasAny([target]));
+            }
         } catch (e) {
             console.error(e);
             await fullScreenTimedMessage(nomangle(`Specimen contained`));
             await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
         }
+        
+        await fullScreenTimedMessage(nomangle(`K-31 location lost`));
+        await fullScreenTimedMessage(nomangle(`Human casualties: ${player.totalKills}`));
+        await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`)); 
+
+        // TODO final screen, rewind
 
         tapePlaying = false;
     }

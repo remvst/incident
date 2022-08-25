@@ -5,6 +5,8 @@ class Player extends Character {
         this.name = 'K-31';
         this.tail = this.head;
 
+        this.totalKills = 0;
+
         this.neck = new Node(this.head);
         this.neck.minDistanceFromParent = 1;
         this.neck.maxDistanceFromParent = 2;
@@ -194,6 +196,8 @@ class Player extends Character {
 
     absorb(human) {
         world.remove(human);
+
+        this.totalKills++;
 
         let delay = 0.5;
         const absorbedNodes = Array.from(human.head.allNodes());
