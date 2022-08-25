@@ -57,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            // {
-            //     world.expand(99);
-            //     // player.head.position.x = world.centerWallRoom.centerX;
-            //     // player.head.position.y = world.centerWallRoom.centerY;
-            //     world.initialRoom.spawnHumanGroup(FireDude, 3);
-            //     await worldScreen(null, () => false);
-            //     await timeout(9999999);
-            // }
+            {
+                world.expand(99);
+                player.head.position.x = world.flamethrowersConnection.centerX;
+                player.head.position.y = world.flamethrowersConnection.centerY;
+                // world.initialRoom.spawnHumanGroup(FireDude, 3);
+                await worldScreen(null, () => false);
+                await timeout(9999999);
+            }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
@@ -134,7 +134,7 @@ story = async () => {
             // Security is dispatched
             {
                 world.expand(6);
-                const securityTeam = world.securityRoom.spawnHumanGroup(SecurityDude, 2);
+                const securityTeam = world.securityRoom.spawnHumanGroup(SecurityDude, 3);
                 await fullScreenTimedMessage(nomangle(`Initial security team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(securityTeam));
                 await timeout(2);
@@ -148,12 +148,12 @@ story = async () => {
 
                 world.centerWallRoomRight.spawnHumanGroup(Intern, 1);
                 world.centerWallRoomLeft.spawnHumanGroup(Intern, 1)
-                world.centerWallRoom.spawnHumanGroup(SecurityDude, 2);
+                world.centerWallRoom.spawnHumanGroup(SecurityDude, 3);
 
-                world.longWallHallway.spawnHumanGroup(SecurityDude, 2);
-                world.longWallHallway.spawnHumanGroup(SecurityDude, 2);
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 3);
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 3);
 
-                world.officesHallway.spawnHumanGroup(SecurityDude, 2);
+                world.officesHallway.spawnHumanGroup(SecurityDude, 3);
                 world.officesHallway.spawnHumanGroup(Intern, 4);
 
                 const target = world.add(world.flamethrowersConnection.asTarget);
@@ -163,7 +163,7 @@ story = async () => {
 
             // Flamethrowers tutorial
             {
-                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 3); // TODO change type
+                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 4);
                 world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
                 await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
                 await worldScreen(null, () => !world.hasAny(flamethrowers));

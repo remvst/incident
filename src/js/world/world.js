@@ -386,6 +386,29 @@ class World extends Waitable {
                     // Center +
                     .makeWallWithSymetry(7, 9, 5, 1)
             },
+            () => {
+                this.afterFlameThrowersRoom = this.flamethrowerRoom
+                    .connectRight(2, 2, 1)
+                    .connectRight(-3, 8, 12)
+                    .makeWall(2, 2, 1, 8)
+                    .makeWall(5, 2, 1, 8);
+
+                this.largeHallway = this.afterFlameThrowersRoom.connectRight(3, 2, 1)
+                    .connectRight(-3, 15, 8)
+                    .makeWall(2, 2, 1, 1)
+                    .makeWall(2, 5, 1, 1)
+
+                    .makeWall(7, 2, 1, 1)
+                    .makeWall(7, 5, 1, 1)
+
+                    .makeWall(12, 2, 1, 1)
+                    .makeWall(12, 5, 1, 1);
+
+                this.roomToHallway = this.afterFlameThrowersRoom.connectDown(5, 1, 2)
+                    .connectDown(-1, 3, 8);
+
+                this.roomToHallway.connectRight(1, 1, 1);
+            }
         ];
     
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {
