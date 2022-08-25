@@ -57,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            // {
-            //     world.expand(99);
-            //     player.head.position.x = world.lastRoom.centerX;
-            //     player.head.position.y = world.lastRoom.centerY;
-            //     // world.initialRoom.spawnHumanGroup(FireDude, 3);
-            //     await worldScreen(null, () => false);
-            //     await timeout(9999999);
-            // }
+            {
+                world.expand(99);
+                player.head.position.x = world.lastLobby.centerX;
+                player.head.position.y = world.lastLobby.centerY;
+                world.lastLobby.spawnHumanGroup(SecurityDude, 3);
+                await worldScreen(null, () => false);
+                await timeout(9999999);
+            }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
@@ -113,7 +113,7 @@ story = async () => {
             // Escape from initial room
             {
                 world.expand(4);
-                const target = world.add(world.lastRoom.asTarget);
+                const target = world.add(world.lastLobby.asTarget);
                 await fullScreenTimedMessage(nomangle(`K-31 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(5);

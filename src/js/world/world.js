@@ -434,7 +434,7 @@ class World extends Waitable {
                     .connectRight(1, 3, 1);
             },
             () => {
-                this.lastRoom = this.connectionToLastRoom.connectRight(-20, 24, 16)
+                this.lastLobby = this.connectionToLastRoom.connectRight(-20, 24, 16)
                     .makeWallWithSymetry(2, 2, 3, 1)
                     .makeWallWithSymetry(2, 2, 1, 3)
                     .makeWall(7, 3, 3, 1)
@@ -445,7 +445,7 @@ class World extends Waitable {
                     .makeWall(8, 14, 1, 2)
                     .makeWall(6, 8, 1, 2)
 
-                this.lastConnection = this.lastRoom.connectUp(7, 3, 2)
+                this.lastConnection = this.lastLobby.connectUp(7, 3, 2)
                     .connectUp(0, 2, 2);
             },
         ];

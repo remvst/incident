@@ -90,8 +90,8 @@ class Human extends Character {
 
         const angleToPlayer = angleBetween(this.head.position, player.head.position);
 
-        const impact = castRay(this.head.position.x, this.head.position.y, angleToPlayer, CELL_SIZE * 10);
-        return !impact || dist(impact, this.head.position) > distanceToPlayer;
+        const impact = castRay(this.head.position.x, this.head.position.y, angleToPlayer, distanceToPlayer);
+        return !impact || dist(impact, this.head.position) >= distanceToPlayer;
     }
 
     render() {
@@ -170,16 +170,27 @@ class AttackingHuman extends Human {
     }
 
     render() {
+        const maxDist = distP(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT) / 2 + this.visionRange;
+        if (dist(this.head.position, camera.center) > maxDist) {
+            return;
+        }
+
         ctx.wrap(() => {
             const seesPlayer = this.seesPlayer();
             const angleToTarget = normalize(angleBetween(this.head.position, this.target));
-            ctx.translate(this.head.position.x, this.head.position.y);
-            ctx.rotate(angleToTarget);
+
             ctx.fillStyle = seesPlayer ? '#f00' : '#fff';
             ctx.globalAlpha = 0.05;
+
+            ctx.translate(this.head.position.x, this.head.position.y);
+
             ctx.beginPath();
             ctx.moveTo(0, 0);
-            ctx.arc(0, 0, this.visionRange, -this.visionAngle / 2, this.visionAngle / 2);
+            for (let angle = angleToTarget - this.visionAngle / 2 ; angle < angleToTarget + this.visionAngle / 2 ; angle += this.visionAngle / 10) {
+                const impact = castRay(this.head.position.x, this.head.position.y, angle, this.visionRange);
+                const distance = impact ? dist(this.head.position, impact) : this.visionRange;
+                ctx.lineTo(cos(angle) * distance, sin(angle) * distance);
+            }
             ctx.fill();
         });
 
