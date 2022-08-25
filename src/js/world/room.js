@@ -61,6 +61,7 @@ class Room {
 
     makeWallWithSymetry(row, col, rows, cols) {
         return this.makeWall(row, col, rows, cols)
+            .makeWall(row, this.cols - col, rows, -cols)
             .makeWall(col, row, cols, rows)
             .makeWall(this.rows - row, this.cols - col, -rows, -cols)
             .makeWall(this.cols - col, this.rows - row, -cols, -rows)

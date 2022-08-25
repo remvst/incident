@@ -408,7 +408,42 @@ class World extends Waitable {
                     .connectDown(-1, 3, 8);
 
                 this.roomToHallway.connectRight(1, 1, 1);
-            }
+
+                this.nextWallRoom = this.largeHallway.connectRight(2, 2, 1)
+                    .connectRight(-3, 12, 12)
+                    .makeWallWithSymetry(4, 2, 4, 1);
+
+                this.secondOfficesHallway = this.nextWallRoom.connectRight(5, 2, 1)
+                    .connectRight(-1, 20, 4);
+
+                this.secondOfficesHallway.connectRight(2, 2, 1).connectRight(-1, 4, 3);
+                this.secondOfficesHallway.connectRight(7, 2, 1).connectRight(-1, 4, 3);
+                this.secondOfficesHallway.connectRight(12, 2, 1).connectRight(-1, 4, 3);
+                this.secondOfficesHallway.connectRight(17, 2, 1).connectRight(-1, 4, 3);
+
+                this.largeHallway.connectRight(13, 1, 1)
+                    .connectRight(-1, 3, 12)
+                    .connectRight(1, 1, 1);
+
+                this.connectionToLastRoom = this.secondOfficesHallway.connectLeft(17, 2, 1)
+                    .connectLeft(-1, 5, 5)
+                    .connectDown(0, 5, 15)
+                    .connectRight(1, 3, 1);
+            },
+            () => {
+                this.lastRoom = this.connectionToLastRoom.connectRight(-20, 24, 16)
+                    .makeWallWithSymetry(2, 2, 3, 1)
+                    .makeWallWithSymetry(2, 2, 1, 3)
+                    .makeWall(7, 3, 3, 1)
+                    .makeWall(10, 10, 3, 1)
+                    .makeWall(13, 4, 1, 2)
+                    .makeWall(17, 8, 1, 3)
+                    .makeWall(15, 14, 1, 2)
+                    .makeWall(8, 14, 1, 2)
+                    .makeWall(6, 8, 1, 2)
+
+                this.lastConnection = this.lastRoom.connectUp(7, 3, 2);
+            },
         ];
     
         for (let i = 0 ; i < Math.min(roomCount, rooms.length) ; i++) {

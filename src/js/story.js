@@ -59,8 +59,8 @@ story = async () => {
             // }
             {
                 world.expand(99);
-                player.head.position.x = world.flamethrowersConnection.centerX;
-                player.head.position.y = world.flamethrowersConnection.centerY;
+                player.head.position.x = world.lastRoom.centerX;
+                player.head.position.y = world.lastRoom.centerY;
                 // world.initialRoom.spawnHumanGroup(FireDude, 3);
                 await worldScreen(null, () => false);
                 await timeout(9999999);
