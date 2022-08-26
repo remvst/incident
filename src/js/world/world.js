@@ -97,6 +97,7 @@ class World extends Waitable {
 
     cycle(elapsed) {
         for (const element of this.elements) {
+            // if (!(element instanceof Human))
             element.cycle(elapsed);
         }
         camera.cycle(elapsed);
@@ -193,8 +194,8 @@ class World extends Waitable {
                         element.computeRectangle();
 
                         ctx.translate(element.rectangle.minX - 10, element.rectangle.minY - 10);
-                        ctx.strokeStyle = '#fff';
-                        ctx.globalAlpha = 0.2;
+                        ctx.strokeStyle = ctx.fillStyle = element instanceof AttackingHuman ? '#f00' : '#fff';
+                        ctx.globalAlpha = element instanceof AttackingHuman ? 1 : 0.2;
                         ctx.strokeRect(
                             0, 
                             0, 
@@ -424,17 +425,17 @@ class World extends Waitable {
                 this.secondOfficesHallway.connectRight(12, 2, 1).connectRight(-1, 4, 3);
                 this.secondOfficesHallway.connectRight(17, 2, 1).connectRight(-1, 4, 3);
 
-                this.largeHallway.connectRight(13, 1, 1)
-                    .connectRight(-1, 3, 12)
-                    .connectRight(1, 1, 1);
+                this.hallwayToSecondOffices = this.largeHallway.connectRight(13, 1, 1)
+                    .connectRight(-1, 3, 12);
+                this.hallwayToSecondOffices.connectRight(1, 1, 1);
 
-                this.connectionToLastRoom = this.secondOfficesHallway.connectLeft(17, 2, 1)
+                this.connectionToLastLobby = this.secondOfficesHallway.connectLeft(17, 2, 1)
                     .connectLeft(-1, 5, 5)
                     .connectDown(0, 5, 15)
                     .connectRight(1, 3, 1);
             },
             () => {
-                this.lastLobby = this.connectionToLastRoom.connectRight(-20, 24, 16)
+                this.lastLobby = this.connectionToLastLobby.connectRight(-20, 24, 16)
                     .makeWallWithSymetry(2, 2, 3, 1)
                     .makeWallWithSymetry(2, 2, 1, 3)
                     .makeWall(7, 3, 3, 1)

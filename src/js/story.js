@@ -57,14 +57,14 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            {
-                world.expand(99);
-                player.head.position.x = world.lastLobby.centerX;
-                player.head.position.y = world.lastLobby.centerY;
-                world.lastLobby.spawnHumanGroup(SecurityDude, 3);
-                await worldScreen(null, () => false);
-                await timeout(9999999);
-            }
+            // {
+            //     world.expand(99);
+            //     player.head.position.x = world.lastLobby.centerX;
+            //     player.head.position.y = world.lastLobby.centerY;
+            //     world.lastLobby.spawnHumanGroup(SecurityDude, 3);
+            //     await worldScreen(null, () => false);
+            //     await timeout(9999999);
+            // }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 
@@ -96,7 +96,7 @@ story = async () => {
 
             // Dash tutorial
             {
-                await fullScreenTimedMessage(nomangle('K-31 starts showing faster movement'));
+                await fullScreenTimedMessage(nomangle('K-31 starts moving faster'));
                 await worldScreen(nomangle('Hold click to dash'), () => player.dashDistance > CELL_SIZE * 10);
                 await timeout(2);
             }
@@ -113,7 +113,7 @@ story = async () => {
             // Escape from initial room
             {
                 world.expand(4);
-                const target = world.add(world.lastLobby.asTarget);
+                const target = world.add(world.initialConnection.asTarget);
                 await fullScreenTimedMessage(nomangle(`K-31 escapes initial containment lab`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(5);
@@ -175,17 +175,35 @@ story = async () => {
 
             // Exit flamethrowers room
             {
-                // TODO spawn a few people
-                const target = world.add(world.flamethrowersExit.asTarget);
-                await fullScreenTimedMessage(nomangle(`K-31 continues its progress through the building`));
+                const target = world.add(world.afterFlamethrowersConnection.asTarget);
+                await fullScreenTimedMessage(nomangle(`K-31 continues to progress through the building`));
                 await worldScreen(null, () => !world.hasAny([target]));
                 world.expand(10);
             }
 
             // Progress until final hallway
             {
-                // TODO spawn a ton of enemies
-                const target = world.add(world.connectionToLastRoom.asTarget);
+                world.afterFlameThrowersRoom.spawnHumanGroup(FireDude, 1);
+                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 2);
+
+                world.largeHallway.spawnHumanGroup(FireDude, 2);
+                world.largeHallway.spawnHumanGroup(SecurityDude, 2);
+
+                world.roomToHallway.spawnHumanGroup(Intern, 3);
+
+                world.nextWallRoom.spawnHumanGroup(Intern, 3);
+                world.nextWallRoom.spawnHumanGroup(SecurityDude, 2);
+                world.nextWallRoom.spawnHumanGroup(FireDude, 3);
+
+                world.hallwayToSecondOffices.spawnHumanGroup(SecurityDude, 1);
+                world.hallwayToSecondOffices.spawnHumanGroup(Intern, 2);
+
+                world.secondOfficesHallway.spawnHumanGroup(Intern, 5);
+                world.secondOfficesHallway.spawnHumanGroup(FireDude, 3);
+
+                world.connectionToLastLobby.spawnHumanGroup(Intern, 5);
+
+                const target = world.add(world.connectionToLastLobby.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
                 await fullScreenTimedMessage(nomangle(`K-31 reaches the top floor`));
                 world.expand(11);
@@ -193,7 +211,12 @@ story = async () => {
 
             // Final exit
             {
-                const target = world.add(world.finalRoom.asTarget);
+                // Spawn a ton of enemies
+                world.lastLobby.spawnHumanGroup(FireDude, 4);
+                world.lastLobby.spawnHumanGroup(SecurityDude, 4);
+                world.lastLobby.spawnHumanGroup(Intern, 4);
+
+                const target = world.add(world.lastLobby.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
             }
 

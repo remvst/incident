@@ -175,10 +175,25 @@ class Player extends Character {
     render() {
         super.render();
 
-        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        ctx.globalAlpha = 0.1;
+
         ctx.beginPath();
-        ctx.arc(this.target.x, this.target.y, 10, 0, TWO_PI)
-        ctx.fill();
+        ctx.arc(this.target.x, this.target.y, 10, 0, TWO_PI);
+        ctx.stroke();
+
+        const angleToTarget = atan2(this.target.y - this.head.position.y, this.target.x - this.head.position.x);
+        const distanceToTarget = dist(this.target, this.head.position);
+        const lineDistance = distanceToTarget - 10;
+        ctx.beginPath();
+        ctx.moveTo(this.head.position.x, this.head.position.y);
+        // ctx.lineTo(this.target.x, this.target.y);
+        ctx.lineTo(
+            this.head.position.x + cos(angleToTarget) * lineDistance, 
+            this.head.position.y + sin(angleToTarget) * lineDistance,
+        );
+        ctx.stroke();
 
         // const angle = angleBetween(this.head.position, this.target);
         // const res = castRay(this.head.position.x, this.head.position.y, angle, CELL_SIZE * 10);
