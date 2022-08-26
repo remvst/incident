@@ -172,7 +172,7 @@ class World extends Waitable {
             ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -50, -4);
             ctx.fillRect(CANVAS_WIDTH - 20, CANVAS_HEIGHT - 20, -4, -50);
 
-            if (this.instruction) {
+            if (this.instruction && tapePlaying) {
                 ctx.textAlign = nomangle('center');
                 ctx.textBaseline = nomangle('top');
                 ctx.font = nomangle('12pt Courier');

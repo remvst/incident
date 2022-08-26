@@ -32,11 +32,22 @@ class IntroScreen extends Waitable {
             }
 
             ctx.font = nomangle('12pt Courier');
-
             ctx.fillStyle = '#000';
             ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y + 2);
             ctx.fillStyle = '#fff';
             ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y);
+
+            const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']);
+            const bestEscapeToString = isNaN(bestEscape) ? nomangle('no recorded escape') : formatTimeShort(bestEscape);
+            const bestEscapeLabel = nomangle('Fastest escape: ') + bestEscapeToString
+
+            ctx.font = nomangle('8pt Courier');
+            ctx.textAlign = nomangle('left');
+            ctx.textBaseline = nomangle('bottom');
+            ctx.fillStyle = '#000';
+            ctx.fillText(bestEscapeLabel, 10, CANVAS_HEIGHT - 10 + 2);
+            ctx.fillStyle = '#fff';
+            ctx.fillText(bestEscapeLabel, 10, CANVAS_HEIGHT - 10);
         });
     }
 }

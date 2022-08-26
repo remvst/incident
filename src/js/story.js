@@ -8,7 +8,7 @@ fullScreenMessage = async (message) => {
 
 fullScreenTimedMessage = (message) => {
     tapeTime += 60 * 2;
-    return fullScreenMessage([timeLabel(), message]);
+    return fullScreenMessage([formatTimeShort(tapeTime), message]);
 };
 
 worldScreen = async (
@@ -220,6 +220,9 @@ story = async () => {
                 await worldScreen(null, () => !world.hasAny([target]));
             }
 
+            const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']) || Number.MAX_SAFE_INTEGER;
+            localStorage['BEST_ESCAPE_KEY'] = min(bestEscape, tapeTime);
+
             await fullScreenTimedMessage(nomangle(`K-31 location lost`));
         } catch (e) {
             console.error(e);
@@ -239,8 +242,8 @@ story = async () => {
 
 mappable = size => Array(size).fill(0);
 
-timeLabel = () => {
-    const decomposed = decomposeTime(tapeTime);
+formatTimeShort = (time) => {
+    const decomposed = decomposeTime(time);
     return `${addZeroes(decomposed.hours, 2)}:${addZeroes(decomposed.minutes, 2)}`;
 };
 
