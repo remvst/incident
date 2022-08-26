@@ -230,7 +230,7 @@ story = async () => {
             await fullScreenTimedMessage(nomangle(`K-31 location lost`));
         } catch (e) {
             console.error(e);
-            await fullScreenTimedMessage(nomangle(`Specimen contained`));
+            await fullScreenTimedMessage(nomangle(`K-31 is contained`));
         }
         
         await fullScreenTimedMessage(nomangle(`Human casualties: ${player.totalKills}`));
