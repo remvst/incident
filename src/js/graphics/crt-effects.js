@@ -38,7 +38,7 @@ crtOverlay = () => {
 
         // Screen tearing
         ctx.globalAlpha = 1;
-        if (Date.now() % 3000 < 200) {
+        if (Date.now() % 6000 < 200) {
             for (let y = 0 ; y < CANVAS_WIDTH ; y += 20) {
                 ctx.drawImage(
                     can, 

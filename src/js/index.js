@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+onload = () => {
     can = document.querySelector('canvas');
     can.width = CANVAS_WIDTH;
     can.height = CANVAS_HEIGHT;
@@ -8,7 +8,11 @@ window.addEventListener('load', () => {
     onresize();
     story();
     frame();
-});
+};
+
+onblur = () => {
+    tapePlaying = false;
+};
 
 let lastFrame = performance.now();
 
@@ -19,7 +23,7 @@ frame = () => {
 
     fastForward = DOWN[70];
 
-    if (fastForward) {
+    if (fastForward || mouseDown) {
         tapePlaying = true;
     }
 
@@ -33,7 +37,10 @@ frame = () => {
 
     cycleTimeouts();
 
-    screen.cycle(elapsed);
+    if (tapePlaying) {
+        screen.cycle(elapsed);
+    }
+
     ctx.wrap(() => {
         crtPrerender();
 

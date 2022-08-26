@@ -9,9 +9,6 @@ class IntroScreen extends Waitable {
     }
 
     cycle() {
-        if (mouseDown) {
-            tapePlaying = true;
-        }
     }
 
     render() {
