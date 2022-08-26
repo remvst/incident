@@ -196,15 +196,17 @@ story = async () => {
                 const target = world.add(world.finalRoom.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
             }
+
+            await fullScreenTimedMessage(nomangle(`K-31 location lost`));
         } catch (e) {
             console.error(e);
             await fullScreenTimedMessage(nomangle(`Specimen contained`));
-            await fullScreenTimedMessage(nomangle(`Human casualties reported: 69`));
         }
         
-        await fullScreenTimedMessage(nomangle(`K-31 location lost`));
         await fullScreenTimedMessage(nomangle(`Human casualties: ${player.totalKills}`));
         await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`)); 
+
+        await fullScreenMessage([nomangle('Thanks for playing')]);
 
         // TODO final screen, rewind
 

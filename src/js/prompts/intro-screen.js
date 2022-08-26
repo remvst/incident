@@ -33,46 +33,13 @@ class IntroScreen extends Waitable {
 
                 y += 50;
             }
+
+            ctx.font = nomangle('12pt Courier');
+
+            ctx.fillStyle = '#000';
+            ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y + 2);
+            ctx.fillStyle = '#fff';
+            ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y);
         });
-
-        if (!tapePlaying) {
-            ctx.wrap(() => {
-                ctx.font = nomangle('12pt Courier');
-                ctx.textAlign = nomangle('center');
-                ctx.textBaseline = nomangle('bottom');
-                ctx.fillStyle = '#fff';
-                ctx.shadowColor = '#000';
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 4;
-                ctx.fillText(nomangle('[CLICK TO PLAY THE TAPE]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT - 40);
-            });
-
-            ctx.wrap(() => {
-                ctx.font = nomangle('18pt Arial');
-                ctx.textAlign = nomangle('left');
-                ctx.textBaseline = nomangle('middle');
-                ctx.shadowColor = '#000';
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 4;
-                ctx.fillStyle = '#fff';
-                ctx.fillRect(20, 20, 5, 25);
-                ctx.fillRect(30, 20, 5, 25);
-                ctx.fillText(nomangle('PAUSED'), 50, 33);
-            });
-
-            // ctx.drawImage(PAUSE_ICON, 0, 0);
-        } else {
-            ctx.wrap(() => {
-                ctx.shadowColor = '#000';
-                ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 4;
-                ctx.fillStyle = '#fff';
-                ctx.beginPath();
-                ctx.moveTo(20, 20);
-                ctx.lineTo(20, 45);
-                ctx.lineTo(40, 32);
-                ctx.fill();
-            });
-        }
     }
 }
