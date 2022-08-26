@@ -166,7 +166,7 @@ story = async () => {
                 const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 4);
                 world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
                 await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
-                await worldScreen(null, () => !world.hasAny(flamethrowers));
+                await worldScreen(nomangle('Eliminate emergency response team'), () => !world.hasAny(flamethrowers));
                 await timeout(2);
 
                 await fullScreenTimedMessage(nomangle(`Emergency response team terminated`));
