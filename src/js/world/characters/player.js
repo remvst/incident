@@ -68,7 +68,7 @@ class Player extends Character {
 
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
-        this.speed = mouseDown ? 300 : 100;
+        this.speed = mouseDown ? 400 : 100;
 
         if (this.burningTimeleft >= 0) {
             this.burningTimeleft -= elapsed;
@@ -105,7 +105,7 @@ class Player extends Character {
                 }
 
                 if (dist(this.head.position, element.head.position) < 30) {
-                    element.damage(elapsed * 2, this.head.position);
+                    element.damage(elapsed * 2 * (mouseDown ? 1 : 3), this.head.position);
                     if (element.health <= 0) {
                         this.absorb(element);
                     }
