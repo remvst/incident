@@ -104,6 +104,10 @@ frame = () => {
                 ctx.shadowOffsetY = 4;
                 ctx.fillText(nomangle('[CLICK TO PLAY THE TAPE]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3);
                 ctx.fillText(nomangle('[PRESS F TO FAST FORWARD]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 20);
+
+                if (screen instanceof FinalScreen) {
+                    ctx.fillText(nomangle('[PRESS T TO TWEET YOUR RESULTS]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 40);
+                }
             });
         }
 

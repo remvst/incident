@@ -13,5 +13,7 @@ let fastForward;
 let tapePlaying;
 let tapeTime = 0;
 
+let escaped = false;
+
 const mousePosition = {'x': 0, 'y': 0};
 let mouseDown;

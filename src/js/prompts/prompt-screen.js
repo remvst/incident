@@ -5,7 +5,7 @@ class PromptScreen extends Waitable {
     }
 
     cycle() {
-        
+
     }
 
     render() {
@@ -24,5 +24,11 @@ class PromptScreen extends Waitable {
                  y += 30;
             }
         });
+    }
+}
+
+class FinalScreen extends PromptScreen {
+    constructor() {
+        super([nomangle('Thanks for playing')]);
     }
 }

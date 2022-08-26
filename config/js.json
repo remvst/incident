@@ -5,6 +5,7 @@
     "src/js/keyboard.js",
     "src/js/waitable.js",
     "src/js/story.js",
+    "src/js/social.js",
 
     "src/js/util/resizer.js",
     "src/js/util/interp.js",

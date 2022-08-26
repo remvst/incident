@@ -1,10 +1,12 @@
-fullScreenMessage = async (message) => {
+fullScreenPrompt = async (prompt) => {
     mouseDown = false;
-    screen = new PromptScreen(message);
+    screen = prompt;
     await timeout(3);
     screen.message = [];
     await timeout(1);
-}
+};
+
+fullScreenMessage = (message) => fullScreenPrompt(new PromptScreen(message));
 
 fullScreenTimedMessage = (message) => {
     tapeTime += 60 * 2;
@@ -28,6 +30,7 @@ worldScreen = async (
 story = async () => {
     tapeTime = 6 * 3600 + 24 * 60;
     timeouts = [];
+    escaped = false;
 
     while (true) {
         try {
@@ -218,6 +221,7 @@ story = async () => {
 
                 const target = world.add(world.lastLobby.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
+                escaped = true;
             }
 
             const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']) || Number.MAX_SAFE_INTEGER;
@@ -232,11 +236,8 @@ story = async () => {
         await fullScreenTimedMessage(nomangle(`Human casualties: ${player.totalKills}`));
         await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`)); 
 
-        await fullScreenMessage([nomangle('Thanks for playing')]);
-
-        // TODO final screen, rewind
-
         tapePlaying = false;
+        await fullScreenPrompt(new FinalScreen());
     }
 };
 
