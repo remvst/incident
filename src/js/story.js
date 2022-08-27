@@ -46,6 +46,7 @@ story = async () => {
 
             camera.cycle(10);
 
+            tapePlaying = false;
             screen = new IntroScreen();
             await timeout(1);
 
