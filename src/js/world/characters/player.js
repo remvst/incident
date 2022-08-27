@@ -71,7 +71,7 @@ class Player extends Character {
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
         this.speed = mouseDown ? 400 : 100;
-        if (this.absorbing) this.speed = 0;
+        // if (this.absorbing) this.speed = 0;
 
         if (this.burningTimeleft >= 0) {
             this.burningTimeleft -= elapsed;
@@ -103,13 +103,13 @@ class Player extends Character {
         this.absorbing = false;
         for (const element of world.elements) {
             if (element instanceof Human) {
-                if (dist(this.target, element.head.position) < CELL_SIZE) {
+                if (dist(this.target, element.head.position) < CELL_SIZE * (this.absorbing ? 3 : 1)) {
                     this.target.x = element.head.position.x;
                     this.target.y = element.head.position.y;
                 }
 
                 if (dist(this.head.position, element.head.position) < 30) {
-                    element.damage(elapsed * 2, this.head.position);
+                    element.damage(elapsed * (mouseDown ? 3 : 2), this.head.position);
                     if (element.health <= 0) {
                         this.absorb(element);
                     }
