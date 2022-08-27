@@ -150,7 +150,7 @@ class AttackingHuman extends Human {
 
     cycle(elapsed) {
         const seesPlayer = this.seesPlayer();
-        this.speed = seesPlayer ? 0 : 100;
+        this.speed = seesPlayer ? 0 : this.health * 100;
         this.visionRange = seesPlayer ? CELL_SIZE * 8 : CELL_SIZE * 5;
 
         super.cycle(elapsed);
