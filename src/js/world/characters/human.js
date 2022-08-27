@@ -207,7 +207,7 @@ class SecurityDude extends AttackingHuman {
     }
 
     doShoot() {
-        this.nextShot = this.shotCount % 3 ? 0.5 : 2;
+        this.nextShot = this.shotCount % 3 ? 0.8 : 3;
         const angleToPlayer = angleBetween(this.head.position, player.head.position);
         world.add(new Bullet(this.head.position.x, this.head.position.y, angleToPlayer, this));
         this.shotCount++;
@@ -223,7 +223,7 @@ class FireDude extends AttackingHuman {
     }
 
     doShoot() {
-        this.nextShot = this.shotCount % 10 ? 0.2 : 2;
+        this.nextShot = this.shotCount % 10 ? 0.2 : 3;
         const angleToPlayer = angleBetween(this.head.position, player.head.position);
         world.add(new Fireball(this.head.position.x, this.head.position.y, angleToPlayer));
         this.shotCount++;
