@@ -226,7 +226,7 @@ class Player extends Character {
 
             const potentialHostNodes = Array.from(this.neck.children[0].allNodes()).sort((a, b) => a.depth - b.depth);
             if (potentialHostNodes.length > 1) {
-                potentialHostNodes.splice(0, potentialHostNodes.length * 0.3)
+                potentialHostNodes.splice(0, potentialHostNodes.length * 0.5);
             }
 
             const hostingNode = pick(potentialHostNodes);

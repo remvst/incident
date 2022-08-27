@@ -28,12 +28,12 @@ worldScreen = async (
 };
 
 story = async () => {
-    tapeTime = 6 * 3600 + 24 * 60;
-    timeouts = [];
-    escaped = false;
-
     while (true) {
         try {
+            tapeTime = 6 * 3600 + 24 * 60;
+            timeouts = [];
+            escaped = false;
+
             world = new World();
             world.expand(1);
 
