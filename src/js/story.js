@@ -219,7 +219,7 @@ story = async () => {
                 world.lastLobby.spawnHumanGroup(SecurityDude, 4);
                 world.lastLobby.spawnHumanGroup(Intern, 4);
 
-                const target = world.add(world.lastLobby.asTarget);
+                const target = world.add(world.lastConnection.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
                 escaped = true;
             }
