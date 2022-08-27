@@ -145,7 +145,7 @@ class AttackingHuman extends Human {
 
     damage(amount, source) {
         super.damage(amount, source);
-        this.nextShot = 1;
+        this.nextShot = 2;
     }
 
     cycle(elapsed) {
