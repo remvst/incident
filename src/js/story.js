@@ -65,7 +65,7 @@ story = async () => {
             //     world.expand(99);
             //     player.head.position.x = world.lastLobby.centerX;
             //     player.head.position.y = world.lastLobby.centerY;
-            //     world.lastLobby.spawnHumanGroup(SecurityDude, 3);
+            //     world.lastLobby.spawnHumanGroup(Intern, 5);
             //     await worldScreen(null, () => false);
             //     await timeout(9999999);
             // }
@@ -155,7 +155,6 @@ story = async () => {
                 world.centerWallRoom.spawnHumanGroup(SecurityDude, 3);
 
                 world.longWallHallway.spawnHumanGroup(SecurityDude, 4);
-                world.longWallHallway.spawnHumanGroup(SecurityDude, 4);
 
                 world.officesHallway.spawnHumanGroup(SecurityDude, 3);
                 world.officesHallway.spawnHumanGroup(Intern, 4);
@@ -187,8 +186,8 @@ story = async () => {
 
             // Progress until final hallway
             {
-                world.afterFlameThrowersRoom.spawnHumanGroup(FireDude, 2);
-                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 4);
+                world.afterFlameThrowersRoom.spawnHumanGroup(Intern, 4);
+                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 2);
 
                 world.largeHallway.spawnHumanGroup(FireDude, 4);
                 world.largeHallway.spawnHumanGroup(SecurityDude, 4);
