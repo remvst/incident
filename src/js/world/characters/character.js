@@ -43,7 +43,10 @@ class Character {
         for (let i = 0 ; i < 5 ; i++) {
             this.addBloodDroop(this.bloodColor, source);
         }
-        this.addBloodParticle(source);
+
+        for (let i = 0 ; i < 3 ; i++) {
+            this.addBloodParticle(source);
+        }
     }
 
     addBloodDroop(color, position) {
@@ -61,12 +64,12 @@ class Character {
 
     addBloodParticle(source) {
         world.add(new Particle({
-            'x': [source.x + rnd(-5, 5), rnd(-40, 40)],
-            'y': [source.y + rnd(-5, 5), rnd(-40, 40)],
+            'x': [source.x + rnd(-5, 5), rnd(-60, 60)],
+            'y': [source.y + rnd(-5, 5), rnd(-60, 60)],
             'duration': rnd(0.2, 0.4),
             'color': this.bloodColor,
-            'size': [rnd(10, 15), 5],
-            'alpha': [1, -1],
+            'size': [rnd(5, 10), 5],
+            'alpha': [1, 0],
         }));
     }
     
