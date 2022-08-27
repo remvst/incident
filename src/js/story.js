@@ -154,8 +154,8 @@ story = async () => {
                 world.centerWallRoomLeft.spawnHumanGroup(Intern, 1)
                 world.centerWallRoom.spawnHumanGroup(SecurityDude, 3);
 
-                world.longWallHallway.spawnHumanGroup(SecurityDude, 3);
-                world.longWallHallway.spawnHumanGroup(SecurityDude, 3);
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 4);
+                world.longWallHallway.spawnHumanGroup(SecurityDude, 4);
 
                 world.officesHallway.spawnHumanGroup(SecurityDude, 3);
                 world.officesHallway.spawnHumanGroup(Intern, 4);
@@ -167,7 +167,7 @@ story = async () => {
 
             // Flamethrowers tutorial
             {
-                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 4);
+                const flamethrowers = world.flamethrowerRoom.spawnHumanGroup(FireDude, 5);
                 world.flamethrowerRoom.spawnHumanGroup(Intern, 4);
                 await fullScreenTimedMessage(nomangle(`Emergency response team is dispatched`));
                 await worldScreen(nomangle('Eliminate emergency response team'), () => !world.hasAny(flamethrowers));
@@ -187,23 +187,23 @@ story = async () => {
 
             // Progress until final hallway
             {
-                world.afterFlameThrowersRoom.spawnHumanGroup(FireDude, 1);
-                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 2);
+                world.afterFlameThrowersRoom.spawnHumanGroup(FireDude, 2);
+                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 4);
 
-                world.largeHallway.spawnHumanGroup(FireDude, 2);
-                world.largeHallway.spawnHumanGroup(SecurityDude, 2);
+                world.largeHallway.spawnHumanGroup(FireDude, 4);
+                world.largeHallway.spawnHumanGroup(SecurityDude, 4);
 
                 world.roomToHallway.spawnHumanGroup(Intern, 3);
 
                 world.nextWallRoom.spawnHumanGroup(Intern, 3);
-                world.nextWallRoom.spawnHumanGroup(SecurityDude, 2);
-                world.nextWallRoom.spawnHumanGroup(FireDude, 3);
+                world.nextWallRoom.spawnHumanGroup(SecurityDude, 4);
+                world.nextWallRoom.spawnHumanGroup(FireDude, 6);
 
-                world.hallwayToSecondOffices.spawnHumanGroup(SecurityDude, 1);
+                world.hallwayToSecondOffices.spawnHumanGroup(SecurityDude, 2);
                 world.hallwayToSecondOffices.spawnHumanGroup(Intern, 2);
 
                 world.secondOfficesHallway.spawnHumanGroup(Intern, 5);
-                world.secondOfficesHallway.spawnHumanGroup(FireDude, 3);
+                world.secondOfficesHallway.spawnHumanGroup(FireDude, 6);
 
                 world.connectionToLastLobby.spawnHumanGroup(Intern, 5);
 
@@ -216,8 +216,8 @@ story = async () => {
             // Final exit
             {
                 // Spawn a ton of enemies
-                world.lastLobby.spawnHumanGroup(FireDude, 4);
-                world.lastLobby.spawnHumanGroup(SecurityDude, 4);
+                world.lastLobby.spawnHumanGroup(FireDude, 10);
+                world.lastLobby.spawnHumanGroup(SecurityDude, 10);
                 world.lastLobby.spawnHumanGroup(Intern, 4);
 
                 const target = world.add(world.lastConnection.asTarget);
