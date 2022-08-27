@@ -108,7 +108,7 @@ class Player extends Character {
                     this.target.y = element.head.position.y;
                 }
 
-                if (dist(this.head.position, element.head.position) < 30 * (this.absorbing ? 2 : 1)) {
+                if (dist(this.head.position, element.head.position) < 30 * (this.absorbing ? 3 : 1)) {
                     element.damage(elapsed * (mouseDown ? 3 : 2), this.head.position);
                     if (element.health <= 0) {
                         this.absorb(element);

@@ -187,10 +187,10 @@ story = async () => {
             // Progress until final hallway
             {
                 world.afterFlameThrowersRoom.spawnHumanGroup(Intern, 4);
-                world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 2);
+                // world.afterFlameThrowersRoom.spawnHumanGroup(SecurityDude, 2);
 
-                world.largeHallway.spawnHumanGroup(FireDude, 4);
-                world.largeHallway.spawnHumanGroup(SecurityDude, 4);
+                world.largeHallway.spawnHumanGroup(FireDude, 2);
+                world.largeHallway.spawnHumanGroup(SecurityDude, 2);
 
                 world.roomToHallway.spawnHumanGroup(Intern, 3);
 
@@ -215,9 +215,9 @@ story = async () => {
             // Final exit
             {
                 // Spawn a ton of enemies
-                world.lastLobby.spawnHumanGroup(FireDude, 10);
-                world.lastLobby.spawnHumanGroup(SecurityDude, 10);
-                world.lastLobby.spawnHumanGroup(Intern, 4);
+                world.lastLobby.spawnHumanGroup(FireDude, 5);
+                world.lastLobby.spawnHumanGroup(SecurityDude, 5);
+                world.lastLobby.spawnHumanGroup(Intern, 6);
 
                 const target = world.add(world.lastConnection.asTarget);
                 await worldScreen(null, () => !world.hasAny([target]));
