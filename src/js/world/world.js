@@ -122,6 +122,7 @@ class World extends Waitable {
                 ctx.wrap(() => element.render());
             }
 
+
             // Obstacles sides
             ctx.fillStyle = '#111';
             for (const [row, col] of this.renderableObstacles()) {
@@ -143,6 +144,8 @@ class World extends Waitable {
             for (const [row, col] of this.renderableObstacles()) {
                 this.renderObstacleTop(row, col);
             }
+    
+            ctx.wrap(() => player.renderHud());
         });
 
         // Camera feed overlay

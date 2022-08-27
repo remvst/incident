@@ -183,10 +183,6 @@ class Player extends Character {
     }
 
     render() {
-        for (const indicator of this.damageIndicators) {
-            indicator.render();
-        }
-
         super.render();
 
         ctx.strokeStyle = '#fff';
@@ -207,6 +203,12 @@ class Player extends Character {
             this.head.position.y + sin(angleToTarget) * lineDistance,
         );
         ctx.stroke();
+    }
+
+    renderHud() {
+        for (const indicator of this.damageIndicators) {
+            indicator.render();
+        }
     }
 
     absorb(human) {
