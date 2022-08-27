@@ -93,6 +93,10 @@ class Character {
         // });
     }
 
+    renderShadow() {
+        this.head.renderShadow();
+    }
+
     faceTarget(target) {
         const angleFromTarget = angleBetween(target, this.head.position);
         this.head.children.forEach((child) => {

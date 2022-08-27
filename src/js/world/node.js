@@ -184,32 +184,24 @@ class Node {
     }
 
     render() {
-        ctx.wrap(() => {
-            ctx.translate(this.visualPosition.x, this.visualPosition.y);
-
-            if (this.parent) {
-                ctx.lineWidth = 10;
-                ctx.strokeStyle = '#fff';
-                ctx.lineCap = 'round';
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(this.parent.visualPosition.x - this.visualPosition.x, this.parent.visualPosition.y - this.visualPosition.y);
-                // ctx.stroke();
-            }
-        });
-
         for (const child of this.children) {
             ctx.wrap(() => child.render());
         } 
 
-        ctx.wrap(() => {
-            this.extraRender(this);
-        });
+        ctx.wrap(() => this.extraRender(this));
 
-        ctx.wrap(() => {
-            ctx.globalAlpha *= 0.5;
-            // this.renderDebug();
-        });
+        // ctx.wrap(() => {
+        //     ctx.globalAlpha *= 0.5;
+        //     this.renderDebug();
+        // });
+    }
+
+    renderShadow() {
+        for (const child of this.children) {
+            ctx.wrap(() => child.renderShadow());
+        } 
+
+        ctx.wrap(() => this.extraRender(this, '#000', 2, 2));
     }
 
     renderDebug() {
@@ -279,23 +271,29 @@ class Node {
 
 
 function renderLine(color, thickness = 5, lineCap = 'round') {
-    return (node) => {
-        ctx.strokeStyle = color;
+    return (node, colorOverride, offsetX = 0, offsetY = 0) => {
+        ctx.strokeStyle = colorOverride || color;
         ctx.lineWidth = thickness;
         ctx.lineCap = lineCap;
 
         ctx.beginPath();
-        ctx.moveTo(node.parent.visualPosition.x, node.parent.visualPosition.y);
-        ctx.lineTo(node.visualPosition.x, node.visualPosition.y)
+        ctx.moveTo(node.parent.visualPosition.x + offsetX, node.parent.visualPosition.y + offsetY);
+        ctx.lineTo(node.visualPosition.x + offsetX, node.visualPosition.y + offsetY);
         ctx.stroke();
     };
 };
 
 function renderCircle(color, radius) {
-    return (node) => {
-        ctx.fillStyle = color;
+    return (node, colorOverride, offsetX = 0, offsetY = 0) => {
+        ctx.fillStyle = colorOverride || color;
         ctx.beginPath();
-        ctx.arc(node.visualPosition.x, node.visualPosition.y, radius, 0, Math.PI * 2);
+        ctx.arc(
+            node.visualPosition.x + offsetX, 
+            node.visualPosition.y + offsetY, 
+            radius, 
+            0, 
+            Math.PI * 2,
+        );
         ctx.fill();
     }
 }

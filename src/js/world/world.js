@@ -114,6 +114,11 @@ class World extends Waitable {
             ctx.fillRect(camera.x, camera.y, CANVAS_WIDTH, CANVAS_HEIGHT);
     
             for (const element of this.elements) {
+                if (element instanceof Character)
+                ctx.wrap(() => element.renderShadow());
+            }
+
+            for (const element of this.elements) {
                 ctx.wrap(() => element.render());
             }
 
