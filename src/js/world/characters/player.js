@@ -18,6 +18,8 @@ class Player extends Character {
         this.nextFireDamage = 0;
         this.bloodTrailTimeleft = 0;
 
+        this.damageIndicators = [];
+
         this.extend();
         this.extend();
 
@@ -112,6 +114,14 @@ class Player extends Character {
                 }
             }
         }
+
+        for (let i = this.damageIndicators.length - 1 ; i >= 0 ; i--) {
+            const indicator = this.damageIndicators[i];
+            indicator.cycle(elapsed);
+            if (indicator.timeLeft <= 0) {
+                this.damageIndicators.splice(i, 1);
+            }
+        }
     }
 
     extend(addLegs) {
@@ -173,6 +183,10 @@ class Player extends Character {
     }
 
     render() {
+        for (const indicator of this.damageIndicators) {
+            indicator.render();
+        }
+
         super.render();
 
         ctx.strokeStyle = '#fff';
@@ -188,25 +202,11 @@ class Player extends Character {
         const lineDistance = distanceToTarget - 10;
         ctx.beginPath();
         ctx.moveTo(this.head.position.x, this.head.position.y);
-        // ctx.lineTo(this.target.x, this.target.y);
         ctx.lineTo(
             this.head.position.x + cos(angleToTarget) * lineDistance, 
             this.head.position.y + sin(angleToTarget) * lineDistance,
         );
         ctx.stroke();
-
-        // const angle = angleBetween(this.head.position, this.target);
-        // const res = castRay(this.head.position.x, this.head.position.y, angle, CELL_SIZE * 10);
-        // if (res) {
-        //     console.log(!!res);
-        //     ctx.fillStyle = '#f00';
-        //     ctx.fillRect(res.x - 20, res.y - 20, 40, 40);
-
-        //     ctx.beginPath();
-        //     ctx.moveTo(this.head.position.x, this.head.position.y);
-        //     ctx.lineTo(res.x, res.y);
-        //     ctx.stroke();
-        // }
     }
 
     absorb(human) {
@@ -242,20 +242,11 @@ class Player extends Character {
     damage(amount, source) {
         super.damage(amount, source);
 
+        this.damageIndicators.push(new DamageIndicator(source.owner ? source.owner.head.position : source));
+
         for (let i = 0 ; i < 10 ; i++) {
             this.addBloodParticle(source);
         }
-
-        // const leaf = pick(Array.from(this.head.allNodes()).filter(node => node.parent && !node.children.length));
-        // if (!leaf) return; // For safety
-
-        // if (leaf === this.tail) {
-        //     this.tail = leaf.parent;
-        // }
-
-
-        // const index = leaf.parent.children.indexOf(leaf);
-        // leaf.parent.children.splice(index, 1);
 
         if (this.tail.parent === this.neck) {
             this.health = 0;
@@ -274,5 +265,41 @@ class Player extends Character {
             if (index >= 0) this.tail.parent.children.splice(index, 1);
             this.tail = this.tail.parent;
         }
+    }
+}
+
+class DamageIndicator {
+    constructor(source) {
+        this.source = source;
+        this.timeLeft = 1;
+        this.age = 0;
+    }
+
+    cycle(elapsed) {
+        this.timeLeft -= elapsed;
+        this.age += elapsed;
+    }
+
+    render() {
+        ctx.wrap(() => {
+            const center = player.head.position;
+            ctx.translate(center.x, center.y);
+            ctx.rotate(angleBetween(center, this.source));
+            ctx.fillStyle = ctx.strokeStyle = '#f00';
+            ctx.lineWidth = 10;
+            ctx.beginPath();
+
+            const ratio = min(1, this.age / 0.1);
+            ctx.globalAlpha = ratio;
+
+            for (let angle = -PI / 6 ; angle < PI / 6 ; angle += PI / 16) {
+                const radius = rnd(100, 110) * ratio;
+                ctx.lineTo(
+                    cos(angle) * radius,
+                    sin(angle) * radius,
+                );
+            }
+            ctx.stroke();
+        });
     }
 }

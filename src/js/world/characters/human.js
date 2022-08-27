@@ -209,7 +209,7 @@ class SecurityDude extends AttackingHuman {
     doShoot() {
         this.nextShot = this.shotCount % 3 ? 0.5 : 2;
         const angleToPlayer = angleBetween(this.head.position, player.head.position);
-        world.add(new Bullet(this.head.position.x, this.head.position.y, angleToPlayer));
+        world.add(new Bullet(this.head.position.x, this.head.position.y, angleToPlayer, this));
         this.shotCount++;
     }
 }
