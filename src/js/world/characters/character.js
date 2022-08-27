@@ -47,9 +47,11 @@ class Character {
     }
 
     addBloodDroop(color, position) {
+        const angle = random() * TWO_PI;
+        const radius = random() * 50;
         const blood = new Blood(
-            position.x + rnd(-50, 50),
-            position.y + rnd(-50, 50),
+            position.x + cos(angle) * radius,
+            position.y + sin(angle) * radius,
             color,
         )
 

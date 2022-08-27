@@ -33,9 +33,9 @@ class IntroScreen extends Waitable {
 
             ctx.font = nomangle('12pt Courier');
             ctx.fillStyle = '#000';
-            ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y + 2);
+            ctx.fillText(nomangle('A confidential 13KB tape by @remvst'), CANVAS_WIDTH / 2, y + 2);
             ctx.fillStyle = '#fff';
-            ctx.fillText(nomangle('by @remvst'), CANVAS_WIDTH / 2, y);
+            ctx.fillText(nomangle('A confidential 13KB tape by @remvst'), CANVAS_WIDTH / 2, y);
 
             const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']);
             const bestEscapeToString = isNaN(bestEscape) ? nomangle('no recorded escape') : formatTimeShort(bestEscape);

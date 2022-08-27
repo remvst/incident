@@ -71,6 +71,7 @@ class Player extends Character {
         this.target.x = mousePosition.x + camera.x;
         this.target.y = mousePosition.y + camera.y;
         this.speed = mouseDown ? 400 : 100;
+        if (this.absorbing) this.speed = 0;
 
         if (this.burningTimeleft >= 0) {
             this.burningTimeleft -= elapsed;
@@ -99,6 +100,7 @@ class Player extends Character {
             this.dashDistance += distP(this.head.position.x, this.head.position.y, x, y);
         }
         
+        this.absorbing = false;
         for (const element of world.elements) {
             if (element instanceof Human) {
                 if (dist(this.target, element.head.position) < CELL_SIZE) {
@@ -111,6 +113,7 @@ class Player extends Character {
                     if (element.health <= 0) {
                         this.absorb(element);
                     }
+                    this.absorbing = true;
                 }
             }
         }
@@ -221,7 +224,12 @@ class Player extends Character {
         for (const absorbedNode of absorbedNodes) {
             absorbedNode.children = [];
 
-            const hostingNode = pick(Array.from(this.neck.children[0].allNodes()));
+            const potentialHostNodes = Array.from(this.neck.children[0].allNodes()).sort((a, b) => a.depth - b.depth);
+            if (potentialHostNodes.length > 1) {
+                potentialHostNodes.splice(0, potentialHostNodes.length * 0.3)
+            }
+
+            const hostingNode = pick(potentialHostNodes);
 
             timeout(delay).then(() => {
                 hostingNode.children.push(absorbedNode);
