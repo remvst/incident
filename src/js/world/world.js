@@ -331,6 +331,36 @@ class World extends Waitable {
         });
     }
 
+    addRandomChunk() {
+        const connection = pick([
+            'connectRight',
+            'connectUp',
+            'connectDown',
+        ]);
+
+        this.addRandomRoom('connectRight');
+
+        const rooms = [];
+        for (let i = 0 ; i < 3 ; i++) {
+            rooms.push(this.addRandomRoom(connection));
+        }
+        rooms.push(this.addRandomRoom('connectRight'));
+        return rooms;
+    }
+
+    addRandomRoom(connection) {
+        const room = this.lastRoom = this.lastRoom[connection](-1, ~~rnd(3, 10), ~~rnd(3, 10));
+
+        const maxOffset = connection === 'connectRight' ? this.lastRoom.rows - 1 : this.lastRoom.cols - 1;
+        const maxRows = connection === 'connectRight' ? 4 : 1;
+        const maxCols = connection === 'connectRight' ? 1 : 4;
+
+        const offset = ~~rnd(0, maxOffset);
+        this.lastRoom = this.lastRoom[connection](offset, ~~rnd(1, maxRows), ~~rnd(1, maxCols));
+
+        return room;
+    }
+
     expand(roomCount) {
         const rooms = [
             () => {

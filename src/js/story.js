@@ -61,14 +61,33 @@ story = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-            // {
-            //     world.expand(99);
-            //     player.head.position.x = world.lastLobby.centerX;
-            //     player.head.position.y = world.lastLobby.centerY;
-            //     world.lastLobby.spawnHumanGroup(Intern, 5);
-            //     await worldScreen(null, () => false);
-            //     await timeout(9999999);
-            // }
+            {
+                world.expand(1);
+                player.head.position.x = world.lastRoom.centerX;
+                player.head.position.y = world.lastRoom.centerY;
+
+                let extensionCount = 0;
+                while (true) {
+                    extensionCount++;
+
+                    for (const room of world.addRandomChunk()) {
+                        room.spawnHumanGroup(Intern, ~~rnd(1, 3));
+
+                        const maxSecurityDudes = limit(0, (extensionCount - 2 * 0.2), 4);
+                        room.spawnHumanGroup(SecurityDude, ~~rnd(0, maxSecurityDudes));
+
+
+                        const maxFireDudes = limit(0, (extensionCount - 4 * 0.2), 4);
+                        room.spawnHumanGroup(SecurityDude, ~~rnd(0, maxFireDudes));
+                    }
+
+                    const target = world.add(world.lastRoom.asTarget);
+                    await worldScreen(null, () => !world.hasAny([target]));
+                }
+
+                // world.lastLobby.spawnHumanGroup(Intern, 5);
+                await timeout(9999999);
+            }
 
             await fullScreenMessage(nomangle(['August 13th 2022', 'BIO13K research lab']));
 

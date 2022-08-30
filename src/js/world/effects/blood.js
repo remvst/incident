@@ -9,7 +9,9 @@ class Blood {
     }
 
     cycle(elapsed) {
-
+        if (world.elements.length > 1000) {
+            world.remove(this);
+        }
     }
 
     render() {

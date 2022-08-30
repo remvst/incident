@@ -18,7 +18,7 @@ let lastFrame = performance.now();
 
 frame = () => {
     const now = performance.now();
-    let elapsed = Math.min((now - lastFrame) / 1000, 1 / 30);
+    let elapsed = (now - lastFrame) / 1000;
     lastFrame = now;
 
     fastForward = DOWN[70];
