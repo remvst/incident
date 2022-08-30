@@ -6,7 +6,7 @@ onload = () => {
     ctx = can.getContext('2d');
 
     onresize();
-    story();
+    gameLoop();
     frame();
 };
 
