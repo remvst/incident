@@ -131,8 +131,8 @@ class Player extends Character {
         this.health += 1;
 
         const spine = new Node(this.tail);
-        spine.minDistanceFromParent = 5;
-        spine.maxDistanceFromParent = 15;
+        spine.minDistanceFromParent = rnd(5, 15);
+        spine.maxDistanceFromParent = spine.minDistanceFromParent + 10;
         spine.visualSpeed = 100;
         spine.angleResolutionResolutionSelector = Node.pickClosest;
 
@@ -140,16 +140,16 @@ class Player extends Character {
             const leg1 = new Node(spine);
             leg1.minAngleOffset = PI / 2 + PI / 3;
             leg1.maxAngleOffset = PI / 2 - PI / 3;
-            leg1.minDistanceFromParent = 10;
-            leg1.maxDistanceFromParent = 20;
+            leg1.minDistanceFromParent = rnd(10, 20);
+            leg1.maxDistanceFromParent = leg1.minDistanceFromParent + 10;
             leg1.visualSpeed = 200;
             leg1.angleResolutionResolutionSelector = Node.pickAverage;
 
             const leg2 = new Node(spine);
             leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
             leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
-            leg2.minDistanceFromParent = 10;
-            leg2.maxDistanceFromParent = 20;
+            leg2.minDistanceFromParent = rnd(10, 20);
+            leg2.maxDistanceFromParent = leg2.minDistanceFromParent + 10;
             leg2.visualSpeed = 200;
             leg2.angleResolutionResolutionSelector = Node.pickAverage;
 
@@ -160,16 +160,16 @@ class Player extends Character {
                 const ext1 = new Node(leg1);
                 ext1.minAngleOffset = PI / 2 + PI / 4;
                 ext1.maxAngleOffset = PI / 2 - PI / 4;
-                ext1.minDistanceFromParent = 20;
-                ext1.maxDistanceFromParent = 40;
+                ext1.minDistanceFromParent = rnd(15, 25);
+                ext1.maxDistanceFromParent = ext1.minDistanceFromParent + 20;
                 ext1.visualSpeed = 200;
                 ext1.angleResolutionResolutionSelector = Node.pickAverage;
 
                 const ext2 = new Node(leg2);
                 ext2.minAngleOffset = PI * 3 / 2 + PI / 4;
                 ext2.maxAngleOffset = PI * 3 / 2 - PI / 4;
-                ext2.minDistanceFromParent = 20;
-                ext2.maxDistanceFromParent = 40;
+                ext2.minDistanceFromParent = rnd(15, 25);
+                ext2.maxDistanceFromParent = ext2.minDistanceFromParent + 20;
                 ext2.visualSpeed = 200;
                 ext2.angleResolutionResolutionSelector = Node.pickAverage;
             }
