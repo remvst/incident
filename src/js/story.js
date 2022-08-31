@@ -92,7 +92,7 @@ storyMode = async () => {
         // Janitors: learn to absorb
         {
             const janitors = world.initialRoom.spawnHumanGroup(Janitor, 2);
-            await fullScreenTimedMessage(nomangle(`Janitorial team #${~~(Math.random() * 10)} encounters specimen`));
+            await fullScreenTimedMessage(nomangle(`Janitorial team #${1 + ~~(random() * 10)} encounters specimen`));
             await worldScreen(nomangle('Move towards humans to interact with them'), () => !world.hasAny(janitors));
             await timeout(2);
             await fullScreenTimedMessage(nomangle(`K-31 shows significant increase in body mass`));
@@ -115,10 +115,12 @@ storyMode = async () => {
         // Interns: absorb more
         {
             const interns = world.initialRoom.spawnHumanGroup(Intern, 2);
-            await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
+            const names = interns[0].name + nomangle(' and ') + interns[1].name.slice(7);
+
+            await fullScreenTimedMessage(names + nomangle(` notice the incident`));
             await worldScreen(null, () => !world.hasAny(interns));
             await timeout(2);
-            await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} are removed from payroll`));
+            await fullScreenTimedMessage(names + nomangle(` are removed from payroll`));
         }
 
         // Escape from initial room
