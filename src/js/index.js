@@ -1,16 +1,22 @@
 isCoilSubscriber = () => {
-    if (location.href.indexOf('iswearihavecoil') > 0) {
+    if (location.href.indexOf(nomangle('iswearihavecoil')) > 0) {
         return true;
     }
     document.monetization && document.monetization.state === nomangle('started');
 };
 
 onload = () => {
-    can = document.querySelector('canvas');
+    can = document.querySelector(nomangle('canvas'));
     can.width = CANVAS_WIDTH;
     can.height = CANVAS_HEIGHT;
 
     ctx = can.getContext('2d');
+
+    // if (inputMode === INPUT_MODE_TOUCH) {
+        joystickCan = document.createElement(nomangle('canvas'));
+        joystickCtx = joystickCan.getContext('2d');
+        document.body.appendChild(joystickCan);
+    // }
 
     onresize();
     gameLoop();
@@ -24,6 +30,8 @@ onblur = () => {
 let lastFrame = performance.now();
 
 frame = () => {
+    console.log('yo frame');
+
     const now = performance.now();
     let elapsed = (now - lastFrame) / 1000;
     lastFrame = now;
@@ -177,26 +185,31 @@ frame = () => {
         crtOverlay();
     });
 
-    if (hasTouchDown) {
-        ctx.wrap(() => {
-            const extraForceRatio = limit(0, (dist(touchStartPosition, touchPosition) - TOUCH_JOYSTICK_RADIUS) / (TOUCH_JOYSTICK_MAX_RADIUS - TOUCH_JOYSTICK_RADIUS), 1);
-            const radius = (1 - extraForceRatio) * TOUCH_JOYSTICK_RADIUS;
+    if (joystickCan) {
+        joystickCan.width = innerWidth;
+        joystickCan.height = innerHeight;
 
-            ctx.globalAlpha = (1 - extraForceRatio) * 0.5;
-            ctx.strokeStyle = '#fff';
-            ctx.lineWidth = 2;
-            ctx.fillStyle = 'rgba(0,0,0,0.5)';
-            ctx.beginPath();
-            ctx.arc(touchStartPosition.x, touchStartPosition.y, radius, 0, TWO_PI);
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.globalAlpha = 0.5;
-            ctx.fillStyle = '#fff';
-            ctx.beginPath();
-            ctx.arc(touchPosition.x, touchPosition.y, 20, 0, TWO_PI);
-            ctx.fill();
-        });
+        if (hasTouchDown) {
+            joystickCtx.wrap(() => {
+                const extraForceRatio = limit(0, (dist(touchStartPosition, touchPosition) - TOUCH_JOYSTICK_RADIUS) / (TOUCH_JOYSTICK_MAX_RADIUS - TOUCH_JOYSTICK_RADIUS), 1);
+                const radius = (1 - extraForceRatio) * TOUCH_JOYSTICK_RADIUS;
+    
+                ctx.globalAlpha = (1 - extraForceRatio) * 0.5;
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 2;
+                ctx.fillStyle = 'rgba(0,0,0,0.5)';
+                ctx.beginPath();
+                ctx.arc(touchStartPosition.x, touchStartPosition.y, radius, 0, TWO_PI);
+                ctx.fill();
+                ctx.stroke();
+    
+                ctx.globalAlpha = 0.5;
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(touchPosition.x, touchPosition.y, 20, 0, TWO_PI);
+                ctx.fill();
+            });
+        }
     }
 
     if (DEBUG) {

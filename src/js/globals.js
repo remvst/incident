@@ -3,6 +3,9 @@ const w = window;
 let can;
 let ctx;
 
+let joystickCan;
+let joystickCtx;
+
 let camera;
 let world;
 let player;
@@ -20,4 +23,4 @@ let escaped = false;
 const mousePosition = {'x': 0, 'y': 0};
 let mouseDown;
 
-let inputMode = INPUT_MODE_MOUSE;
+let inputMode = navigator.userAgent.match(nomangle(/andro|ipho|ipa|ipo/i)) ? INPUT_MODE_TOUCH : INPUT_MODE_MOUSE;

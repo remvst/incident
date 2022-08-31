@@ -1,5 +1,5 @@
 onresize = () => {
-    var windowWidth = innerWidth,
+    let windowWidth = innerWidth,
         windowHeight = innerHeight,
 
         availableRatio = windowWidth / windowHeight, // available ratio
