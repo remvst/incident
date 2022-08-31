@@ -25,8 +25,8 @@ touchUpdate = () => {
             const angle = angleBetween(touchStartPosition, touchPosition);
             const force = dist(touchStartPosition, touchPosition) / TOUCH_JOYSTICK_MAX_RADIUS;
 
-            player.target.x = player.head.position.x + cos(angle) * force * 100;
-            player.target.y = player.head.position.y + sin(angle) * force * 100;
+            player.target.x = player.head.position.x + cos(angle) * 100;
+            player.target.y = player.head.position.y + sin(angle) * 100;
 
             player.movementPower = force;
         }
