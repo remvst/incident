@@ -23,4 +23,6 @@ let escaped = false;
 const mousePosition = {'x': 0, 'y': 0};
 let mouseDown;
 
+let hasGamepad;
+
 let inputMode = navigator.userAgent.match(nomangle(/andro|ipho|ipa|ipo/i)) ? INPUT_MODE_TOUCH : INPUT_MODE_MOUSE;

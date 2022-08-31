@@ -56,9 +56,11 @@ gamepadUpdate = () => {
 
 updateControls = () => {
     // Detect if the user is using a gamepad at all
-    if (navigator.getGamepads && inputMode !== INPUT_MODE_GAMEPAD) {
+    if (navigator.getGamepads) {
         for (const gamepad of navigator.getGamepads()) {
             if (gamepad) {
+                hasGamepad = true;
+
                 for (const button of gamepad.buttons) {
                     if (button.pressed) {
                         inputMode = INPUT_MODE_GAMEPAD;

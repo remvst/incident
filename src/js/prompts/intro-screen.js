@@ -49,18 +49,35 @@ class IntroScreen extends Waitable {
             ctx.fillText(subtitle, CANVAS_WIDTH / 2, y + 2);
             ctx.fillStyle = '#fff';
             ctx.fillText(subtitle, CANVAS_WIDTH / 2, y);
+        });
 
+        ctx.wrap(() => {
             const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']);
-            const bestEscapeToString = isNaN(bestEscape) ? nomangle('no recorded escape') : formatTimeShort(bestEscape);
-            const bestEscapeLabel = nomangle('Fastest escape: ') + bestEscapeToString
 
             ctx.font = nomangle('8pt Courier');
             ctx.textAlign = nomangle('left');
             ctx.textBaseline = nomangle('bottom');
-            ctx.fillStyle = '#000';
-            ctx.fillText(bestEscapeLabel, 10, CANVAS_HEIGHT - 10 + 2);
             ctx.fillStyle = '#fff';
-            ctx.fillText(bestEscapeLabel, 10, CANVAS_HEIGHT - 10);
+            ctx.shadowColor = '#000';
+            ctx.shadowOffsetY = 2;
+            ctx.fillText(
+                nomangle('Fastest escape: ') + (
+                    isNaN(bestEscape) 
+                        ? nomangle('none yet') 
+                        : formatTimeShort(bestEscape)
+                ), 
+                10, 
+                CANVAS_HEIGHT - 10
+            );
+
+            ctx.textAlign = nomangle('right');
+            ctx.fillText(
+                hasGamepad
+                    ? nomangle('Gamepad detected')
+                    : nomangle('No gamepad detected'), 
+                CANVAS_WIDTH - 10, 
+                CANVAS_HEIGHT - 10,
+            );
         });
     }
 }
