@@ -103,10 +103,10 @@ storyMode = async () => {
             await fullScreenTimedMessage(nomangle('K-31 starts moving faster'));
             await worldScreen(
                 inputMode === INPUT_MODE_MOUSE 
-                    ? nomangle('Hold click to dash')
+                    ? nomangle('Hold [CLICK] to dash')
                     : inputMode === INPUT_MODE_TOUCH 
                     ? nomangle('Drag joystick further to dash')
-                    : nomangle('Hold any button to dash'), 
+                    : nomangle('Hold [A] to dash'), 
                 () => player.dashDistance > CELL_SIZE * 10,
             );
             await timeout(2);

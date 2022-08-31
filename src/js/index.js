@@ -34,9 +34,9 @@ frame = () => {
     let elapsed = (now - lastFrame) / 1000;
     lastFrame = now;
 
-    fastForward = DOWN[70];
+    updateControls();
 
-    if (fastForward || mouseDown || hasTouchDown) {
+    if (fastForward) {
         tapePlaying = true;
     }
 
@@ -132,13 +132,31 @@ frame = () => {
                 // ctx.fillText(nomangle('[F] FAST FORWARD'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 20);
 
                 const messages = [
-                    [nomangle('[CLICK]'), nomangle('PLAY THE TAPE')],
-                    [nomangle('[F]'), nomangle('FAST FORWARD')],
+                    [
+                        mapInput(
+                            nomangle('[CLICK]'), 
+                            nomangle('[TAP]'), 
+                            nomangle('[A]'), 
+                        ),
+                        nomangle('PLAY THE TAPE'),
+                    ],
+                    [
+                        mapInput(
+                            nomangle('[F]'), 
+                            nomangle('N/A'), 
+                            nomangle('[Y]'), 
+                        ),
+                        nomangle('FAST FORWARD'),
+                    ],
                 ]
 
                 if (screen instanceof IntroScreen) {
                     const extra = [
-                        nomangle('[I]'), 
+                        mapInput(
+                            nomangle('[I]'), 
+                            nomangle('N/A'), 
+                            nomangle('[I]'), 
+                        ),
                         isInfiniteMode
                             ? nomangle('STORY MODE')
                             : nomangle('INFINITE MODE (COIL ONLY)'),

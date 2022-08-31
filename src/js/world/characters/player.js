@@ -62,8 +62,6 @@ class Player extends Character {
     }
 
     cycle(elapsed) {
-        updateControls();
-
         const { x, y } = this.head.position;
 
         this.leftClaw.minAngleOffset = PI - PI / 5 + PI / 8 + Math.sin(tapeTime * PI * 2 * 4) * PI / 3;
