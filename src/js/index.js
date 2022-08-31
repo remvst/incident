@@ -1,4 +1,9 @@
-isCoilSubscriber = () => document.monetization && document.monetization.state === 'started';
+isCoilSubscriber = () => {
+    if (location.href.indexOf('iswearihavecoil') > 0) {
+        return true;
+    }
+    document.monetization && document.monetization.state === nomangle('started');
+};
 
 onload = () => {
     can = document.querySelector('canvas');
