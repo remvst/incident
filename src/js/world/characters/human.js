@@ -143,6 +143,11 @@ class AttackingHuman extends Human {
         this.shotCount = 0;
     }
 
+    newTarget() {
+        super.newTarget();
+        this.nextShot = max(this.nextShot, 2);
+    }
+
     damage(amount, source) {
         super.damage(amount, source);
         this.nextShot = 2;
