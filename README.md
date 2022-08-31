@@ -1,8 +1,10 @@
 # Incident at BIO13K
 
+<img src="/assets/screenshot-intro.png" width="400"> <img src="/assets/screenshot-gameplay.png" width="400">
+
 Incident at BIO13K is my entry for 2022's JS13K competition.
 
-The game is about escaping the BIO13K lab as specimen K-31. As you progress through the lab, you may absorb humans to gain body mass.
+> Relive the events of August 13, 2022, when specimen K-31 broke containment and attempted to escape the BIO13K research lab.
 
 ## Regarding the quality of the code
 
