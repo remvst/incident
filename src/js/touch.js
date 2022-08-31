@@ -9,15 +9,17 @@ ontouchstart = (event) => {
 
     hasTouchDown = true;
 
-    getEventPosition(event.touches[0], touchStartPosition);
-    getEventPosition(event.touches[0], touchPosition);
+    touchStartPosition.x = touchPosition.x = event.touches[0].pageX;
+    touchStartPosition.y = touchPosition.y = event.touches[0].pageY;
 };
 
 ontouchmove = (event) => {
     event.preventDefault();
-    getEventPosition(event.touches[0], touchPosition);
+    touchPosition.x = event.touches[0].pageX;
+    touchPosition.y = event.touches[0].pageY;
 };
 
-ontouchend = () => {
+ontouchend = (event) => {
+    event.preventDefault();
     hasTouchDown = false;
 };

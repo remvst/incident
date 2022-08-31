@@ -68,7 +68,14 @@ storyMode = async () => {
         // Movement tutorial
         {
             await fullScreenTimedMessage(nomangle('Specimen K-31 is held in containment'));
-            await worldScreen(nomangle('Use mouse to move'), () => player.travelledDistance > CELL_SIZE * 10);
+            await worldScreen(
+                inputMode === INPUT_MODE_MOUSE 
+                    ? nomangle('Use mouse to move')
+                    : inputMode === INPUT_MODE_TOUCH 
+                    ? nomangle('Touch screen to move')
+                    : nomangle('Use left joystick to move'), 
+                () => player.travelledDistance > CELL_SIZE * 10,
+            );
             await timeout(2);
         }
 
@@ -94,7 +101,14 @@ storyMode = async () => {
         // Dash tutorial
         {
             await fullScreenTimedMessage(nomangle('K-31 starts moving faster'));
-            await worldScreen(nomangle('Hold click to dash'), () => player.dashDistance > CELL_SIZE * 10);
+            await worldScreen(
+                inputMode === INPUT_MODE_MOUSE 
+                    ? nomangle('Hold click to dash')
+                    : inputMode === INPUT_MODE_TOUCH 
+                    ? nomangle('Drag joystick further to dash')
+                    : nomangle('Hold any button to dash'), 
+                () => player.dashDistance > CELL_SIZE * 10,
+            );
             await timeout(2);
         }
 

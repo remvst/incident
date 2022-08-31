@@ -5,6 +5,8 @@ class Player extends Character {
         this.name = 'K-31';
         this.tail = this.head;
 
+        this.movementPower = 0;
+
         this.totalKills = 0;
 
         this.neck = new Node(this.head);
@@ -70,7 +72,7 @@ class Player extends Character {
         this.rightClaw.minAngleOffset = PI + PI / 5 + PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
         this.rightClaw.maxAngleOffset = PI + PI / 5 - PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
 
-        this.speed = this.dashing ? 400 : 100;
+        this.speed = 400 * this.movementPower;
         // if (this.absorbing) this.speed = 0;
 
         if (this.burningTimeleft >= 0) {
@@ -96,7 +98,7 @@ class Player extends Character {
 
         super.cycle(elapsed);
 
-        if (mouseDown) {
+        if (this.movementPower > 1 / 4) {
             this.dashDistance += distP(this.head.position.x, this.head.position.y, x, y);
         }
         
