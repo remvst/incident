@@ -31,7 +31,7 @@ let lastFrame = performance.now();
 
 frame = () => {
     const now = performance.now();
-    let elapsed = (now - lastFrame) / 1000;
+    const elapsedRaw = (now - lastFrame) / 1000;
     lastFrame = now;
 
     updateControls();
@@ -40,13 +40,10 @@ frame = () => {
         tapePlaying = true;
     }
 
-    if (fastForward) {
-        elapsed *= 4;
-    }
 
-    if (tapePlaying) {
-        tapeTime += elapsed;
-    }
+    let elapsed = elapsedRaw;
+    if (fastForward) elapsed *= 4;
+    if (tapePlaying) tapeTime += elapsed;
 
     cycleTimeouts();
 
@@ -233,7 +230,7 @@ frame = () => {
         ctx.textAlign = nomangle('right');
         ctx.textBaseline = nomangle('top');
         ctx.font = nomangle('24pt Arial');
-        ctx.fillText(~~(1 / elapsed), CANVAS_WIDTH - 10, 10);
+        ctx.fillText(~~(1 / elapsedRaw), CANVAS_WIDTH - 10, 10);
     }
 
     requestAnimationFrame(frame);
