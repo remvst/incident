@@ -30,7 +30,7 @@ class StaticScreen extends Waitable {
             const x = ~~(random() * 100);
             const y = ~~(random() * 100);
 
-            ctx.scale(4, 4);
+            ctx.scale(scale, scale);
             ctx.translate(x, y);
             ctx.fillRect(-x, -y, CANVAS_WIDTH / scale, CANVAS_HEIGHT / scale);
         })
