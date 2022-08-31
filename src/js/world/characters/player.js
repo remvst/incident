@@ -223,10 +223,11 @@ class Player extends Character {
 
         this.totalKills++;
 
-        let delay = 0.5;
+        let delay = 0.2;
         const absorbedNodes = Array.from(human.head.allNodes());
         for (const absorbedNode of absorbedNodes) {
             absorbedNode.children = [];
+            absorbedNode.skipCollisions = true;
 
             const potentialHostNodes = Array.from(this.neck.children[0].allNodes()).sort((a, b) => a.depth - b.depth);
             if (potentialHostNodes.length > 1) {
@@ -242,7 +243,7 @@ class Player extends Character {
             delay += 0.2;
         }
 
-        timeout(0.5).then(() => this.extend(true));
+        timeout(0.2).then(() => this.extend(true));
 
         for (let delay = 0 ; delay < 3 ; delay += 0.2) {
             timeout(delay).then(() => this.addBloodDroop('#900', this.head.position));

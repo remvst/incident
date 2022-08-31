@@ -124,6 +124,10 @@ class Node {
     }
 
     resolveCollision() {
+        if (this.skipCollisions) {
+            return;
+        }
+
         const {x, y} = this.position;
 
         const radius = 15;
@@ -272,6 +276,16 @@ class Node {
 
 function renderLine(color, thickness = 5, lineCap = 'round') {
     return (node, colorOverride, offsetX = 0, offsetY = 0) => {
+        const renderOnX = isBetween(camera.x, node.visualPosition.x, camera.x + CANVAS_WIDTH)
+            || isBetween(camera.x, node.parent.visualPosition.x, camera.x + CANVAS_WIDTH);
+
+        const renderOnY = isBetween(camera.y, node.visualPosition.y, camera.y + CANVAS_HEIGHT)
+            || isBetween(camera.y, node.parent.visualPosition.y, camera.y + CANVAS_HEIGHT);
+        
+        if (!renderOnX || !renderOnY) {
+            return;
+        }
+
         ctx.strokeStyle = colorOverride || color;
         ctx.lineWidth = thickness;
         ctx.lineCap = lineCap;
@@ -285,6 +299,13 @@ function renderLine(color, thickness = 5, lineCap = 'round') {
 
 function renderCircle(color, radius) {
     return (node, colorOverride, offsetX = 0, offsetY = 0) => {
+        const renderOnX = isBetween(camera.x - radius, node.visualPosition.x, camera.x + radius + CANVAS_WIDTH);
+        const renderOnY = isBetween(camera.y - radius, node.visualPosition.y, camera.y + radius + CANVAS_HEIGHT);
+        
+        if (!renderOnX || !renderOnY) {
+            return;
+        }
+
         ctx.fillStyle = colorOverride || color;
         ctx.beginPath();
         ctx.arc(

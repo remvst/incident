@@ -52,8 +52,8 @@ class World extends Waitable {
             return null;
         }
 
-        const row = Math.floor(y / CELL_SIZE);
-        const col = Math.floor(x / CELL_SIZE);
+        const row = floor(y / CELL_SIZE);
+        const col = floor(x / CELL_SIZE);
 
         const res = {'x': x, 'y': y};
 
