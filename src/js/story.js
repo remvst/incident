@@ -236,7 +236,7 @@ storyMode = async () => {
 gameLoop = async () => {
     while (true) {
         screen = new StaticScreen();
-        await new Promise(r => setTimeout(r, 1000));
+        await new Promise(r => setTimeout(r, 2000));
 
         // Globals
         tapeTime = 6 * 3600 + 24 * 60;
