@@ -202,8 +202,8 @@ storyMode = async () => {
             world.roomToHallway.spawnHumanGroup(Intern, 3);
 
             world.nextWallRoom.spawnHumanGroup(Intern, 3);
-            world.nextWallRoom.spawnHumanGroup(SecurityDude, 4);
-            world.nextWallRoom.spawnHumanGroup(FireDude, 6);
+            world.nextWallRoom.spawnHumanGroup(SecurityDude, 3);
+            world.nextWallRoom.spawnHumanGroup(FireDude, 4);
 
             world.hallwayToSecondOffices.spawnHumanGroup(SecurityDude, 2);
             world.hallwayToSecondOffices.spawnHumanGroup(Intern, 2);
