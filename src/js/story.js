@@ -118,7 +118,7 @@ storyMode = async () => {
             await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} notice the incident`));
             await worldScreen(null, () => !world.hasAny(interns));
             await timeout(2);
-            await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} removed from payroll`));
+            await fullScreenTimedMessage(nomangle(`Interns #${~~(Math.random() * 300)} and #${~~(Math.random() * 300)} are removed from payroll`));
         }
 
         // Escape from initial room
