@@ -222,7 +222,7 @@ frame = () => {
                 joystickCtx.globalAlpha = 0.5;
                 joystickCtx.fillStyle = '#fff';
                 joystickCtx.beginPath();
-                joystickCtx.arc(touchPosition.x, touchPosition.y, 20, 0, TWO_PI);
+                joystickCtx.arc(touchPosition.x, touchPosition.y, 30, 0, TWO_PI);
                 joystickCtx.fill();
             });
         }
