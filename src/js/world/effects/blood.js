@@ -9,7 +9,7 @@ class Blood {
     }
 
     cycle(elapsed) {
-        if (dist(this, player.head.position) > CANVAS_WIDTH * 3) {
+        if (dist(this, player.head.position) > CANVAS_WIDTH * 2) {
             world.remove(this);
         }
     }
