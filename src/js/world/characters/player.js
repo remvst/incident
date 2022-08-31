@@ -188,6 +188,10 @@ class Player extends Character {
     render() {
         super.render();
 
+        if (inputMode !== INPUT_MODE_MOUSE) {
+            return;
+        }
+
         ctx.strokeStyle = '#fff';
         ctx.lineWidth = 2;
         ctx.globalAlpha = 0.1;

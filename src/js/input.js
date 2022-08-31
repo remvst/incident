@@ -23,7 +23,8 @@ touchUpdate = () => {
             tapePlaying = true;
 
             const angle = angleBetween(touchStartPosition, touchPosition);
-            const force = dist(touchStartPosition, touchPosition) / TOUCH_JOYSTICK_MAX_RADIUS;
+            let force = dist(touchStartPosition, touchPosition) / TOUCH_JOYSTICK_MAX_RADIUS;
+            if (force < 0.2) force = 0;
 
             player.target.x = player.head.position.x + cos(angle) * 100;
             player.target.y = player.head.position.y + sin(angle) * 100;
@@ -38,7 +39,10 @@ gamepadUpdate = () => {
         if (gamepad) {
             const angle = atan2(gamepad.axes[1], gamepad.axes[0]);
             let force = distP(0, 0, gamepad.axes[0], gamepad.axes[1]) * 1 / 4;
-            if (gamepad.buttons[0] && gamepad.buttons[0].pressed) {
+
+            if (force < 0.2) {
+                force = 0;
+            } else if (gamepad.buttons[0] && gamepad.buttons[0].pressed) {
                 force = 1;
             }
 
@@ -48,28 +52,47 @@ gamepadUpdate = () => {
                 player.movementPower = force;
             }
 
-            tapePlaying = gamepad.buttons[0] && gamepad.buttons[0].pressed;
-            fastForward = gamepad.buttons[2] && gamepad.buttons[2].pressed;
+            tapePlaying = tapePlaying || gamepad.buttons[0] && gamepad.buttons[0].pressed;
+            fastForward = gamepad.buttons[3] && gamepad.buttons[3].pressed;
         }
     }
 };
 
-updateControls = () => {
-    // Detect if the user is using a gamepad at all
-    if (navigator.getGamepads) {
-        for (const gamepad of navigator.getGamepads()) {
-            if (gamepad) {
-                hasGamepad = true;
+maybeSwitchToGamepad = () => {
+    hasGamepad = false;
 
-                for (const button of gamepad.buttons) {
-                    if (button.pressed) {
-                        inputMode = INPUT_MODE_GAMEPAD;
-                        break;
-                    }
-                }
+    if (!navigator.getGamepads) {
+        return;
+    }
+
+    for (const gamepad of navigator.getGamepads()) {
+        if (!gamepad) {
+            continue;
+        }
+
+        hasGamepad = true;
+
+        if (inputMode === INPUT_MODE_GAMEPAD) {
+            return;
+        }
+
+        for (const button of gamepad.buttons) {
+            if (button.pressed) {
+                inputMode = INPUT_MODE_GAMEPAD;
+                return;
+            }
+        }
+        for (const axis of gamepad.axes) {
+            if (abs(axis) > 0.5) {
+                inputMode = INPUT_MODE_GAMEPAD;
+                return;
             }
         }
     }
+}
+
+updateControls = () => {
+    maybeSwitchToGamepad();
 
     mapInput(
         mouseUpdate,
