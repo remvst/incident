@@ -23,6 +23,7 @@
 
     "src/js/prompts/prompt-screen.js",
     "src/js/prompts/intro-screen.js",
+    "src/js/prompts/static-screen.js",
 
     "src/js/world/node.js",
     "src/js/world/world.js",

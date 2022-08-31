@@ -13,6 +13,8 @@ let fastForward;
 let tapePlaying;
 let tapeTime = 0;
 
+let isInfiniteMode;
+
 let escaped = false;
 
 const mousePosition = {'x': 0, 'y': 0};

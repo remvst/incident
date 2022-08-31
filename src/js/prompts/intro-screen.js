@@ -2,10 +2,6 @@ class IntroScreen extends Waitable {
 
     constructor() {
         super();
-        this.message = [
-            nomangle('INCIDENT'),
-            nomangle('AT BIO13K'),
-        ];
     }
 
     cycle() {
@@ -20,8 +16,16 @@ class IntroScreen extends Waitable {
             ctx.textAlign = nomangle('center');
             ctx.textBaseline = nomangle('middle');
 
-            let y = CANVAS_HEIGHT / 2 - this.message.length / 2 * 50;
-            for (const line of this.message) {
+            const message = isInfiniteMode
+                ? [nomangle('INFINITE MODE'), nomangle('BONUS TAPE')]
+                : [nomangle('INCIDENT'), nomangle('AT BIO13K')];
+
+            const subtitle = isInfiniteMode 
+                ? nomangle('Coil subscribers only') 
+                : nomangle('A confidential 13KB tape by @remvst');
+
+            let y = CANVAS_HEIGHT / 2 - message.length / 2 * 50;
+            for (const line of message) {
                 ctx.fillStyle = '#000';
                 ctx.fillText(line, CANVAS_WIDTH / 2, y + 8);
 
@@ -33,9 +37,10 @@ class IntroScreen extends Waitable {
 
             ctx.font = nomangle('12pt Courier');
             ctx.fillStyle = '#000';
-            ctx.fillText(nomangle('A confidential 13KB tape by @remvst'), CANVAS_WIDTH / 2, y + 2);
+
+            ctx.fillText(subtitle, CANVAS_WIDTH / 2, y + 2);
             ctx.fillStyle = '#fff';
-            ctx.fillText(nomangle('A confidential 13KB tape by @remvst'), CANVAS_WIDTH / 2, y);
+            ctx.fillText(subtitle, CANVAS_WIDTH / 2, y);
 
             const bestEscape = parseFloat(localStorage['BEST_ESCAPE_KEY']);
             const bestEscapeToString = isNaN(bestEscape) ? nomangle('no recorded escape') : formatTimeShort(bestEscape);

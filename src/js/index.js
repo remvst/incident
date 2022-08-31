@@ -1,3 +1,5 @@
+isCoilSubscriber = () => document.monetization && document.monetization.state === 'started';
+
 onload = () => {
     can = document.querySelector('canvas');
     can.width = CANVAS_WIDTH;
@@ -6,7 +8,9 @@ onload = () => {
     ctx = can.getContext('2d');
 
     onresize();
-    gameLoop();
+
+    screen = new StaticScreen();
+    setTimeout(gameLoop, 1000);
     frame();
 };
 
@@ -46,7 +50,20 @@ frame = () => {
 
         ctx.wrap(() => screen.render());
 
-        if (fastForward) {
+        if (screen instanceof StaticScreen) {
+            ctx.wrap(() => {
+                ctx.font = nomangle('18pt Arial');
+                ctx.textAlign = nomangle('left');
+                ctx.textBaseline = nomangle('middle');
+                ctx.shadowColor = '#000';
+                ctx.shadowOffsetX = 0;
+                ctx.shadowOffsetY = 4;
+                ctx.fillStyle = '#fff';
+                // ctx.fillRect(20, 20, 5, 25);
+                // ctx.fillRect(30, 20, 5, 25);
+                ctx.fillText(nomangle('NO INPUT'), 20, 33);
+            });
+        } else if (fastForward) {
             ctx.wrap(() => {
                 ctx.translate(CANVAS_WIDTH - 80, 50);
                 ctx.shadowColor = '#000';
@@ -96,17 +113,55 @@ frame = () => {
 
             ctx.wrap(() => {
                 ctx.font = nomangle('12pt Courier');
-                ctx.textAlign = nomangle('center');
+                ctx.textAlign = nomangle('left');
                 ctx.textBaseline = nomangle('bottom');
                 ctx.fillStyle = '#fff';
                 ctx.shadowColor = '#000';
                 ctx.shadowOffsetX = 0;
-                ctx.shadowOffsetY = 4;
-                ctx.fillText(nomangle('[CLICK TO PLAY THE TAPE]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3);
-                ctx.fillText(nomangle('[PRESS F TO FAST FORWARD]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 20);
+                ctx.shadowOffsetY = 2;
+                // ctx.fillText(nomangle('[CLICK] PLAY THE TAPE'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3);
+                // ctx.fillText(nomangle('[F] FAST FORWARD'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 20);
+
+                const messages = [
+                    [nomangle('[CLICK]'), nomangle('PLAY THE TAPE')],
+                    [nomangle('[F]'), nomangle('FAST FORWARD')],
+                ]
+
+                if (screen instanceof IntroScreen) {
+                    const extra = [
+                        nomangle('[I]'), 
+                        isInfiniteMode
+                            ? nomangle('STORY MODE')
+                            : nomangle('INFINITE MODE (COIL ONLY)'),
+                    ];
+                    messages.push(extra);
+
+                    extra.alpha = isCoilSubscriber() ? 1 : 0.5;
+                }
 
                 if (screen instanceof FinalScreen) {
-                    ctx.fillText(nomangle('[PRESS T TO TWEET YOUR RESULTS]'), CANVAS_WIDTH / 2, CANVAS_HEIGHT * 2 / 3 + 40);
+                    messages.push([nomangle('[T]'), nomangle('TWEET YOUR RESULTS')]);
+                }
+
+                const maxTotalWidth = messages.reduce((acc, msg) => {
+                    return max(acc, ctx.measureText(msg.slice(0, 2).join(' ')).width);
+                }, 0)
+                const maxFirstCol = messages.reduce((acc, [msg]) => {
+                    return max(acc, ctx.measureText(msg).width);
+                }, 0);
+
+                let y = CANVAS_HEIGHT * 2 / 3;
+                for (const line of messages) {
+                    const startX = (CANVAS_WIDTH - maxTotalWidth) / 2;
+
+                    ctx.fillStyle = line.color || '#fff';
+                    ctx.globalAlpha = line.alpha || 1;
+                    ctx.textAlign = nomangle('center');
+                    ctx.fillText(line[0], startX, y);
+                    ctx.textAlign = nomangle('left');
+                    ctx.fillText(line[1], startX + maxFirstCol, y);
+
+                    y += 20;
                 }
             });
         }
