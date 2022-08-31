@@ -140,7 +140,7 @@ class Player extends Character {
             const leg1 = new Node(spine);
             leg1.minAngleOffset = PI / 2 + PI / 3;
             leg1.maxAngleOffset = PI / 2 - PI / 3;
-            leg1.minDistanceFromParent = rnd(10, 40);
+            leg1.minDistanceFromParent = rnd(5, 30);
             leg1.maxDistanceFromParent = leg1.minDistanceFromParent + 10;
             leg1.visualSpeed = 200;
             leg1.angleResolutionResolutionSelector = Node.pickAverage;
@@ -148,7 +148,7 @@ class Player extends Character {
             const leg2 = new Node(spine);
             leg2.minAngleOffset = PI * 3 / 2 + PI / 3;
             leg2.maxAngleOffset = PI * 3 / 2 - PI / 3;
-            leg2.minDistanceFromParent = rnd(10, 40);
+            leg2.minDistanceFromParent = rnd(5, 30);
             leg2.maxDistanceFromParent = leg2.minDistanceFromParent + 10;
             leg2.visualSpeed = 200;
             leg2.angleResolutionResolutionSelector = Node.pickAverage;
