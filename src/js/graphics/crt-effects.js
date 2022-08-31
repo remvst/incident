@@ -21,6 +21,19 @@ crtPrerender = () => {
     }
 };
 
+crtScreenTearing = () => {
+    ctx.globalAlpha = 1;
+    if (Date.now() % 6000 < 200) {
+        for (let y = 0 ; y < CANVAS_WIDTH ; y += 20) {
+            ctx.drawImage(
+                can, 
+                0, y, CANVAS_WIDTH, 10,
+                40, y, CANVAS_WIDTH, 10,
+            );
+        }
+    }
+}
+
 crtOverlay = () => {
     const t = ~~(Date.now() / (1000 / 50));
 
@@ -36,16 +49,8 @@ crtOverlay = () => {
         ctx.globalAlpha = 0.03;
         ctx.fillRect(0, (Date.now() % 10000 / 10000) * (CANVAS_HEIGHT + 150) - 150, CANVAS_WIDTH, 150);
 
-        // Screen tearing
-        ctx.globalAlpha = 1;
         if (Date.now() % 6000 < 200) {
-            for (let y = 0 ; y < CANVAS_WIDTH ; y += 20) {
-                ctx.drawImage(
-                    can, 
-                    0, y, CANVAS_WIDTH, 10,
-                    40, y, CANVAS_WIDTH, 10,
-                );
-            }
+            crtScreenTearing();
         }
     });
 

@@ -8,9 +8,7 @@ onload = () => {
     ctx = can.getContext('2d');
 
     onresize();
-
-    screen = new StaticScreen();
-    setTimeout(gameLoop, 1000);
+    gameLoop();
     frame();
 };
 

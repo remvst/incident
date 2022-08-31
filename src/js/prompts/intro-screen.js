@@ -2,12 +2,20 @@ class IntroScreen extends Waitable {
 
     constructor() {
         super();
+        this.createdTime = Date.now();
     }
 
     cycle() {
     }
 
     render() {
+        const realAge = (Date.now() - this.createdTime) / 1000;
+        const ratio = min(1, realAge / 0.3);
+        if (ratio > 0) {
+            ctx.translate(0, sin(realAge * TWO_PI * 10) * CANVAS_HEIGHT * (1 - ratio));
+            crtScreenTearing();
+        }
+
         ctx.fillStyle = '#0018b0';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 

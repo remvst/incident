@@ -235,6 +235,9 @@ storyMode = async () => {
 
 gameLoop = async () => {
     while (true) {
+        screen = new StaticScreen();
+        await new Promise(r => setTimeout(r, 1000));
+
         // Globals
         tapeTime = 6 * 3600 + 24 * 60;
         timeouts = [];
@@ -268,8 +271,11 @@ gameLoop = async () => {
             //     await worldScreen(null, () => !world.hasAny(securityTeam));
             //     await timeout(999999);
             // }
-        await infiniteMode();
-        // await storyMode();
+        if (isInfiniteMode) {
+            await infiniteMode();
+        } else {
+            await storyMode();
+        }
     }
 };
 
