@@ -166,7 +166,16 @@ class World extends Waitable {
 
             ctx.textAlign = nomangle('left');
             ctx.textBaseline = nomangle('top');
-            ctx.fillText('REC', 35, 35);
+            ctx.fillText(nomangle('REC'), 35, 35);
+
+            if (tapeTime % 4 > 1) {
+                ctx.wrap(() => {
+                    ctx.fillStyle = '#900';
+                    ctx.beginPath();
+                    ctx.arc(35 + ctx.measureText(nomangle('REC')).width + 15, 50, 10, 0, TWO_PI);
+                    ctx.fill();
+                });
+            }
 
             ctx.fillRect(20, 20, 50, 4);
             ctx.fillRect(20, 20, 4, 50);
