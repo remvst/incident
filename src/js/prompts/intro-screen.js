@@ -29,7 +29,7 @@ class IntroScreen extends Waitable {
                 : [nomangle('INCIDENT'), nomangle('AT BIO13K')];
 
             const subtitle = isInfiniteMode 
-                ? nomangle('Coil subscribers only') 
+                ? nomangle('Confidential - for Coil subscribers only') 
                 : nomangle('A confidential 13KB tape by @remvst');
 
             let y = CANVAS_HEIGHT / 2 - message.length / 2 * 50;
