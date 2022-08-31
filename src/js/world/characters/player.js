@@ -235,7 +235,7 @@ class Player extends Character {
                 hostingNode.children.push(absorbedNode);
                 absorbedNode.parent = hostingNode;
             });
-            delay += 0.5;
+            delay += 0.2;
         }
 
         timeout(0.5).then(() => this.extend(true));
