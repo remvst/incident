@@ -60,6 +60,8 @@ class Player extends Character {
     }
 
     cycle(elapsed) {
+        updateControls();
+
         const { x, y } = this.head.position;
 
         this.leftClaw.minAngleOffset = PI - PI / 5 + PI / 8 + Math.sin(tapeTime * PI * 2 * 4) * PI / 3;
@@ -68,9 +70,7 @@ class Player extends Character {
         this.rightClaw.minAngleOffset = PI + PI / 5 + PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
         this.rightClaw.maxAngleOffset = PI + PI / 5 - PI / 8 - sin(tapeTime * PI * 2 * 4) * PI / 3;
 
-        this.target.x = mousePosition.x + camera.x;
-        this.target.y = mousePosition.y + camera.y;
-        this.speed = mouseDown ? 400 : 100;
+        this.speed = this.dashing ? 400 : 100;
         // if (this.absorbing) this.speed = 0;
 
         if (this.burningTimeleft >= 0) {

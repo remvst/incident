@@ -19,3 +19,5 @@ let escaped = false;
 
 const mousePosition = {'x': 0, 'y': 0};
 let mouseDown;
+
+let inputMode = INPUT_MODE_MOUSE;

@@ -30,7 +30,7 @@ frame = () => {
 
     fastForward = DOWN[70];
 
-    if (fastForward || mouseDown) {
+    if (fastForward || mouseDown || hasTouchDown) {
         tapePlaying = true;
     }
 
@@ -176,6 +176,28 @@ frame = () => {
 
         crtOverlay();
     });
+
+    if (hasTouchDown) {
+        ctx.wrap(() => {
+            const extraForceRatio = limit(0, (dist(touchStartPosition, touchPosition) - TOUCH_JOYSTICK_RADIUS) / (TOUCH_JOYSTICK_MAX_RADIUS - TOUCH_JOYSTICK_RADIUS), 1);
+            const radius = (1 - extraForceRatio) * TOUCH_JOYSTICK_RADIUS;
+
+            ctx.globalAlpha = (1 - extraForceRatio) * 0.5;
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.fillStyle = 'rgba(0,0,0,0.5)';
+            ctx.beginPath();
+            ctx.arc(touchStartPosition.x, touchStartPosition.y, radius, 0, TWO_PI);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.globalAlpha = 0.5;
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(touchPosition.x, touchPosition.y, 20, 0, TWO_PI);
+            ctx.fill();
+        });
+    }
 
     if (DEBUG) {
         ctx.fillStyle = '#fff';
