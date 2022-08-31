@@ -5,5 +5,5 @@ onmousemove = (e) => {
     mousePosition.y = (e.pageY - canvasRect.top) / canvasRect.height * CANVAS_HEIGHT;
 };
 
-onmousedown = () => mouseDown = true;
+onmousedown = () => mouseDown = document.hasFocus();
 onmouseup = () => mouseDown = false;
