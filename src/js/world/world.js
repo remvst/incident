@@ -467,12 +467,15 @@ class World extends Waitable {
                     .connectRight(-1, 3, 12);
                 this.hallwayToSecondOffices.connectRight(1, 1, 1);
 
-                this.connectionToLastLobby = this.secondOfficesHallway.connectLeft(17, 2, 1)
-                    .connectLeft(-1, 5, 5)
-                    .connectDown(0, 5, 15)
-                    .connectRight(1, 3, 1);
+                this.connectionToVeryLastHallway = this.secondOfficesHallway.connectLeft(17, 2, 1);
             },
             () => {
+                this.verylastHallway = this.connectionToVeryLastHallway
+                    .connectLeft(-1, 5, 5)
+                    .connectDown(0, 5, 15)
+
+                this.connectionToLastLobby = this.verylastHallway.connectRight(1, 3, 1);
+
                 this.lastLobby = this.connectionToLastLobby.connectRight(-20, 24, 16)
                     .makeWallWithSymetry(2, 2, 3, 1)
                     .makeWallWithSymetry(2, 2, 1, 3)

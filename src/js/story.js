@@ -211,9 +211,7 @@ storyMode = async () => {
             world.secondOfficesHallway.spawnHumanGroup(Intern, 5);
             world.secondOfficesHallway.spawnHumanGroup(FireDude, 6);
 
-            world.connectionToLastLobby.spawnHumanGroup(Intern, 5);
-
-            const target = world.add(world.connectionToLastLobby.asTarget);
+            const target = world.add(world.connectionToVeryLastHallway.asTarget);
             await worldScreen(null, () => !world.hasAny([target]));
             await fullScreenTimedMessage(nomangle(`K-31 reaches the top floor`));
             world.expand(11);
@@ -221,6 +219,8 @@ storyMode = async () => {
 
         // Final exit
         {
+            world.verylastHallway.spawnHumanGroup(Intern, 5);
+
             // Spawn a ton of enemies
             world.lastLobby.spawnHumanGroup(FireDude, 5);
             world.lastLobby.spawnHumanGroup(SecurityDude, 5);
