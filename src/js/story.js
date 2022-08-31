@@ -57,7 +57,7 @@ infiniteMode = async () => {
     } catch (e) {
         console.error(e);
         await fullScreenTimedMessage(nomangle(`K-31 is contained`));
-        await fullScreenTimedMessage(nomangle(`Absorbed humans: ${player.totalKills}`));
+        await fullScreenTimedMessage(nomangle(`Absorbed humans: `) + player.totalKills);
     }
 };
 
@@ -240,7 +240,7 @@ storyMode = async () => {
         await fullScreenTimedMessage(nomangle(`K-31 is contained`));
     }
 
-    await fullScreenTimedMessage(nomangle(`Human casualties: ${player.totalKills}`));
+    await fullScreenTimedMessage(nomangle(`Human casualties: `) + player.totalKills);
     await fullScreenTimedMessage(nomangle(`BIO13K CEO Andre Matur announces new round of hiring`)); 
 
     tapePlaying = false;
