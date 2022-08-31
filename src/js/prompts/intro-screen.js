@@ -16,7 +16,7 @@ class IntroScreen extends Waitable {
             crtScreenTearing();
         }
 
-        ctx.fillStyle = '#0018b0';
+        ctx.fillStyle = isInfiniteMode ? '#008000' : '#0018b0';
         ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 
         ctx.wrap(() => {
