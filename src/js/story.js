@@ -33,7 +33,7 @@ infiniteMode = async () => {
         player.head.position.x = world.lastRoom.centerX;
         player.head.position.y = world.lastRoom.centerY;
 
-        await fullScreenMessage([nomangle(`Endless Mode (Coil subscribers only)`)]);
+        await fullScreenMessage([nomangle(`Endless Mode`), nomangle('(Coil subscribers only)')]);
         await fullScreenMessage([nomangle(`Absorb as many humans as you can`)]);
 
         let extensionCount = 0;
